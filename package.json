@@ -1,0 +1,19 @@
+{
+  "name": "amp",
+  "version": "1.0.0",
+  "description": "美信api管理平台",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gomeplusFED/AMP.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gomeplusFED/AMP/issues"
+  },
+  "homepage": "https://github.com/gomeplusFED/AMP#readme"
+}
