@@ -1,18 +1,17 @@
 <template>
-	<div class="main_bg"></div>
-	<h1>首页</h1>
+	<div>
+		<m-head></m-head>
+		<router-view keep-alive></router-view>
+	</div>
 </template>
-
 
 <style type="text/css">
 	
-.main_bg{position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: #ff5151;}
-
 </style>
 
 <script lang="babel">
 
-import Vue from 'vue';
+import Header from './common/header.vue';
 
 export default {
 	name: 'App',
@@ -20,6 +19,9 @@ export default {
 		return {
 
 		}
+	},
+	components: {
+		'm-head': Header
 	}
 }
 

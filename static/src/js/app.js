@@ -1,24 +1,25 @@
+/*
+ * AMP 前端入口文件
+ */
+
 import Vue from 'vue';
-// import Vuex from 'vue';
 import Router from 'vue-router';
 
-// Vue.use(Vuex);
 Vue.use(Router);
 
-const router = new Router();
+const router = new Router({
+	history: true,
+	saveScrollPosition: true
+});
 
-import App from './component/app.vue';
 
-const BLANK = Vue.extend({});
+import Index from './component/main/index.vue';
 
 router.map({
     '/': {
-        component: App
+        component: Index
     }
 });
 
-router.redirect({
-    '*': '/'
-});
-
-router.start(BLANK, '#app');
+import App from './component/app.vue';
+router.start(App, '#app');

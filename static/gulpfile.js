@@ -14,13 +14,11 @@ var gutil = require("gulp-util");
 var rev = require('gulp-rev-hash');
 var path = require('path');
 
-
 var pwd = __dirname;
 
 // gulp --env=pro 压缩代码，直接执行gulp，不压缩代码
 var argv = require('minimist')(process.argv.slice(2));
 var config = require('../config.json');
-
 
 var vendorPlugin = new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
@@ -111,7 +109,6 @@ gulp.task('rev', function() {
         })))
         .pipe(gulp.dest('../views/'));
 })
-
 
 gulp.task('watch', function() {
     webpackConfig.watch = argv.env != 'pro';
