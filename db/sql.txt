@@ -1,0 +1,3 @@
+CREATE DATABASE amp DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+create table collection (id int auto_increment, name varchar(20) not null);

@@ -1,0 +1,12 @@
+{
+	"name": "amp",
+  "description": "美信api管理平台",
+  "main": "app.js",
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.3"
+  }
+}

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>AMP</title>
+	<link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<ul>
+				<%for (var i=0;i<list.length;i++){%>
+		        	<li><%=list[i]["name"]%></li>
+		        <%}%>
+		        </ul>
+			</div>
+			<div class="col-md-9">
+				<form action="/api/collection" method="post">
+					<input type="text" name="name"/>
+					<input type="submit" value = '提交'/>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
