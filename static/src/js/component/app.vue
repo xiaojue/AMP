@@ -8,6 +8,8 @@
 
 import store from '../store/index.js';
 
+import $ from 'jquery';
+
 export default {
 	name: 'App',
 	store: store,
@@ -16,12 +18,21 @@ export default {
 
 		}
 	},
+	vuex: {
+		getters: {
+			bgImgUrl: () => {
+				return store.state.bgImgUrl
+			}
+		}
+	},
 	methods: {
 		getUserInfo: () => {
 
 		}
 	},
 	created() {
+		// 设置背景图片（自定义主题）
+		$('html').css('background-image', 'url(' + this.bgImgUrl + ')');
 		// 初次加载获取用户信息，如未登录跳转到 '/'，如登录跳转到 '/main/project'
 		// console.log('app.vue');
 	}

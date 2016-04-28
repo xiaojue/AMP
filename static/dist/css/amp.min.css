@@ -1,6 +1,5 @@
 @charset "UTF-8";
 html {
-  background-image: url('/dist/img/main_bg.png');
   background-size: cover;
 }
 html,
@@ -124,6 +123,14 @@ input,
 textarea {
   margin: 0;
   padding: 0;
+}
+/* 入口app */
+#app {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  overflow: auto;
 }
 /* 定位 */
 .vertical_center {
