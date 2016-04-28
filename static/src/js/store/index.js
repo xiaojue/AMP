@@ -13,10 +13,8 @@ const state = {
 	}
 }
 
-import * as actions from './actions/index.js';
-import * as mutations from './mutations/index.js';
-
-console.log(actions);
+import actions from './actions/index.js';
+import mutations from './mutations/index.js';
 
 export default new Vuex.Store({
     state,
