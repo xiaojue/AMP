@@ -34,6 +34,11 @@ router.map({
 
 });
 
+router.redirect({
+	'/main': '/main/project',
+	'*': '/main/project'
+})
+
 
 import App from './component/app.vue';
 router.start(App, '#app');
