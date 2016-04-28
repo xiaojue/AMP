@@ -117,10 +117,13 @@ a img {
 :focus {
   outline: 0;
 }
-.clearfix:after {
-  content: "";
-  display: table;
-  clear: both;
+input:-webkit-autofill {
+  transition: background-color 5000s ease-in-out 0s;
+}
+input,
+textarea {
+  margin: 0;
+  padding: 0;
 }
 /* 定位 */
 .vertical_center {

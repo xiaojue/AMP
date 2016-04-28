@@ -29,6 +29,9 @@
 						<span>保存密码</span>				
 					</label>
 				</div>
+				<div class="errors">
+					<p>密码不能为空</p>
+				</div>
 				<button class="submit" type="submit">登录</button>
 				<a v-link="{ path: '/main/project' }">假装登录成功</a>
 			</form>
@@ -108,12 +111,13 @@
 }
 .login form label i{
 	display: block;
+	width: 26px;
+	height: 26px;
 	position: absolute;
 	color: #fff;
 	font-size: 26px;
 	font-weight: 300;
-	top: 50%;
-	margin-top: -13px;
+	margin-top: 4px;
 	line-height: 26px;
 	padding: 0;
 	left: 10px;
@@ -144,13 +148,18 @@
 .remeber{
 	color: #fff;
 	font-size: 12px;
-	line-height: 40px;
+	line-height: 32px;
 	-webkit-text-size-adjust: none;
 	-webkit-user-select: none;
 	margin-top: 15px;
 }
 .remeber>label{
 	cursor: pointer;
+}
+.remeber>label input {
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 5px;
 }
 .errors{
 
@@ -206,11 +215,12 @@ export default {
 		}
 	},
 	created(){
-		console.log('Index');
+		
 	},
 	methods: {
 		login(){
 			console.log(this.model);
+			// 登录验证，获取用户基本信息
 		}
 	}
 }
