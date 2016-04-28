@@ -12,6 +12,7 @@ var rename = require('gulp-rename');
 var minimist = require('minimist');
 var gutil = require("gulp-util");
 var rev = require('gulp-rev-hash');
+var less = require('gulp-less');
 var path = require('path');
 
 var pwd = __dirname;
@@ -28,7 +29,13 @@ var vendorPlugin = new webpack.optimize.CommonsChunkPlugin({
 var webpackConfig = {
     entry: {
         amp: './src/js/app.js',
-        vendor: ['vue', 'jquery', 'vuex', 'vue-router']
+        vendor: [
+            'vue', 
+            'jquery', 
+            'vuex', 
+            'vue-router',
+            'vue-form'
+        ]
     },
     output: {
         filename: '[name].min.js'
@@ -47,6 +54,9 @@ var webpackConfig = {
             test: /.css$/,
             loader: 'style-loader'
         }]
+    },
+    vue: {
+        less: 'css!less'
     },
     plugins: [vendorPlugin],
     resolve: {
@@ -81,8 +91,10 @@ gulp.task('js', function() {
 
 gulp.task('css', function() {
     return gulp
-        .src('./src/css/*.css')
-        .pipe(concat('all.js'))
+        .src('./src/css/app.less')
+        .pipe(less({
+            paths: [path.join(pwd, './src/css')]
+        }))
         .pipe(gulpIf(argv.env == 'pro', minifyCss()))
         .pipe(gulpIf(argv.env == 'pro', header(banner, { config: config })))
         .pipe(rename('amp.min.css'))
@@ -97,8 +109,8 @@ gulp.task('img', function() {
 
 gulp.task('font', function() {
     return gulp
-        .src('./src/fonts/*')
-        .pipe(gulp.dest('./dist/fonts/'))
+        .src('./src/font/*')
+        .pipe(gulp.dest('./dist/font/'))
 })
 
 gulp.task('rev', function() {

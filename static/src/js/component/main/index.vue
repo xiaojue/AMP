@@ -1,24 +1,218 @@
 <template>
-	<section>
-		<div class="main_bg"></div>
-		<h1>首页</h1>	
+	<section class="index">
+		<div class="desc">
+			<div class="all_center" style="top: 30%;">
+				<h2>AMP</h2>
+				<p>高效的API管理平台</p>						
+			</div>
+		</div>
+		<div class="login">
+			<h2>登录</h2>
+			<form v-form name="loginForm" @submit.prevent="login()">
+				<label>
+					<i class="iconfont">&#xe603;</i>
+					<input type="text" v-model="model.email" v-form-ctrl required name="email" placeholder="请输入邮箱"></input>					
+					<div class="errors" v-if="loginForm.$submitted">
+						<p v-if="loginForm.email.$error.required">邮箱不能为空</p>
+					</div>
+				</label>
+				<label>
+					<i class="iconfont">&#xe602;</i>
+					<input type="password" v-model="model.passowrd" v-form-ctrl required name="passowrd" placeholder="请输入密码"></input>
+					<div class="errors" v-if="loginForm.$submitted">
+						<p v-if="loginForm.passowrd.$error.required">密码不能为空</p>
+					</div>
+				</label>
+				<div class="remeber">
+					<label>
+						<input type="checkbox" v-model="model.remeber"></input>
+						<span>保存密码</span>				
+					</label>
+				</div>
+				<button class="submit" type="submit">登录</button>
+				<a v-link="{ path: '/project' }">假装登录成功</a>
+			</form>
+		</div>
 	</section>
 </template>
 
+<style scoped>
+.index{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+.desc{
+	position: fixed;
+	top: 50%;
+	left: 25%;
+	width: 400px;
+	height: 400px;
+	margin-top: -200px;
+	margin-left: -200px;
+	color: #fff;
+	animation:fadeInLeftBig 0.7s ease 0s 1 both;
+	-webkit-animation:fadeInLeftBig 0.7s ease 0s 1 both;
+	-moz-animation:fadeInLeftBig 0.7s ease 0s 1 both;
+	-ms-animation:fadeInLeftBig 0.7s ease 0s 1 both;
+}
+.desc h2{
+	font-size: 32px;
+	text-align: center;
+	line-height: 88px;
+}
+.desc p{
+	font-size: 20px;
+	line-height: 66px;
+	text-align: center;
+}
+.login{
+	width: 400px;
+	height: 400px;
+	border: 1px solid rgba(255,255,255,0.9);
+	border-radius: 6px;
+	position: fixed;
+	left: 75%;
+	top: 50%;
+	margin-left: -200px;
+	margin-top: -200px;
+	padding: 20px;
+	box-sizing: border-box;
+	animation:fadeInRightBig 0.7s ease 0s 1 both;
+	-webkit-animation:fadeInRightBig 0.7s ease 0s 1 both;
+	-moz-animation:fadeInRightBig 0.7s ease 0s 1 both;
+	-ms-animation:fadeInRightBig 0.7s ease 0s 1 both;
+	background-color: rgba(255,255,255,0.2);
+}
+.login h2{
+	color: #fff;
+	font-size: 24px;
+	font-weight: normal;
+	line-height: 38px;
+}
+.login form{
+	width: 100%;
+	display: block;
+	margin-top: 20px;
+}
+.login form>label{
+	width: 100%;
+	display: block;
+	border: 1px solid #fff;
+	border-radius: 4px;
+	height: 38px;
+	margin-top: 25px;
+	position: relative;
+}
+.login form label i{
+	display: block;
+	position: absolute;
+	color: #fff;
+	font-size: 26px;
+	font-weight: 300;
+	top: 50%;
+	margin-top: -13px;
+	line-height: 26px;
+	padding: 0;
+	left: 10px;
+}
+.login form>label input{
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: none;
+	padding: 0 10px;
+	margin: 0;
+	font-size: 14px;
+	box-sizing: border-box;
+	text-indent: 36px;
+	background: rgba(0,0,0,0);
+	color: #fff;
+}
+.login form label input::-moz-placeholder { color: rgba(255,255,255,0.8); }
+.login form label input::-webkit-input-placeholder { color:rgba(255,255,255,0.8); }
+.login form label input:-ms-input-placeholder { color:rgba(255,255,255,0.8); }
+.login form label input:-webkit-autofill{
+	-webkit-text-fill-color: #fff !important;
+	transition: background-color 5000s ease-in-out 0s;
+}
+.login form label:first-child{
+	margin-top: 0px;
+}
+.remeber{
+	color: #fff;
+	font-size: 12px;
+	line-height: 40px;
+	-webkit-text-size-adjust: none;
+	-webkit-user-select: none;
+	margin-top: 15px;
+}
+.remeber>label{
+	cursor: pointer;
+}
+.errors{
 
-<style type="text/css">
-.main_bg{position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: -1;background-image: url('/dist/img/main_bg.png');background-size: cover;}
+}
+.errors p{
+	font-size: 12px;
+	color: #f50;
+	line-height: 20px;
+}
+.submit{
+	display: block;
+	font-size: 14px;
+	width: 80%;
+	height: 38px;
+	border: 1px solid rgba(255,255,255,0.7);
+	padding: 0;
+	margin: 20px auto 0;
+	line-height: 38px;
+	color: #fff;
+	background: rgba(0,0,0,0);
+	cursor: pointer;
+	text-align: center;
+	border-radius: 4px;
+	clear: both;
+	transition: all ease 0.2s;
+	-webkit-transition: all ease 0.2s;
+	-moz-transition: all ease 0.2s;
+	-ms-transition: all ease 0.2s;
+}
+.submit:hover{
+	background: rgba(255,255,255,0.7);
+	color: #73b982;
+}
+	
 </style>
 
+
 <script lang="babel">
-	
+
+import Vue from 'vue';
+import * as vueForm from 'vue-form'; 
+Vue.use(vueForm);
+
 export default {
 	name: 'Index',
-	data: () => {
+	data(){
 		return {
-
+			model: {
+				remeber: true
+			},
+			loginForm: {}
+		}
+	},
+	created(){
+		console.log('Index');
+	},
+	methods: {
+		login(){
+			console.log(this.model);
 		}
 	}
 }
+
 
 </script>

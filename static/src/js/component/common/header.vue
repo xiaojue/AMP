@@ -5,8 +5,8 @@
 </template>
 
 
-<style type="text/css">
-	
+<style lang="less" scoped>
+header{width: 100%;height: 60px;position: fixed;top: 0;left: 0;background-color: #73b982;}
 </style>
 
 <script lang="babel">
