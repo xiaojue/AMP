@@ -3,7 +3,7 @@
 </template>
 
 <style scoped>
-	
+h1{margin-top: 60px;}
 </style>
 
 <script lang="babel">

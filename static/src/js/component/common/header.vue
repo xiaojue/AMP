@@ -6,7 +6,7 @@
 
 
 <style lang="less" scoped>
-header{width: 100%;height: 60px;position: fixed;top: 0;left: 0;background-color: #73b982;}
+header{width: 100%;height: 60px;position: fixed;top: 0;left: 0;}
 </style>
 
 <script lang="babel">

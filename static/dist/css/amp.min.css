@@ -1,6 +1,5 @@
 @charset "utf-8";
-html,
-body {
+html {
   background-image: url('/dist/img/main_bg.png');
   background-size: cover;
 }
