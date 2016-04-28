@@ -7,14 +7,16 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const state = {
-	isIndex: false,
+	loading: false,
 	userInfo: {
 
 	}
 }
 
-const actions = require('./action/index.js');
-const mutations = require('./mutation/index.js');
+import * as actions from './actions/index.js';
+import * as mutations from './mutations/index.js';
+
+console.log(actions);
 
 export default new Vuex.Store({
     state,

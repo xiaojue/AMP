@@ -1,7 +1,8 @@
 <template>
 	<div>
 		<m-head></m-head>
-		<router-view keep-alive></router-view>	
+		<router-view keep-alive></router-view>
+		<m-loading></m-loading>
 	</div>
 </template>
 
@@ -12,7 +13,11 @@
 <script lang="babel">
 
 
+import Loading from '../base/loading.vue';
+
+
 import Head from '../common/header.vue';
+
 
 export default {
 	name: 'Main',
@@ -22,6 +27,7 @@ export default {
 		}
 	},
 	components: {
+		'm-loading': Loading,
 		'm-head': Head
 	}
 }
