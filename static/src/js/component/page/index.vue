@@ -30,7 +30,7 @@
 					</label>
 				</div>
 				<button class="submit" type="submit">登录</button>
-				<a v-link="{ path: '/project' }">假装登录成功</a>
+				<a v-link="{ path: '/main/project' }">假装登录成功</a>
 			</form>
 		</div>
 	</section>
@@ -192,6 +192,7 @@
 
 import Vue from 'vue';
 import * as vueForm from 'vue-form'; 
+
 Vue.use(vueForm);
 
 export default {

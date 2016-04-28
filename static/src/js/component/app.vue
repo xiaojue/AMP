@@ -6,8 +6,6 @@
 
 <script lang="babel">
 
-import Head from './common/header.vue';
-
 export default {
 	name: 'App',
 	data() {
@@ -15,16 +13,13 @@ export default {
 
 		}
 	},
-	components: {
-		'm-head': Head
-	},
 	methods: {
 		getUserInfo: () => {
 
 		}
 	},
 	created() {
-
+		// 初次加载获取用户信息，如未登录跳转到 '/'，如登录跳转到 '/main/project'
 	}
 }
 
