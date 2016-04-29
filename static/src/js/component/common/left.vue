@@ -1,5 +1,5 @@
 <template>
-	<div class="con">
+	<div class="con text_shadow">
 		<div class="user_info">
 			<div class="avatar">
 				<img src="http://aqvatarius.com/themes/taurus_v12/html/img/example/user/dmitry_b.jpg">

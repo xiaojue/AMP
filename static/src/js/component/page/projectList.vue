@@ -1,13 +1,16 @@
 <template>
 	<div class="main_con">
-		<div class="item_con">
-			<h2 class="title">{{titleMap[type]}}</h2>
-			<div class="project_item" v-for="item in projects" @mouseenter="">
-				<h2>{{item.name}}</h2>
-				<p>{{item.desc}}</p>
-				<a class="email" :href="'mailto:' + item.creator">{{item.creator}}</a>
-				<span>{{item.creatTime | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
-				<div class="check_detail" v-link="{path: '/main/project/detail', params: {id: item._id}}"><div class="all_center" style="width: 100%;">查看API列表</div></div>
+		<div class="conent_list">
+			<h2 class="title text_shadow">{{titleMap[type]}}</h2>
+			<div class="item_con">
+				<div class="item" v-for="item in projects" @mouseenter="">
+					<h2>{{item.name}}</h2>
+					<p>{{item.desc}}</p>
+					<a class="email" :href="'mailto:' + item.creator">{{item.creator}}</a>
+					<span>{{item.creatTime | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
+					<!-- <div class="check_detail" v-link="{path: '/main/project/detail', params: {id: item._id}}"><div class="all_center" style="width: 100%;">查看API列表</div></div> -->
+				</div>
+				<span>加载更多...</span>
 			</div>
 		</div>
 	</div>
@@ -15,41 +18,79 @@
 
 <style scoped>
 
-h1{color: #fff;display: block;width: 100%;}
-
-.project_item{
+.conent_list{
 	width: 100%;
 	box-sizing: border-box;
-	padding: 20px 35px;
 	background-color: rgba(255,255,255,0.2);
-	margin-top: 20px;
 	border-radius: 4px;
 	color: #fff;
 	position: relative;
+	height: 100%;
+	padding-bottom: 66px;
+	overflow: auto;
+	box-sizing: border-box;
+}
+.conent_list>h2{
+	font-size: 22px;
+	line-height: 55px;
+	text-indent: 15px;
 }
 
-.project_item h2{
-	font-size: 34px;
-	line-height: 44px;
-	display: block;
-	width: 90%;
+.item_con{
+	width: 100%;
+	background-color: rgba(0,0,0,0.3);
+	position: relative;
 }
-.project_item p{
+
+.item_con>span{
+	display: block;
+	font-size: 12px;
+	cursor: pointer;
+	height: 55px;
+	line-height: 55px;
+	width: 120px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.item_con .item{
+	background-color: #e7ebec;
+	color: #333;
+	position: relative;
+	text-shadow: none!important;
+	padding: 10px 20px;
+	box-sizing: border-box;
+}
+.item_con .item:hover{
+	background-color: #fff!important;
+}
+.item_con .item:nth-child(2n+1){
+	background-color: #dee4e5;
+}
+
+.item_con .item h2{
+	font-size: 16px;
+	line-height: 24px;
+	display: block;
+	color: #333;
+}
+.item_con .item p{
 	font-size: 14px;
 	display: block;
 	width: 90%;
-	line-height: 24px;
-	color: #ccc;
+	line-height: 16px;
+	color: #888D9A;
+	margin: 5px 0;
 }
-.project_item .email{
+.item_con .item .email{
 	font-size: 12px;
-	line-height: 20px;
-	color: #fff;
+	line-height: 18px;
+	color: #888D9A;
 }
-.project_item span{
+.item_con .item span{
 	display: block;
 }
-.project_item .check_detail{
+.item_con .item .check_detail{
 	position: absolute;
 	right: 0;
 	width: 20%;
@@ -60,13 +101,10 @@ h1{color: #fff;display: block;width: 100%;}
 	cursor: pointer;
 }
 
-.project_item:first-child{
+.item_con .item:first-child{
 	margin-top: 0;
 }
 
-.coming_from_right{
-	animation: right 0.8s ease 0s both;
-}
 
 
 </style>
@@ -86,6 +124,26 @@ export default {
 				mine: '我的项目'
 			},
 			projects: [
+				{
+					_id: '123123123',
+					name: 'DataPlatform',
+					desc: '美信数据平台',
+					creator: 'fuqiang-ds1@gomeplus.com',
+					creatTime: 1461908775821,
+					member: ['yanglei-ds1@gomeplus.com', 'luoye@gomeplus.com'],
+					apiNum: 60,
+					public: true
+				},
+				{
+					_id: '456456456',
+					name: 'AMP',
+					desc: 'API管理平台',
+					creator: 'wangchunpeng@gomeplus.com',
+					creatTime: 1461908909241,
+					member: ['luoye@gomeplus.com'],
+					apiNum: 10,
+					public: true
+				},
 				{
 					_id: '123123123',
 					name: 'DataPlatform',

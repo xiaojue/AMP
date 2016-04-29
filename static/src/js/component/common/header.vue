@@ -1,5 +1,5 @@
 <template>
-	<header>
+	<header class="text_shadow">
 		<div class="flag">
 			<h2 v-link="{name: 'projectList', params: {type: 'all'}}">AMP</h2>			
 		</div>
