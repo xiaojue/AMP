@@ -7,14 +7,15 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const state = {
-	isIndex: false,
+	bgImgUrl: '/dist/img/main_bg.png',
+	loading: false,
 	userInfo: {
 
 	}
 }
 
-const actions = require('./action/index.js');
-const mutations = require('./mutation/index.js');
+import actions from './actions/index.js';
+import mutations from './mutations/index.js';
 
 export default new Vuex.Store({
     state,

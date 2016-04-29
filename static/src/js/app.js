@@ -12,26 +12,31 @@ const router = new Router({
 });
 
 
-import Index from './component/main/index.vue';
-import Project from './component/main/project.vue';
+import Index from './component/page/index.vue';
+import Main from './component/page/main.vue';
+import Project from './component/page/project.vue';
 
 router.map({
     '/': {
         component: Index
     },
     '/main': {
-    	// component: Foo,
+    	component: Main,
 	    subRoutes: {
 	        '/project': {
+	        	name: 'project',
 	            component: Project
 	        },
-	        '/api': {
-	            // component: Baz
-	        }
+	        // '/api': {
+	        //     // component: Baz
+	        // }
 	    }
 	}
-
 });
+
+router.redirect({
+	'*': '/main/project'
+})
 
 
 import App from './component/app.vue';

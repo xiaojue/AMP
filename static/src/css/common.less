@@ -1,4 +1,74 @@
 /* 定位 */
-.vertical_center {position: absolute;top: 50%;-webkit-transform: translateY(-50%);}
-.horizontal_center {position: absolute;left: 50%;-webkit-transform: translateX(-50%);}
-.all_center {position: absolute;top: 50%;left: 50%;-webkit-transform: translate(-50%, -50%);}
+
+.vertical_center {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+}
+
+.horizontal_center {
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+}
+
+.all_center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+}
+
+
+/* 过度 */
+
+.transition {
+    transition: all ease 0.2s;
+    -webkit-transition: all ease 0.2s;
+    -moz-transition: all ease 0.2s;
+    -ms-transition: all ease 0.2s;
+}
+
+.bounce-transition {
+    opacity: 1;
+}
+
+.bounce-enter, .bounce-leave {
+    opacity: 0;
+}
+
+
+/* 主容器 */
+
+.main_con {
+    width: 98%;
+    height: 100%;
+    position: fixed;
+    left: 1%;
+    right: 1%;
+    top: 0;
+    margin-left: 320px;
+    margin-top: 66px;
+    border-radius: 4px;
+    padding-right: 320px;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0)
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: rgba(0, 0, 0, 0.2);
+}

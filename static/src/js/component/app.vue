@@ -6,17 +6,24 @@
 
 <script lang="babel">
 
-import Head from './common/header.vue';
+import $ from 'jquery';
+
+import store from '../store/index.js';
 
 export default {
 	name: 'App',
+	store: store,
 	data() {
 		return {
 
 		}
 	},
-	components: {
-		'm-head': Head
+	vuex: {
+		getters: {
+			bgImgUrl: () => {
+				return store.state.bgImgUrl;
+			}
+		}
 	},
 	methods: {
 		getUserInfo: () => {
@@ -24,7 +31,10 @@ export default {
 		}
 	},
 	created() {
-
+		// 设置背景图片（可用户自定义）
+		$('#app').css('background-image', 'url(' + this.bgImgUrl + ')')
+		// 初次加载获取用户信息，如未登录跳转到 '/'，如登录跳转到 '/main/project'
+		// console.log('app.vue');
 	}
 }
 

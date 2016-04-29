@@ -29,8 +29,11 @@
 						<span>保存密码</span>				
 					</label>
 				</div>
+				<div class="errors">
+					<p>密码不能为空</p>
+				</div>
 				<button class="submit" type="submit">登录</button>
-				<a v-link="{ path: '/project' }">假装登录成功</a>
+				<a v-link="{name: 'project', params: {type: 'all'}}">假装登录成功</a>
 			</form>
 		</div>
 	</section>
@@ -152,6 +155,9 @@
 .remeber>label{
 	cursor: pointer;
 }
+.remeber>label input{
+	margin-right: 5px;
+}
 .errors{
 
 }
@@ -181,8 +187,7 @@
 	-ms-transition: all ease 0.2s;
 }
 .submit:hover{
-	background: rgba(255,255,255,0.7);
-	color: #73b982;
+	background: rgba(0,0,0,0.1);
 }
 	
 </style>
@@ -192,6 +197,7 @@
 
 import Vue from 'vue';
 import * as vueForm from 'vue-form'; 
+
 Vue.use(vueForm);
 
 export default {
@@ -205,11 +211,11 @@ export default {
 		}
 	},
 	created(){
-		console.log('Index');
+		// console.log('Index');
 	},
 	methods: {
 		login(){
-			console.log(this.model);
+			// console.log(this.model);
 		}
 	}
 }
