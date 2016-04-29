@@ -19,7 +19,7 @@ router.map({
     '/': {
         component: Index
     },
-    '/foo': {
+    '/main': {
     	// component: Foo,
 	    subRoutes: {
 	        '/project': {
