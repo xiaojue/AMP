@@ -28,6 +28,7 @@
     "co-mysql": "^1.0.0",
     "jquery": "^2.2.3",
     "koa": "^2.0.0",
+    "koa-better-body": "^2.0.0",
     "koa-convert": "^1.2.0",
     "koa-logger": "^1.3.0",
     "koa-router": "^7.0.1",

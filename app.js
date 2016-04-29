@@ -9,6 +9,7 @@ import Router from 'koa-router';
 import Static from 'koa-static';
 import Logger from 'koa-logger';
 import Send from 'koa-send';
+import KoaBodyParser  from 'koa-better-body'
 
 // koa1中间件转换
 import convert from 'koa-convert';
@@ -17,6 +18,8 @@ import routers from './routes'
 
 const app = new Koa();
 const port = 9090;
+
+app.use(KoaBodyParser());
 
 const index = Router();
 index.get('/', async (ctx, next) => {
