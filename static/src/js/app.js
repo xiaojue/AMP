@@ -11,10 +11,12 @@ const router = new Router({
 	saveScrollPosition: true
 });
 
+// filter
+import './filter/index.js';
 
 import Index from './component/page/index.vue';
 import Main from './component/page/main.vue';
-import Project from './component/page/project.vue';
+import projectList from './component/page/projectList.vue';
 
 router.map({
     '/': {
@@ -23,11 +25,20 @@ router.map({
     '/main': {
     	component: Main,
 	    subRoutes: {
-	        '/project': {
-	        	name: 'project',
-	            component: Project
+	        '/project/list/:type': {
+	        	name: 'projectList',
+	            component: projectList
 	        },
-	        // '/api': {
+	        // '/project/detail/:id': {
+	        	// name: 'projectDetail',
+	            // component: projectList
+	        // },
+	        // '/api/list/:type': {
+	        	// name: 'apiList',
+	        //     // component: Baz
+	        // },
+	        // '/api/detail/:id': {
+	        	// name: 'apiDetail',
 	        //     // component: Baz
 	        // }
 	    }
@@ -35,7 +46,7 @@ router.map({
 });
 
 router.redirect({
-	'*': '/main/project'
+	'*': '/main/project/list/all'
 })
 
 

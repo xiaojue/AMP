@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<m-head></m-head>
-		<m-lfet></m-lfet>
+		<m-left></m-left>
 		<router-view keep-alive></router-view>
 		<m-loading></m-loading>
 	</div>
@@ -30,7 +30,7 @@ export default {
 	components: {
 		'm-loading': Loading,
 		'm-head': Head,
-		'm-lfet': Left
+		'm-left': Left
 	}
 }
 

@@ -1,7 +1,7 @@
 <template>
 	<header>
 		<div class="flag">
-			<h2 v-link="{name: 'project', query: {id: 'all'}}">AMP</h2>			
+			<h2 v-link="{name: 'projectList', params: {type: 'all'}}">AMP</h2>			
 		</div>
 		<div class="user">
 			asd
@@ -44,7 +44,7 @@ header>div{
 .flag{
 	font-size: 28px;
 	line-height: 44px;
-	width: 300px;
+	width: 250px;
 	text-align: center;
 }
 .flag h2{

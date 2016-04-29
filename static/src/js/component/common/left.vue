@@ -13,7 +13,7 @@
 		<div class="item_con">
 			<div class="item">
 				<ul>
-					<li v-link="{name: 'project', query: {id: 'mine'}}">
+					<li v-link="{name: 'projectList', params: {type: 'mine'}}">
 						<span class="iconfont">&#xe606;</span>
 						<p>我的项目</p>
 						<i class="iconfont">&#xe604;</i>
@@ -27,7 +27,7 @@
 			</div>
 			<div class="item">
 				<ul>
-					<li v-link="{name: 'project', query: {id: 'coverme'}}">
+					<li v-link="{name: 'projectList', params: {type: 'coverme'}}">
 						<span class="iconfont">&#xe606;</span>
 						<p>我参与的项目</p>
 						<i class="iconfont">&#xe604;</i>
@@ -41,7 +41,7 @@
 			</div>
 			<div class="item">
 				<ul>
-					<li v-link="{name: 'project', query: {id: 'all'}}">
+					<li v-link="{name: 'projectList', params: {type: 'all'}}">
 						<span class="iconfont">&#xe606;</span>
 						<p>全部项目</p>
 						<i class="iconfont">&#xe604;</i>
@@ -59,7 +59,7 @@
 
 <style scoped>
 .con{
-	width: 300px;
+	width: 250px;
 	position: fixed;
 	height: 100%;
 	left: 1%;
@@ -155,8 +155,6 @@
 </style>
 
 <script lang="babel">
-
-import $ from 'jquery';
 
 export default {
 	name: 'Left',
