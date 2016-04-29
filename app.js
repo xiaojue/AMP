@@ -13,6 +13,8 @@ import Send from 'koa-send';
 // koa1中间件转换
 import convert from 'koa-convert';
 
+import routers from './routes'
+
 const app = new Koa();
 const port = 8989;
 
@@ -21,16 +23,12 @@ index.get('/', async (ctx, next) => {
 	await Send(ctx, './views/index.html');
 })
 
-const user = Router();
-user.get('/user', (ctx, next) => {
-	ctx.body = ctx.query;
-})
-
 // middleware
 app.use(convert(Logger()));
 app.use(convert(Static(path.join(__dirname, 'static'))));
+// routers
 app.use(index.routes());
-app.use(user.routes());
+app.use(routers.routes());
 
 
 // 错误处理
