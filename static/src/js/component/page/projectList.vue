@@ -1,17 +1,19 @@
 <template>
 	<div class="main_con">
 		<div class="conent_list">
-			<h2 class="title text_shadow">{{titleMap[type]}}</h2>
-			<div class="item_con">
-				<div class="item" v-for="item in projects" @mouseenter="">
-					<h2>{{item.name}}</h2>
-					<p>{{item.desc}}</p>
-					<a class="email" :href="'mailto:' + item.creator">{{item.creator}}</a>
-					<span>{{item.creatTime | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
-					<!-- <div class="check_detail" v-link="{path: '/main/project/detail', params: {id: item._id}}"><div class="all_center" style="width: 100%;">查看API列表</div></div> -->
+			<div class="top text_shadow">{{titleMap[type]}}</div>
+			<div class="middle">
+				<div class="item_con">
+					<div class="item" v-for="item in projects" @mouseenter="">
+						<h2>{{item.name}}</h2>
+						<p>{{item.desc}}</p>
+						<a class="email" :href="'mailto:' + item.creator">{{item.creator}}</a>
+						<span>{{item.creatTime | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
+						<!-- <div class="check_detail" v-link="{path: '/main/project/detail', params: {id: item._id}}"><div class="all_center" style="width: 100%;">查看API列表</div></div> -->
+					</div>
 				</div>
-				<span>加载更多...</span>
 			</div>
+			<div class="bottom"><span>加载更多...</span></div>
 		</div>
 	</div>
 </template>
@@ -24,34 +26,45 @@
 	background-color: rgba(255,255,255,0.2);
 	border-radius: 4px;
 	color: #fff;
+	overflow: hidden;
 	position: relative;
 	height: 100%;
-	padding-bottom: 66px;
-	overflow: auto;
-	box-sizing: border-box;
 }
-.conent_list>h2{
+.conent_list>div{
+
+}
+.conent_list .top{
 	font-size: 22px;
 	line-height: 55px;
 	text-indent: 15px;
-}
-
-.item_con{
 	width: 100%;
-	background-color: rgba(0,0,0,0.3);
-	position: relative;
+	/*position: absolute;*/
+	/*top: 0;*/
 }
 
-.item_con>span{
-	display: block;
+.conent .middle{
+	/*margin-bottom: 55px;*/
+	background-color: rgba(0,0,0,0.3);
+	overflow: auto;
+	height: 100%;
+}
+
+.conent_list .bottom{
 	font-size: 12px;
-	cursor: pointer;
 	height: 55px;
 	line-height: 55px;
-	width: 120px;
+	width: 100%;
 	text-align: center;
-	margin: 0 auto;
+	position: absolute;
+	bottom: 0;
 }
+
+
+.item_con{
+	
+	overflow: auto;
+}
+
 
 .item_con .item{
 	background-color: #e7ebec;
@@ -152,6 +165,26 @@ export default {
 					creatTime: 1461908775821,
 					member: ['yanglei-ds1@gomeplus.com', 'luoye@gomeplus.com'],
 					apiNum: 60,
+					public: true
+				},
+				{
+					_id: '456456456',
+					name: 'AMP',
+					desc: 'API管理平台',
+					creator: 'wangchunpeng@gomeplus.com',
+					creatTime: 1461908909241,
+					member: ['luoye@gomeplus.com'],
+					apiNum: 10,
+					public: true
+				},
+				{
+					_id: '456456456',
+					name: 'AMP',
+					desc: 'API管理平台',
+					creator: 'wangchunpeng@gomeplus.com',
+					creatTime: 1461908909241,
+					member: ['luoye@gomeplus.com'],
+					apiNum: 10,
 					public: true
 				},
 				{
