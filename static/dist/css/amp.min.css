@@ -168,35 +168,65 @@ textarea {
 .bounce-leave {
   opacity: 0;
 }
-/* 主容器 */
+/* 主容器 布局 */
 .main_con {
   width: 98%;
   height: 100%;
   position: fixed;
-  padding-left: 270px;
   left: 1%;
   right: 1%;
   top: 0;
+  margin-left: 270px;
   margin-top: 66px;
   border-radius: 4px;
+  padding-right: 270px;
   box-sizing: border-box;
+  padding-bottom: 86px;
+  overflow: hidden;
+}
+.main_con .conent_list {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: #fff;
+  position: relative;
+  height: 100%;
   overflow: auto;
-  padding-bottom: 66px;
+}
+.main_con .conent_list .top {
+  font-size: 22px;
+  line-height: 55px;
+  text-indent: 15px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+}
+.main_con .conent_list .middle {
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  box-sizing: border-box;
+  height: calc(100% - 110px);
+  position: relative;
+  overflow: auto;
+  margin-top: 55px;
+}
+.main_con .conent_list .middle::-webkit-scrollbar {
+  width: 0px;
+}
+.main_con .conent_list .bottom {
+  font-size: 12px;
+  height: 55px;
+  line-height: 55px;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
 }
 /* 滚动条样式 */
-::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0);
-}
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 0px;
   background-color: rgba(0, 0, 0, 0);
-}
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: rgba(0, 0, 0, 0.2);
 }
 @font-face {
   font-family: "iconfont";

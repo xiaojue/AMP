@@ -20,49 +20,8 @@
 
 <style scoped>
 
-.conent_list{
-	width: 100%;
-	box-sizing: border-box;
-	background-color: rgba(255,255,255,0.2);
-	border-radius: 4px;
-	color: #fff;
-	overflow: hidden;
-	position: relative;
-	height: 100%;
-}
-.conent_list>div{
-
-}
-.conent_list .top{
-	font-size: 22px;
-	line-height: 55px;
-	text-indent: 15px;
-	width: 100%;
-	/*position: absolute;*/
-	/*top: 0;*/
-}
-
-.conent .middle{
-	/*margin-bottom: 55px;*/
-	background-color: rgba(0,0,0,0.3);
-	overflow: auto;
-	height: 100%;
-}
-
-.conent_list .bottom{
-	font-size: 12px;
-	height: 55px;
-	line-height: 55px;
-	width: 100%;
-	text-align: center;
-	position: absolute;
-	bottom: 0;
-}
-
-
 .item_con{
-	
-	overflow: auto;
+	/*overflow: auto;*/
 }
 
 
