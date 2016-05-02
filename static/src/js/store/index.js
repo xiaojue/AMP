@@ -7,7 +7,7 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const state = {
-	bgImgUrl: '/dist/img/main_bg.png',
+	bgImgUrl: '/dist/img/main_bg2.jpg',
 	loading: false,
 	userInfo: {
 

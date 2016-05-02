@@ -6,9 +6,9 @@
 
 <script lang="babel">
 
-import store from '../store/index.js';
-
 import $ from 'jquery';
+
+import store from '../store/index.js';
 
 export default {
 	name: 'App',
@@ -32,7 +32,7 @@ export default {
 	},
 	created() {
 		// 设置背景图片（自定义主题）
-		$('html').css('background-image', 'url(' + this.bgImgUrl + ')');
+		$('#app').css('background-image', 'url(' + this.bgImgUrl + ')');
 		// 初次加载获取用户信息，如未登录跳转到 '/'，如登录跳转到 '/main/project'
 		// console.log('app.vue');
 	}

@@ -33,7 +33,7 @@
 					<p>密码不能为空</p>
 				</div>
 				<button class="submit" type="submit">登录</button>
-				<a v-link="{ path: '/main/project' }">假装登录成功</a>
+				<a v-link="{name: 'projectList', params: {type: 'all'}}">假装登录成功</a>
 			</form>
 		</div>
 	</section>
@@ -190,8 +190,7 @@
 	-ms-transition: all ease 0.2s;
 }
 .submit:hover{
-	background: rgba(255,255,255,0.7);
-	color: #73b982;
+	background: rgba(0,0,0,0.1);
 }
 	
 </style>
@@ -215,15 +214,16 @@ export default {
 		}
 	},
 	created(){
+
 		
 	},
 	methods: {
 		login(){
 			console.log(this.model);
 			// 登录验证，获取用户基本信息
+			// console.log('Index');
 		}
 	}
 }
-
 
 </script>
