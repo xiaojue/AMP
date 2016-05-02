@@ -137,14 +137,6 @@ textarea {
 .text_shadow {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
-/* 入口app */
-#app {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
-  overflow: auto;
-}
 /* 定位 */
 .vertical_center {
   position: absolute;
