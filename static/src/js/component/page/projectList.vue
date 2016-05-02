@@ -13,7 +13,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="bottom"><span>加载更多...</span></div>
+			<div class="bottom">
+				<m-pagination :pagination-conf="paginationConf"></m-pagination>
+			</div>
 		</div>
 	</div>
 </template>
@@ -84,6 +86,7 @@
 <script lang="babel">
 
 import $ from 'jquery';
+import Pagination from '../base/pagination.vue';
 
 export default {
 	name: 'Project',
@@ -94,6 +97,15 @@ export default {
 				all: '全部项目',
 				coverme: '我参与的项目',
 				mine: '我的项目'
+			},
+			paginationConf: {
+				currentPage: 1,     // 当前页
+				totalItems: 30,     // 总条数
+				itemsPerPage: 4,    // 每页条数
+				pagesLength: 5,     // 显示几页( 1,2,3 / 1,2,3,4,5)
+				onChange: function() {
+					// 回调
+				}
 			},
 			projects: [
 				{
@@ -169,6 +181,9 @@ export default {
 	    data(transition) {
 	    	this.type = transition.to.params.type;
 	    }
+	},
+	components: {
+		'm-pagination': Pagination
 	}
 }
 
