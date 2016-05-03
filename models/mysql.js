@@ -1,3 +1,8 @@
+/**
+ * @author spring
+ * @fileoverview 连接数据库并且重写GET POST DELETE PUT方法
+ * @date 2016-04-29
+ */
 var db = require("../config/db.json");
 
 var wrapper = require('co-mysql'),
@@ -13,7 +18,7 @@ var options = {
 var pool = mysql.createPool(options),
     p = wrapper(pool);
 function addQuote(value){
-    var reg = /['"]/gi;
+    var reg = /^['"]/gi;
     if(!reg.test(value)){
         value = "'" + value + "'";
     }

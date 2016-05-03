@@ -31,8 +31,9 @@ app.use(convert(Logger()));
 app.use(convert(Static(path.join(__dirname, 'static'))));
 // routers
 app.use(index.routes());
-app.use(routers.routes());
-
+for(let item of routers){
+    app.use(item.routes());
+}
 
 // 错误处理
 app.on('error', (err, ctx) => {

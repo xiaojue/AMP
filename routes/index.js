@@ -1,13 +1,15 @@
 /**
  * @author spring
- * @fileoverview 路由配置
+ * @fileoverview 路由配置: amp管理系统的路由
  * @date 2016-04-29
  */
 import Router from 'koa-router';
 import Send from 'koa-send';
 
 import db from '../models/mysql';
-import api from './api';
+import tables from './config';
+import api from './api'
+import project from './project'
 
 const router = Router({
     prefix: '/api'
@@ -49,13 +51,11 @@ router
         ctx.body = res;
     })
 */
-for(var i=0,l=api.length;i<l;i++){
-    var item = api[i];
-    console.log(item);
+for(let item of tables){
     router
         .get('/'+item, async (ctx,next) => {
             console.log('get');
-            var sql = "select * from " + item,
+            let sql = "select * from " + item,
                 res = await db.query(sql,ctx.query,{
                     type: "GET"
                 });
@@ -63,15 +63,19 @@ for(var i=0,l=api.length;i<l;i++){
         })
         .post('/'+item,async (ctx,next) => {
             console.log("post");
-            var sql = "insert into " + item,
+            let sql = "insert into " + item,
                 res = await db.query(sql,ctx.body,{
                     type: "POST"
+                }),
+                sql2 = "select * from "+ item + " where id=" + res['insertId'],
+                result = await db.query(sql2,{},{
+                    type: "GET"
                 });
-            ctx.body = res;
+            ctx.body = result[0];
         })
         .put('/'+item+'/:id', async (ctx,next) => {
             console.log("put");
-            var sql = 'update '+item,
+            let sql = 'update '+item,
                 res = await db.query(sql,ctx.body,{
                     type: 'PUT',
                     params: ctx.params
@@ -80,7 +84,7 @@ for(var i=0,l=api.length;i<l;i++){
         })
         .del('/'+ item +'/:id', async (ctx, next)=> {
             console.log("del");
-            var sql = 'delete from '+item,
+            let sql = 'delete from '+item,
                 res = await db.query(sql,{},{
                     type: 'DELETE',
                     params: ctx.params
@@ -89,4 +93,4 @@ for(var i=0,l=api.length;i<l;i++){
         })
 }
  
-module.exports = router;
+module.exports = [router,project,api];
