@@ -33,12 +33,20 @@ router.map({
 	        	// name: 'projectDetail',
 	            // component: projectList
 	        // },
+	        // '/project/edit/:id': {
+	        	// name: 'projectEdit',
+	            // component: projectList
+	        // },
 	        // '/api/list/:type': {
 	        	// name: 'apiList',
 	        //     // component: Baz
 	        // },
 	        // '/api/detail/:id': {
 	        	// name: 'apiDetail',
+	        //     // component: Baz
+	        // },
+	        // '/api/edit/:id': {
+	        	// name: 'apiEdit',
 	        //     // component: Baz
 	        // }
 	    }
