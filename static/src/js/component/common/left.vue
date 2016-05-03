@@ -63,7 +63,7 @@
 	position: fixed;
 	height: 100%;
 	left: 1%;
-	top: 66px;
+	top: 59px;
 	overflow: auto;
 	padding-bottom: 80px;
 	box-sizing: border-box;
