@@ -28,6 +28,7 @@ header{
 	position: relative;
 	text-align: justify; 
 	font-size: 0;
+	background-image: url('/dist/img/noisy.png');
 }
 header:after{
     content: '';

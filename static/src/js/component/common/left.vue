@@ -72,6 +72,7 @@
 	width: 100%;
 	height: 230px;
 	background-color: rgba(255,255,255,0.2);
+	background-image: url('/dist/img/noisy.png');
 	border-radius: 4px;
 	padding-top: 15px;
 	box-sizing: border-box;
@@ -116,6 +117,7 @@
 	margin-top: 20px;
 	color: #fff;
 	box-shadow: 0px 2px 3px rgba(0,0,0,0.3);
+	background-image: url('/dist/img/noisy.png');
 }
 .item_con .item ul{
 

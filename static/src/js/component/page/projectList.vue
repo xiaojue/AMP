@@ -1,7 +1,7 @@
 <template>
 	<div class="main_con">
-		<div class="conent_list">
-			<div class="top text_shadow">
+		<div class="conent_list text_shadow">
+			<div class="top">
 				<span v-tips="['right','背景']">{{titleMap[type]}}</span>
 			</div>
 			<div class="middle">
@@ -29,19 +29,23 @@
 }
 
 .item_con .item{
-	background-color: rgba(0,0,0,0.2);
+	background-color: rgba(67,58,60, 0.6);
+	background-image: url('/dist/img/noisy.png');
 	color: #fff;
 	position: relative;
-	text-shadow: none!important;
 	padding: 20px 20px;
 	box-sizing: border-box;
 }
 .item_con .item:hover{
-	background-color: rgba(0,0,0,0.1);
+	background-color: rgba(42,36,38,0.6);
 }
 .item_con .item:nth-child(2n+1){
-
+	background-color: rgba(62,49,69,0.6);
 }
+.item_con .item:nth-child(2n+1):hover{
+	background-color: rgba(42,36,38,0.6);
+}
+
 
 .item_con .item>h2{
 	font-size: 18px;
