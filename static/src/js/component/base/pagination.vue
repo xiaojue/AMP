@@ -12,11 +12,11 @@
 
 <style scoped>
 .page-list {font-size: 0;color: #333;text-align: center;-webkit-text-size-adjust: none;-webkit-user-select: none;line-height: 22px;margin-top: 11px;margin-right: 10px;}
-.page-list .pagination {font-size: 0;display: inline-block;vertical-align: middle;*display: inline;*zoom: 1;box-shadow: 0 0 6px rgba(0,0,0,0.5);border-radius: 4px; border: 2px solid rgba(0,0,0,0.3);}
+.page-list .pagination {font-size: 0;display: inline-block;vertical-align: middle;*display: inline;*zoom: 1;box-shadow: 0 0 10px rgba(0,0,0,0.2);border-radius: 3px; border: 2px solid rgba(0,0,0,0.3);}
 .page-list .pagination li {color: #fff;display: inline-block;vertical-align: middle;font-size: 16px;background: linear-gradient(rgba(0,0,0,0.28), rgba(192,192,192,0.28));padding: 0 10px;font-weight: bold;text-align: center;cursor: pointer;transition: all ease 0.3s;-webkit-transition: all ease 0.3s;-o-transition: all ease 0.3s;-moz-transition: all ease 0.3s;}
-.page-list .pagination li:hover {color: #fff;background: rgba(0,0,0,0);}
-.page-list .pagination li:active {color: #fff;background: rgba(0,0,0,0);box-shadow: 0 0 6px rgba(0,0,0,0.5);}
-.page-list .pagination .active {color: #fff;background: rgba(0,0,0,0);border-radius: 4px;}
+.page-list .pagination li:hover {color: #fff;background: rgba(0,0,0,0.2);}
+.page-list .pagination li:active {color: #fff;background: rgba(0,0,0,0.2);box-shadow: 0 0 6px rgba(0,0,0,0.5);}
+.page-list .pagination .active {color: #fff;background: rgba(0,0,0,0.2);border-radius: 4px;}
 .page-list .pagination .disabled {color: #ddd;cursor: not-allowed;}
 .page-list .pagination .disabled:hover {color: #ddd;background: linear-gradient(rgba(0,0,0,0.28), rgba(192,192,192,0.28));}
 .page-list .pagination span {display: block;padding: 5px 10px;}
