@@ -1,7 +1,9 @@
 <template>
 	<div class="main_con">
 		<div class="conent_list">
-			<div class="top text_shadow">{{titleMap[type]}}</div>
+			<div class="top text_shadow">
+				<span v-tips="['right','背景']">{{titleMap[type]}}</span>
+			</div>
 			<div class="middle">
 				<div class="item_con">
 					<div class="item" v-for="item in projects" @mouseenter="">
@@ -23,46 +25,45 @@
 <style scoped>
 
 .item_con{
-	/*overflow: auto;*/
+	
 }
 
-
 .item_con .item{
-	background-color: #e7ebec;
-	color: #333;
+	background-color: rgba(0,0,0,0.2);
+	color: #fff;
 	position: relative;
 	text-shadow: none!important;
-	padding: 10px 20px;
+	padding: 20px 20px;
 	box-sizing: border-box;
 }
 .item_con .item:hover{
-	background-color: #fff!important;
+	background-color: rgba(0,0,0,0.1);
 }
 .item_con .item:nth-child(2n+1){
-	background-color: #dee4e5;
+
 }
 
-.item_con .item h2{
-	font-size: 16px;
-	line-height: 24px;
-	display: block;
-	color: #333;
+.item_con .item>h2{
+	font-size: 18px;
+	line-height: 20px;
+	color: #fff;
 }
-.item_con .item p{
+.item_con .item>p{
 	font-size: 14px;
+	line-height: 16px;
 	display: block;
 	width: 90%;
-	line-height: 16px;
-	color: #888D9A;
-	margin: 5px 0;
+	color: #eee;
+	margin-top: 3px;
 }
 .item_con .item .email{
-	font-size: 12px;
-	line-height: 18px;
-	color: #888D9A;
+	font-size: 13px;
+	color: #eee;
 }
-.item_con .item span{
+.item_con .item>span{
 	display: block;
+	font-size: 11px;
+	color: #eee;
 }
 .item_con .item .check_detail{
 	position: absolute;
@@ -167,12 +168,54 @@ export default {
 					member: ['luoye@gomeplus.com'],
 					apiNum: 10,
 					public: true
+				},
+				{
+					_id: '456456456',
+					name: 'AMP',
+					desc: 'API管理平台',
+					creator: 'wangchunpeng@gomeplus.com',
+					creatTime: 1461908909241,
+					member: ['luoye@gomeplus.com'],
+					apiNum: 10,
+					public: true
+				},
+				{
+					_id: '456456456',
+					name: 'AMP',
+					desc: 'API管理平台',
+					creator: 'wangchunpeng@gomeplus.com',
+					creatTime: 1461908909241,
+					member: ['luoye@gomeplus.com'],
+					apiNum: 10,
+					public: true
+				},
+				{
+					_id: '456456456',
+					name: 'AMP',
+					desc: 'API管理平台',
+					creator: 'wangchunpeng@gomeplus.com',
+					creatTime: 1461908909241,
+					member: ['luoye@gomeplus.com'],
+					apiNum: 10,
+					public: true
+				},
+				{
+					_id: '456456456',
+					name: 'AMP',
+					desc: 'API管理平台',
+					creator: 'wangchunpeng@gomeplus.com',
+					creatTime: 1461908909241,
+					member: ['luoye@gomeplus.com'],
+					apiNum: 10,
+					public: true
 				}
 			]
 		}
 	},
 	methods: {
-
+		test(msg, ev) {
+			console.log(ev.target);
+		}
 	},
 	created() {
 

@@ -14,6 +14,9 @@ const router = new Router({
 // filter
 import './filter/index.js';
 
+// directive
+import './directive/tips.js';
+
 import Index from './component/page/index.vue';
 import Main from './component/page/main.vue';
 import projectList from './component/page/projectList.vue';
