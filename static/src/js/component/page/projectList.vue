@@ -7,12 +7,12 @@
 			</div>
 			<div class="middle">
 				<div class="item_con">
-					<div class="item" v-for="item in projects" >
+					<div class="item" v-for="item in projects" @mouseenter="toggleMenu($index)" @mouseleave="toggleMenu($index)">
 						<h2>{{item.name}}</h2>
 						<p>{{item.desc}}</p>
 						<a class="email" :href="'mailto:' + item.creator">{{item.creator}}</a>
 						<span>{{item.creatTime | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
-						<div class="check_detail text_shadow" v-link="{path: '/main/project/detail', params: {id: item._id}}">
+						<div class="check_detail text_shadow" :class="{in: showMenu[$index], out: !showMenu[$index]}" v-link="{path: '/main/project/detail', params: {id: item._id}}">
 							<a href="javascript:void(0)">项目详情</a>
 							<a href="javascript:void(0)">接口列表</a>
 						</div>
@@ -96,6 +96,21 @@
 	vertical-align: text-bottom;
 	align-self: center;
 	font-size: 16px;
+	right: -100%;
+}
+.in{
+	animation: in 0.3s ease both;
+}
+.out{
+	animation: out 0.3s ease both;
+}
+@keyframes in {
+	0%{right: -100%;}	
+	100%{right: 0;}
+}
+@keyframes out {
+	0%{right: 0%;}
+	100%{right: -100%;}
 }
 
 
@@ -103,6 +118,7 @@
 </style>
 
 <script lang="babel">
+import Vue from 'vue';
 
 import $ from 'jquery';
 import Pagination from '../base/pagination.vue';
@@ -227,16 +243,22 @@ export default {
 					apiNum: 10,
 					public: true
 				}
-			]
+			],
+			showMenu: {}
 		}
 	},
 	methods: {
 		test(msg, ev) {
 			console.log(ev.target);
+		},
+		toggleMenu(index) {
+			this.showMenu[index] = !this.showMenu[index];
 		}
 	},
 	created() {
-
+		this.projects.forEach((item, index) => {
+			Vue.set(this.showMenu, index, false);
+		})
 	},
 	route: {
 	    data(transition) {
