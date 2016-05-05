@@ -2,11 +2,12 @@
 	<div class="main_con">
 		<div class="conent_list text_shadow">
 			<div class="top">
-				<span v-tips="['right','背景']">{{titleMap[type]}}</span>
+				<p>{{titleMap[type]}}</p>
+				<a href="javascript:void(0)">新建项目</a>
 			</div>
 			<div class="middle">
 				<div class="item_con">
-					<div class="item" v-for="item in projects" @mouseenter="">
+					<div class="item" v-for="item in projects">
 						<h2>{{item.name}}</h2>
 						<p>{{item.desc}}</p>
 						<a class="email" :href="'mailto:' + item.creator">{{item.creator}}</a>
@@ -23,9 +24,30 @@
 </template>
 
 <style scoped>
-
-.item_con{
-	
+.top{
+	position: relative;
+}
+.top p{
+	font-size: 22px;
+	line-height: 55px;
+	text-indent: 15px;
+}
+.top a{
+	color: #fff;
+	text-decoration: none;
+	display: block;
+	position: absolute;
+	right: 15px;
+	line-height: 38px;
+	top: 50%;
+	font-size: 18px;
+	background-color: rgba(82,215,105,0.9);
+	margin-top: -19px;
+	padding: 0 20px;
+	border-radius: 4px;
+	background-image: url('/dist/img/noisy.png');
+	box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+	box-sizing: border-box;
 }
 
 .item_con .item{
