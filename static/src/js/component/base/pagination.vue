@@ -81,7 +81,7 @@ export default {
 		    _this.paginationConf.currentPage = parseInt(_this.paginationConf.currentPage) ? parseInt(_this.paginationConf.currentPage) : 1;
 		    _this.paginationConf.totalItems = parseInt(_this.paginationConf.totalItems) ? parseInt(_this.paginationConf.totalItems) : 0;
 		    _this.paginationConf.itemsPerPage = parseInt(_this.paginationConf.itemsPerPage) ? parseInt(_this.paginationConf.itemsPerPage) : 8;
-		    _this.paginationConf.numberOfPages = Math.ceil(_this.paginationConf.totalItems / _this.paginationConf.itemsPerPage);
+		    Vue.set(_this.paginationConf, 'numberOfPages',  Math.ceil(_this.paginationConf.totalItems / _this.paginationConf.itemsPerPage));
 		    if (_this.paginationConf.currentPage < 1) {
 		        _this.paginationConf.currentPage = 1;
 		    }
