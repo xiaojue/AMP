@@ -112,9 +112,6 @@
 	0%{right: 0%;}
 	100%{right: -100%;}
 }
-
-
-
 </style>
 
 <script lang="babel">
