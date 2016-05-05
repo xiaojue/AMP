@@ -57,7 +57,7 @@ router.map({
 });
 
 router.redirect({
-	'*': '/main/project/list/all'
+	'*': '/main/project/list/mine'
 })
 
 

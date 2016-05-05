@@ -2,17 +2,20 @@
 	<div class="main_con">
 		<div class="conent_list text_shadow">
 			<div class="top">
-				<p>{{titleMap[type]}}</p>
-				<a href="javascript:void(0)">新建项目</a>
+				<p class="title">{{titleMap[type]}}</p>
+				<a class="btn btn_success" href="javascript:void(0)">新建项目</a>
 			</div>
 			<div class="middle">
 				<div class="item_con">
-					<div class="item" v-for="item in projects">
+					<div class="item" v-for="item in projects" >
 						<h2>{{item.name}}</h2>
 						<p>{{item.desc}}</p>
 						<a class="email" :href="'mailto:' + item.creator">{{item.creator}}</a>
 						<span>{{item.creatTime | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
-						<!-- <div class="check_detail" v-link="{path: '/main/project/detail', params: {id: item._id}}"><div class="all_center" style="width: 100%;">查看API列表</div></div> -->
+						<div class="check_detail text_shadow" v-link="{path: '/main/project/detail', params: {id: item._id}}">
+							<a href="javascript:void(0)">项目详情</a>
+							<a href="javascript:void(0)">接口列表</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -24,30 +27,12 @@
 </template>
 
 <style scoped>
-.top{
-	position: relative;
-}
-.top p{
-	font-size: 22px;
-	line-height: 55px;
-	text-indent: 15px;
-}
+
 .top a{
-	color: #fff;
-	text-decoration: none;
-	display: block;
 	position: absolute;
 	right: 15px;
-	line-height: 38px;
 	top: 50%;
-	font-size: 18px;
-	background-color: rgba(82,215,105,0.9);
 	margin-top: -19px;
-	padding: 0 20px;
-	border-radius: 4px;
-	background-image: url('/dist/img/noisy.png');
-	box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
-	box-sizing: border-box;
 }
 
 .item_con .item{
@@ -67,7 +52,6 @@
 .item_con .item:nth-child(2n+1):hover{
 	background-color: rgba(42,36,38,0.6);
 }
-
 
 .item_con .item>h2{
 	font-size: 18px;
@@ -97,13 +81,21 @@
 	width: 20%;
 	height: 100%;
 	top: 0;
-	background-color: rgba(225,90,0,0.7);
-	text-align: center;
-	cursor: pointer;
+	background-color: rgba(225,90,0,0.5);
+	display: flex;
+	justify-content: center;
+	align-content: space-between;
 }
 
-.item_con .item:first-child{
-	margin-top: 0;
+.item_con .item .check_detail a{
+	color: #fff;
+	text-decoration: none;
+	line-height: 28px;
+	padding: 0 15px;
+	display: inline-block;
+	vertical-align: text-bottom;
+	align-self: center;
+	font-size: 16px;
 }
 
 

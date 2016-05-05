@@ -33,7 +33,7 @@
 					<p>密码不能为空</p>
 				</div>
 				<button class="submit" type="submit">登录</button>
-				<a v-link="{name: 'projectList', params: {type: 'all'}}">假装登录成功</a>
+				<a v-link="{name: 'projectList', params: {type: 'mine'}}">假装登录成功</a>
 			</form>
 		</div>
 	</section>
