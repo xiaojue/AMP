@@ -57,5 +57,5 @@ app.on('error', (err, ctx) => {
     console.error('server error', err, ctx);
 });
 
-app.listen(8989);
-https.createServer(options, app.callback()).listen(port);
+app.listen(port);
+https.createServer(options, app.callback()).listen(8989);
