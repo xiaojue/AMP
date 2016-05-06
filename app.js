@@ -22,6 +22,7 @@ import db from './config/db.json'
 const app = new Koa();
 const port = 9090;
 
+app.use(KoaBodyParser());
 app.use(
     session({
         key: "SESSIONID",

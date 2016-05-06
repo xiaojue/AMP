@@ -53,7 +53,7 @@ export default function(opts = {}) {
     return async function(ctx, next) {
 
         let id = ctx.cookies.get(opts.key, opts);
-        console.log(0,id)
+        //console.log(0,id)
         if(!id) {
             ctx.session = {};
         } else {
@@ -61,11 +61,11 @@ export default function(opts = {}) {
             ctx.session = typeof ctx.session === 'string' ? {} : ctx.session;
         }
 
-        console.log(1,ctx.session);
+        // console.log(1,ctx.session);
 
         await next();
 
-        console.log(2,ctx.session);
+        // console.log(2,ctx.session);
 
         if(ctx.session == null) {
             await opts.store.destory(id);
@@ -74,7 +74,7 @@ export default function(opts = {}) {
             if(sid != id) ctx.cookies.set(opts.key, sid, opts);
         }
 
-        console.log(3,ctx.session);
+        // console.log(3,ctx.session);
 
     }
 }
