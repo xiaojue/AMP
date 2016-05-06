@@ -11,5 +11,5 @@ import project from './project'
 import login from './login'
 import mock from './mock'
 
-module.exports = [api,project,login,mock];
+module.exports = [login,api,project,mock];
 
