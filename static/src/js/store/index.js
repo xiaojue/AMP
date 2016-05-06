@@ -9,6 +9,19 @@ Vue.use(Vuex);
 const state = {
 	bgImgUrl: '/dist/img/main_bg.png',
 	loading: false,
+	alertConfig: {
+		show: false,
+		msg: '提示信息',
+		type: 'info', // info/warning/success/danger
+		delay: 2500
+	},
+	confirmConfig: {
+		show: false,
+		title: '弹出对话框',
+		msg: '提示信息',
+		apply: 'func',
+		cancle: 'func'
+	},
 	userInfo: {
 
 	}

@@ -2,16 +2,20 @@
 	<div class="main_con">
 		<div class="conent_list text_shadow">
 			<div class="top">
-				<span v-tips="['right','背景']">{{titleMap[type]}}</span>
+				<p class="title">{{titleMap[type]}}</p>
+				<a class="btn btn_success" href="javascript:void(0)">新建项目</a>
 			</div>
 			<div class="middle">
 				<div class="item_con">
-					<div class="item" v-for="item in projects" @mouseenter="">
+					<div class="item" v-for="item in projects" @mouseenter="toggleMenu($index)" @mouseleave="toggleMenu($index)">
 						<h2>{{item.name}}</h2>
 						<p>{{item.desc}}</p>
 						<a class="email" :href="'mailto:' + item.creator">{{item.creator}}</a>
 						<span>{{item.creatTime | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
-						<!-- <div class="check_detail" v-link="{path: '/main/project/detail', params: {id: item._id}}"><div class="all_center" style="width: 100%;">查看API列表</div></div> -->
+						<div class="check_detail text_shadow out" :class="{in: showMenu[$index], out: !showMenu[$index]}" v-link="{path: '/main/project/detail', params: {id: item._id}}">
+							<a href="javascript:void(0)">项目详情</a>
+							<a href="javascript:void(0)">接口列表</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -24,8 +28,11 @@
 
 <style scoped>
 
-.item_con{
-	
+.top a{
+	position: absolute;
+	right: 15px;
+	top: 50%;
+	margin-top: -19px;
 }
 
 .item_con .item{
@@ -45,7 +52,6 @@
 .item_con .item:nth-child(2n+1):hover{
 	background-color: rgba(42,36,38,0.6);
 }
-
 
 .item_con .item>h2{
 	font-size: 18px;
@@ -72,25 +78,45 @@
 .item_con .item .check_detail{
 	position: absolute;
 	right: 0;
-	width: 20%;
+	width: 250px;
 	height: 100%;
 	top: 0;
-	background-color: rgba(225,90,0,0.7);
-	text-align: center;
-	cursor: pointer;
+	background-color: rgba(225,90,0,0.5);
+	display: flex;
+	justify-content: center;
+	align-content: space-between;
 }
 
-.item_con .item:first-child{
-	margin-top: 0;
+.item_con .item .check_detail a{
+	color: #fff;
+	text-decoration: none;
+	line-height: 28px;
+	padding: 0 15px;
+	display: inline-block;
+	vertical-align: text-bottom;
+	align-self: center;
+	font-size: 16px;
+	right: -100%;
 }
-
-
-
+.in{
+	animation: in 0.3s ease both;
+}
+.out{
+	animation: out 0.3s ease both;
+}
+@keyframes in {
+	0%{right: -100%;}	
+	100%{right: 0;}
+}
+@keyframes out {
+	0%{right: 0%;}
+	100%{right: -100%;}
+}
 </style>
 
 <script lang="babel">
+import Vue from 'vue';
 
-import $ from 'jquery';
 import Pagination from '../base/pagination.vue';
 
 export default {
@@ -213,16 +239,22 @@ export default {
 					apiNum: 10,
 					public: true
 				}
-			]
+			],
+			showMenu: {}
 		}
 	},
 	methods: {
 		test(msg, ev) {
 			console.log(ev.target);
+		},
+		toggleMenu(index) {
+			this.showMenu[index] = !this.showMenu[index];
 		}
 	},
 	created() {
-
+		this.projects.forEach((item, index) => {
+			Vue.set(this.showMenu, index, false);
+		})
 	},
 	route: {
 	    data(transition) {

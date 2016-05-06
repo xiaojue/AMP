@@ -40,6 +40,7 @@ vm.$data.paginationConf = {
 	}
 };
 */
+import Vue from 'vue';
 
 export default {
 	name: 'Pagination',
