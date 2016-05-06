@@ -7,7 +7,9 @@ import Router from 'koa-router';
 import db from '../models/mysql';
 import ldap from 'ldapjs'
 
-const router = Router();
+const router = Router({
+    prefix: '/api'
+});
 const ldapurl = 'ldap://10.69.100.1';
 const username = 'yunyingbaobiao';
 const password = '5P=/d_Xp';
@@ -26,11 +28,29 @@ router.post('/login',async (ctx,next)=>{
     let email = ctx.body.email,
         pwd = ctx.body.password,
         remember = ctx.body.remember;
+    if(!email || !pwd){
+        ctx.status = 400;
+        ctx.body = '请填写邮箱和密码'
+        return;
+    }
     await ldapClient(ctx,email,pwd,remember,next).then(function(res){
-        return res;
-    }).then(function(res){
+        ctx.body = res;
+    },function(res){
         ctx.body = res;
     });
+});
+router.post('/logout',async (ctx,next)=>{
+    ctx.session = null;
+    // ctx.redirect = '/login';
+    ctx.body = 'ok';
+});
+router.all('*',async (ctx,next)=>{
+    if(!ctx.session.isLogin){
+        ctx.status = 401;
+        ctx.body = 401;
+        return;
+    }
+    await next();
 });
 
 function unbind(client, next) {
@@ -96,7 +116,7 @@ var ldapClient = function(ctx,email,pwd,remember,next){
                                                 type: "POST"
                                             });
                                             saveLogin(ctx,querys);
-                                            resolve(entry.object);
+                                            resolve(querys);
                                         }
                                     });                                    
                                 }

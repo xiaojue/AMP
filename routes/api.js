@@ -14,7 +14,7 @@ const router = Router({
 for(let item of tables){
     router
         .get('/'+item, async (ctx,next) => {
-            console.log('get');
+            console.log('getttttttt');
             let sql = "select * from " + item,
                 res = await db.query(sql,ctx.query,{
                     type: "GET"
