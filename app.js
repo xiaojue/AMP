@@ -10,6 +10,8 @@ import Static from 'koa-static';
 import Logger from 'koa-logger';
 import Send from 'koa-send';
 import KoaBodyParser  from 'koa-better-body'
+import fs from 'fs';
+import https from 'https';
 
 import session from './koa-session2';
 
@@ -21,6 +23,11 @@ import db from './config/db.json'
 
 const app = new Koa();
 const port = 9090;
+const options = {
+    key: fs.readFileSync('./privatekey.pem'),
+    cert: fs.readFileSync('./certificate.pem')
+}
+
 
 app.use(KoaBodyParser());
 app.use(
@@ -50,4 +57,5 @@ app.on('error', (err, ctx) => {
     console.error('server error', err, ctx);
 });
 
-app.listen(port);
+app.listen(8989);
+https.createServer(options, app.callback()).listen(port);
