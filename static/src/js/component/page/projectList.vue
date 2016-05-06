@@ -3,7 +3,7 @@
 		<div class="conent_list text_shadow">
 			<div class="top">
 				<p class="title">{{titleMap[type]}}</p>
-				<a class="btn btn_success" href="javascript:void(0)">新建项目</a>
+				<a class="btn btn_success" href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: 'new'}}">新建项目</a>
 			</div>
 			<div class="middle">
 				<div class="item_con">
@@ -13,7 +13,8 @@
 						<a class="email" :href="'mailto:' + item.creator">{{item.creator}}</a>
 						<span>{{item.creatTime | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
 						<div class="check_detail text_shadow out" :class="{in: showMenu[$index], out: !showMenu[$index]}" v-link="{path: '/main/project/detail', params: {id: item._id}}">
-							<a href="javascript:void(0)">项目详情</a>
+							<a href="javascript:void(0)" v-link="{name: 'projectDetail', params: {id: item._id}}">项目详情</a>
+							<a href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: item._id}}">修改项目</a>
 							<a href="javascript:void(0)">接口列表</a>
 						</div>
 					</div>
@@ -76,15 +77,15 @@
 	color: #eee;
 }
 .item_con .item .check_detail{
-	position: absolute;
 	right: 0;
-	width: 250px;
+	width: 300px;
 	height: 100%;
 	top: 0;
 	background-color: rgba(225,90,0,0.5);
 	display: flex;
 	justify-content: center;
 	align-content: space-between;
+	position: absolute;
 }
 
 .item_con .item .check_detail a{

@@ -20,6 +20,8 @@ import './directive/tips.js';
 import Index from './component/page/index.vue';
 import Main from './component/page/main.vue';
 import projectList from './component/page/projectList.vue';
+import projectDetail from './component/page/projectDetail.vue';
+import projectEdit from './component/page/projectEdit.vue';
 
 router.map({
     '/': {
@@ -32,14 +34,14 @@ router.map({
 	        	name: 'projectList',
 	            component: projectList
 	        },
-	        // '/project/detail/:id': {
-	        	// name: 'projectDetail',
-	            // component: projectList
-	        // },
-	        // '/project/edit/:id': {
-	        	// name: 'projectEdit',
-	            // component: projectList
-	        // },
+	        '/project/detail/:id': {
+	        	name: 'projectDetail',
+	            component: projectDetail
+	        },
+	        '/project/edit/:id': {
+	        	name: 'projectEdit',
+	            component: projectEdit
+	        },
 	        // '/api/list/:type': {
 	        	// name: 'apiList',
 	        //     // component: Baz

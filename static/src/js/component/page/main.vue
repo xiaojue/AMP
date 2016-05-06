@@ -2,7 +2,7 @@
 	<div>
 		<m-head></m-head>
 		<m-left></m-left>
-		<router-view keep-alive></router-view>
+		<router-view></router-view>
 		<m-loading></m-loading>
 	</div>
 </template>
