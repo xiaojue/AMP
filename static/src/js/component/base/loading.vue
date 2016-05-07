@@ -1,20 +1,24 @@
 <template>
-	<div class="loading_con transition" transition="fade" v-show="loading">
-		<div class="loading all_center">
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-		</div>
-	</div>	
+<div class="main_con" v-show="loading">
+	<div class="conent_list text_shadow">
+		<div class="loading_con transition" transition="fade">
+			<div class="loading all_center">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>	
+	</div>
+</div>
 </template>
 
 <style scoped>
 
 .loading_con{
-	position: fixed;
+	position: absolute;
 	width: 100%;
 	height: 100%;
 	top: 0;
@@ -31,10 +35,10 @@
 .loading_con .loading span{
 	display: inline-block;
 	vertical-align: top;
-	width: 10px;
-	height: 100px;
+	width: 8px;
+	height: 80px;
 	background-color: #fff;
-	margin: 0 5px;
+	margin: 0 4px;
 	box-shadow: 0 0 15px rgba(0,0,0,0.4);
 }
 .loading_con .loading span:nth-child(1){

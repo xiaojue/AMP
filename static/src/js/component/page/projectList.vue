@@ -12,7 +12,7 @@
 						<p>{{item.desc}}</p>
 						<a class="email" :href="'mailto:' + item.creator">{{item.creator}}</a>
 						<span>{{item.creatTime | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
-						<div class="check_detail text_shadow out" :class="{in: showMenu[$index], out: !showMenu[$index]}" v-link="{path: '/main/project/detail', params: {id: item._id}}">
+						<div class="check_detail text_shadow" v-show="showMenu[$index]" v-link="{path: '/main/project/detail', params: {id: item._id}}" transition="translate">
 							<a href="javascript:void(0)" v-link="{name: 'projectDetail', params: {id: item._id}}">项目详情</a>
 							<a href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: item._id}}">修改项目</a>
 							<a href="javascript:void(0)">接口列表</a>
@@ -77,7 +77,7 @@
 	color: #eee;
 }
 .item_con .item .check_detail{
-	right: 0;
+	right: -100%;
 	width: 300px;
 	height: 100%;
 	top: 0;
@@ -97,22 +97,8 @@
 	vertical-align: text-bottom;
 	align-self: center;
 	font-size: 16px;
-	right: -100%;
 }
-.in{
-	animation: in 0.3s ease both;
-}
-.out{
-	animation: out 0.3s ease both;
-}
-@keyframes in {
-	0%{right: -100%;}	
-	100%{right: 0;}
-}
-@keyframes out {
-	0%{right: 0%;}
-	100%{right: -100%;}
-}
+
 </style>
 
 <script lang="babel">

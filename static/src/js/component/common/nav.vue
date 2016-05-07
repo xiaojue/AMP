@@ -1,5 +1,5 @@
 <template>
-	<div class="con text_shadow">
+	<nav class="con text_shadow">
 		<div class="user_info">
 			<div class="avatar">
 				<img src="http://aqvatarius.com/themes/taurus_v12/html/img/example/user/dmitry_b.jpg">
@@ -54,7 +54,7 @@
 				</ul>
 			</div>
 		</div>
-	</div>
+	</nav>
 </template>
 
 <style scoped>
