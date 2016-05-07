@@ -171,31 +171,6 @@ textarea {
 .fade-leave {
   opacity: 0;
 }
-.translate-transition {
-  transition: all .3s ease;
-}
-.translate-enter {
-  right: 0;
-}
-.translate-leave {
-  right: -100%;
-}
-@keyframes in {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-@keyframes out {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
 /* 主容器 布局 */
 .main_con {
   width: 98%;
