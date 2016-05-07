@@ -19,9 +19,14 @@ import './directive/tips.js';
 
 import Index from './component/page/index.vue';
 import Main from './component/page/main.vue';
-import projectList from './component/page/projectList.vue';
-import projectDetail from './component/page/projectDetail.vue';
-import projectEdit from './component/page/projectEdit.vue';
+
+import ProjectList from './component/page/projectList.vue';
+import ProjectDetail from './component/page/projectDetail.vue';
+import ProjectEdit from './component/page/projectEdit.vue';
+
+import ApiList from './component/page/apiList.vue';
+import ApiDetail from './component/page/apiDetail.vue';
+import ApiEdit from './component/page/apiEdit.vue';
 
 router.map({
     '/': {
@@ -32,28 +37,28 @@ router.map({
 	    subRoutes: {
 	        '/project/list/:type': {
 	        	name: 'projectList',
-	            component: projectList
+	            component: ProjectList
 	        },
 	        '/project/detail/:id': {
 	        	name: 'projectDetail',
-	            component: projectDetail
+	            component: ProjectDetail
 	        },
 	        '/project/edit/:id': {
 	        	name: 'projectEdit',
-	            component: projectEdit
+	            component: ProjectEdit
 	        },
-	        // '/api/list/:type': {
-	        	// name: 'apiList',
-	        //     // component: Baz
-	        // },
-	        // '/api/detail/:id': {
-	        	// name: 'apiDetail',
-	        //     // component: Baz
-	        // },
-	        // '/api/edit/:id': {
-	        	// name: 'apiEdit',
-	        //     // component: Baz
-	        // }
+	        '/api/list/:type': {
+	        	name: 'apiList',
+	            component: ApiList
+	        },
+	        '/api/detail/:id': {
+	        	name: 'apiDetail',
+	            component: ApiDetail
+	        },
+	        '/api/edit/:id': {
+	        	name: 'apiEdit',
+	            component: ApiEdit
+	        }
 	    }
 	}
 });

@@ -2,8 +2,9 @@
 	<div>
 		<m-head></m-head>
 		<m-left></m-left>
-		<router-view></router-view>
-		<m-loading></m-loading>
+		<router-view>
+			<m-loading></m-loading>
+		</router-view>
 	</div>
 </template>
 

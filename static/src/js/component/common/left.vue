@@ -18,7 +18,7 @@
 						<p>我的项目</p>
 						<i class="iconfont">&#xe604;</i>
 					</li>
-					<li>
+					<li v-link="{name: 'apiList', params: {type: 'mine'}}">
 						<span class="iconfont">&#xe605;</span>
 						<p>我的API</p>
 						<i class="iconfont">&#xe604;</i>
@@ -32,7 +32,7 @@
 						<p>我参与的项目</p>
 						<i class="iconfont">&#xe604;</i>
 					</li>
-					<li>
+					<li v-link="{name: 'apiList', params: {type: 'coverme'}}">
 						<span class="iconfont">&#xe605;</span>
 						<p>我参与的API</p>
 						<i class="iconfont">&#xe604;</i>
@@ -46,7 +46,7 @@
 						<p>全部项目</p>
 						<i class="iconfont">&#xe604;</i>
 					</li>
-					<li>
+					<li v-link="{name: 'apiList', params: {type: 'all'}}">
 						<span class="iconfont">&#xe605;</span>
 						<p>全部API</p>
 						<i class="iconfont">&#xe604;</i>
