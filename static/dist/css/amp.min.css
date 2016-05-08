@@ -3218,7 +3218,7 @@ textarea {
   animation-name: slideOutUp;
 }
 /* tip提示样式 */
-.awesomeTips {
+.tool_tip {
   position: absolute;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -3229,19 +3229,19 @@ textarea {
   border-radius: 8px;
   z-index: 9999;
 }
-.awesomeTips.tipsInLeft {
+.tool_tip.tipsInLeft {
   -webkit-animation: tipsInLeft 0.3s ease 0.2s both;
   animation: tipsInLeft 0.3s ease 0.2s both;
 }
-.awesomeTips.tipsInRight {
+.tool_tip.tipsInRight {
   -webkit-animation: tipsInRight 0.3s ease 0.2s both;
   animation: tipsInRight 0.3s ease 0.2s both;
 }
-.awesomeTips.tipsInTop {
+.tool_tip.tipsInTop {
   -webkit-animation: tipsInTop 0.3s ease 0.2s both;
   animation: tipsInTop 0.3s ease 0.2s both;
 }
-.awesomeTips.tipsInBottom {
+.tool_tip.tipsInBottom {
   -webkit-animation: tipsInBottom 0.3s ease 0.2s both;
   animation: tipsInBottom 0.3s ease 0.2s both;
 }
@@ -3285,19 +3285,19 @@ textarea {
     -webkit-transform: translateY(0);
   }
 }
-.awesomeTips.tipsOutLeft {
+.tool_tip.tipsOutLeft {
   -webkit-animation: tipsOutLeft 0.3s ease 0.1s both;
   animation: tipsOutLeft 0.3s ease 0.1s both;
 }
-.awesomeTips.tipsOutRight {
+.tool_tip.tipsOutRight {
   -webkit-animation: tipsOutRight 0.3s ease 0.1s both;
   animation: tipsOutRight 0.3s ease 0.1s both;
 }
-.awesomeTips.tipsOutTop {
+.tool_tip.tipsOutTop {
   -webkit-animation: tipsOutTop 0.3s ease 0.1s both;
   animation: tipsOutTop 0.3s ease 0.1s both;
 }
-.awesomeTips.tipsOutBottom {
+.tool_tip.tipsOutBottom {
   -webkit-animation: tipsOutBottom 0.3s ease 0.1s both;
   animation: tipsOutBottom 0.3s ease 0.1s both;
 }

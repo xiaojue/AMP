@@ -196,7 +196,7 @@
 </style>
 
 
-<script lang="babel">
+<script>
 
 import Vue from 'vue';
 import * as vueForm from 'vue-form'; 

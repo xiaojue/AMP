@@ -104,7 +104,7 @@
 </style>
 
 
-<script lang="babel">
+<script>
 
 import Vue from 'vue';
 

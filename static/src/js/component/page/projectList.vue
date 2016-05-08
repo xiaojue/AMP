@@ -3,7 +3,7 @@
 		<div class="conent_list text_shadow">
 			<div class="top">
 				<p class="title">{{titleMap[type]}}</p>
-				<a class="btn btn_success" href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: 'new'}}">新建项目</a>
+				<a class="btn btn_success" v-tips="['bottom', '标题']" href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: 'new'}}">新建项目</a>
 			</div>
 			<div class="middle">
 				<div class="item_con">
@@ -115,7 +115,7 @@
 }
 </style>
 
-<script lang="babel">
+<script>
 import Vue from 'vue';
 
 import Pagination from '../base/pagination.vue';

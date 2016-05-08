@@ -156,7 +156,7 @@
 
 </style>
 
-<script lang="babel">
+<script>
 
 export default {
 	name: 'Left',

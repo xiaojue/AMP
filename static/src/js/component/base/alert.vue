@@ -16,7 +16,7 @@
 .alert .alert_img.danger {color: #a94442;background-color: #f2dede;border-color: #ebccd1;}
 </style>
 
-<script lang="babel">
+<script>
 
 import store from '../../store/index.js';
 

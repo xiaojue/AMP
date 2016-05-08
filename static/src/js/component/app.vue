@@ -4,7 +4,7 @@
 	</div>
 </template>
 
-<script lang="babel">
+<script>
 
 import $ from 'jquery';
 

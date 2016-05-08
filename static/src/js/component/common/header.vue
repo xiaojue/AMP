@@ -10,7 +10,7 @@
 </template>
 
 
-<style lang="less" scoped>
+<style scoped>
 header{
 	width: 98%;
 	height: 44px;
@@ -58,7 +58,7 @@ header>div{
 }
 </style>
 
-<script lang="babel">
+<script>
 	
 export default{
 	name: 'Header',

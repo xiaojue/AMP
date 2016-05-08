@@ -34,7 +34,7 @@
 	
 </style>
 
-<script lang="babel">
+<script>
 
 
 export default {
@@ -49,7 +49,8 @@ export default {
 				creatTime: 1461908909241,
 				member: ['luoye@gomeplus.com','wangchunpeng@gomeplus.com'],
 				apiNum: 10
-			}
+			},
+			test: {}
 		}
 	},
 	route: {

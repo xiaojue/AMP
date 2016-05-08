@@ -11,7 +11,7 @@
 	
 </style>
 
-<script lang="babel">
+<script>
 
 
 import Loading from '../base/loading.vue';
