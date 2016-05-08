@@ -40,6 +40,7 @@
 	background-color: #fff;
 	margin: 0 4px;
 	box-shadow: 0 0 15px rgba(0,0,0,0.4);
+	border-radius: 2px;
 }
 .loading_con .loading span:nth-child(1){
 	animation: loading 1.2s ease-in-out 0s infinite;
