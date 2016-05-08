@@ -230,6 +230,17 @@ textarea {
   bottom: 0;
   background-color: rgba(153, 242, 243, 0.2);
 }
+.main_con .conent_list .bottom .btn_con {
+  text-align: right;
+  box-sizing: border-box;
+  padding-right: 15px;
+  line-height: 55px;
+  font-size: 0px;
+}
+.main_con .conent_list .bottom .btn_con a {
+  display: inline-block;
+  vertical-align: middle;
+}
 /* 滚动条样式 */
 ::-webkit-scrollbar {
   width: 0px;
@@ -241,18 +252,26 @@ textarea {
   text-decoration: none;
   display: block;
   line-height: 34px;
-  font-size: 18px;
+  font-size: 14px;
   padding: 0 15px;
   border-radius: 4px;
   background-image: url('/dist/img/noisy.png');
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
+  margin: 0 5px;
+  transition: all ease 0.2s;
 }
 .btn.btn_success {
   background-color: rgba(82, 215, 105, 0.9);
 }
+.btn.btn_success:hover {
+  background-color: rgba(82, 215, 105, 0.5);
+}
 .btn.btn_default {
   background-color: rgba(122, 122, 122, 0.9);
+}
+.btn.btn_default:hover {
+  background-color: rgba(122, 122, 122, 0.6);
 }
 @font-face {
   font-family: "iconfont";
