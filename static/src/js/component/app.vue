@@ -1,6 +1,9 @@
 <template>
 	<div>
 		<router-view keep-alive></router-view>
+		<m-loading></m-loading>
+		<m-alert></m-alert>
+		<m-confirm></m-confirm>
 	</div>
 </template>
 
@@ -11,6 +14,10 @@ import store from 'store';
 import actions from 'actions';
 
 import utils from 'utils';
+
+import Loading from './base/loading.vue';
+import Alert from './base/alert.vue';
+import Confirm from './base/confirm.vue';
 
 export default {
 	name: 'App',
@@ -30,6 +37,11 @@ export default {
 	},
 	methods: {
 
+	},
+	components: {
+		'm-loading': Loading,
+		'm-alert': Alert,
+		'm-confirm': Confirm
 	},
 	created() {
 		this.$http({
