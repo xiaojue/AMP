@@ -4,13 +4,13 @@
 			<h2 v-link="{name: 'projectList', params: {type: 'all'}}">AMP</h2>			
 		</div>
 		<div class="user">
-			asd
+			<a href="javascript:void(0)" class="btn btn_danger" @click="logout()">退出</a>
 		</div>
 	</header>
 </template>
 
 
-<style lang="less" scoped>
+<style scoped>
 header{
 	width: 98%;
 	height: 44px;
@@ -53,18 +53,46 @@ header>div{
 }
 .user{
 	width: 300px;
-	font-size: 32px;
 	line-height: 44px;
+	text-align: right;
+	box-sizing: border-box;
+	padding-right: 15px;
+	font-size: 0;
+}
+.user a{
+	display: inline-block;
+	vertical-align: middle;
 }
 </style>
 
-<script lang="babel">
+<script>
+
+import $ from 'jquery';
+
+import store from '../../store/index.js';
+import actions from '../../store/actions/index.js';
 	
 export default{
 	name: 'Header',
 	data: () => {
 		return {
 
+		}
+	},
+	vuex: {
+		actions: actions
+	},
+	methods: {
+		logout() {
+			$.ajax({
+				url: '/api/logout',
+				type: 'post',
+				success: (res) => {
+					if(!res.iserror){
+						this.$route.router.go('/');
+					}
+				}
+			})
 		}
 	}
 }

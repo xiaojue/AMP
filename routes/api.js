@@ -4,7 +4,6 @@
  * @date 2016-04-29
  */
 import Router from 'koa-router';
-import db from '../models/mysql';
 
 const tables = ['urls','collection','results','arguments']
 const router = Router({
@@ -14,90 +13,101 @@ const router = Router({
 for(let item of tables){
     router
         .get('/'+item, async (ctx,next) => {
-            console.log('getttttttt');
+            console.log('get');
             let sql = "select * from " + item,
-                res = await db.query(sql,ctx.query,{
+                res = await ctx.mysqlQuery(sql,ctx.query,{
                     type: "GET"
                 });
-            ctx.body = res;
+            ctx.body = {
+                code: 200,
+                data: res,
+                iserror: 0,
+                msg: ''
+            };
         })
         .post('/'+item,async (ctx,next) => {
             console.log("post");
             let sql = "insert into " + item,
-                res = await db.query(sql,ctx.body,{
+                res = await ctx.mysqlQuery(sql,ctx.body,{
                     type: "POST"
                 }),
                 sql2 = "select * from "+ item + " where id=" + res['insertId'],
+                result = await ctx.mysqlQuery(sql2,{},{
+                    type: "GET"
+                });
+            ctx.body = {
+                code: 200,
+                data: result[0],
+                iserror: 0,
+                msg: ''
+            };
+        })
+        .put('/'+item, async (ctx,next) => {
+            console.log("put");
+            let res = await checkId(ctx,item);
+            if(res){
+                ctx.body = {
+                    code: 400,
+                    data: '',
+                    iserror: 1,
+                    msg: res
+                }
+                return;
+            }
+            let sql = 'update '+item,
+                res1 = await ctx.mysqlQuery(sql,ctx.body,{
+                    type: 'PUT',
+                    params: {id: ctx.query.id}
+                }),
+                sql2 = "select * from "+ item + " where id= " + ctx.query.id,
                 result = await db.query(sql2,{},{
                     type: "GET"
                 });
-            ctx.body = result[0];
+            ctx.body = {
+                code: 200,
+                data: result,
+                iserror: 0,
+                msg: ''
+            };
         })
-        .put('/'+item+'/:id', async (ctx,next) => {
-            console.log("put");
-            let sql = 'update '+item,
-                res = await db.query(sql,ctx.body,{
-                    type: 'PUT',
-                    params: ctx.params
-                });
-            ctx.body = res;
-        })
-        .del('/'+ item +'/:id', async (ctx, next)=> {
+        .del('/'+ item, async (ctx, next)=> {
             console.log("del");
+            let res = await checkId(ctx,item);
+            if(res){
+                ctx.body = {
+                    code: 400,
+                    data: '',
+                    iserror: 1,
+                    msg: res
+                }
+                return;
+            }
             let sql = 'delete from '+item,
-                res = await db.query(sql,{},{
+                result = await ctx.mysqlQuery(sql,{},{
                     type: 'DELETE',
-                    params: ctx.params
+                    params: {id: ctx.query.id}
                 });
-            ctx.body = res;
+            ctx.body = {
+                code: 200,
+                data: result,
+                iserror: 0,
+                msg: ''
+            };
         })
+}
+var checkId = async(ctx,item)=>{
+    let id = ctx.query.id;
+    if(!id){
+        return '请填写接口的ID';
+    }
+    let sql = 'select * from ' + item + " where id = " + id,
+        items = await db.query(sql,{},{
+            type: "GET"
+        });
+    if(!items.length){
+        return '请填写正确的Id';
+    }
+    return;
 }
 
 module.exports = router;
-
-
-// CREATE TABLE urls (
-//       id int not null  AUTO_INCREMENT,
-//       url VARCHAR(200),
-//       type VARCHAR(50),
-//       collection_id INT NOT NULL,
-//       PRIMARY KEY (`id`),
-//       CONSTRAINT FOREIGN KEY (collection_id) REFERENCES collection(id)
-//       ON DELETE  RESTRICT  ON UPDATE CASCADE
-// );
-
-// CREATE TABLE results (
-//       id int not null  AUTO_INCREMENT,
-//       content text,
-//       url_id INT NOT NULL,
-//       PRIMARY KEY (`id`),
-//       CONSTRAINT FOREIGN KEY (url_id) REFERENCES urls(id)
-//       ON DELETE  RESTRICT  ON UPDATE CASCADE
-// );
-
-// CREATE TABLE arguments (
-//       id int not null  AUTO_INCREMENT,
-//       title varchar(50),
-//       type varchar(50) default 'text',
-//       value varchar(200) not null,
-//       url_id INT NOT NULL,
-//       PRIMARY KEY (`id`),
-//       CONSTRAINT FOREIGN KEY (url_id) REFERENCES urls(id)
-//       ON DELETE  RESTRICT  ON UPDATE CASCADE
-// );
-
-// CREATE TABLE users (
-//   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-//   `name` varchar(255) DEFAULT NULL COMMENT '姓名',
-//   `username` varchar(255) DEFAULT NULL COMMENT '账号名',
-//   `email` varchar(50) DEFAULT NULL COMMENT 'email',
-//   `department` varchar(50) DEFAULT NULL COMMENT '部门',
-//   `role` varchar(255) DEFAULT NULL COMMENT '角色',
-//   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-//   `status` tinyint(2) DEFAULT NULL COMMENT '状态：1启用，0禁用',
-//   `limited` varchar(255) DEFAULT NULL COMMENT '控制',
-//   `date` bigint(15) DEFAULT NULL COMMENT 'date',
-//   `is_admin` tinyint(2) DEFAULT NULL COMMENT 'isAdmin = 99 超级管理员',
-//   `export` varchar(255) DEFAULT NULL COMMENT '导出权限',
-//   PRIMARY KEY (`id`)
-// ) ;

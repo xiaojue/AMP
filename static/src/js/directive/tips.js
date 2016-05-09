@@ -1,16 +1,22 @@
+/*
+ * @author: luoye <842891024@qq.com>
+ * @date: 2015-05-08
+ * @description: 元素提示指令
+ */
+
 import Vue from 'vue';
 import $ from 'jquery';
 
-var createTips = (direction, msg) => {
+const createTips = (direction, msg) => {
     const oDiv = document.createElement('div');
-    oDiv.className = 'awesomeTips';
+    oDiv.className = 'tool_tip';
     oDiv.innerHTML = msg;
     const triangle = createTriangle(direction);
     oDiv.appendChild(triangle);
     return oDiv;
 }
 
-var createTriangle = (direction) => {
+const createTriangle = (direction) => {
     const oDiv = document.createElement('div');
     oDiv.style.cssText = 'position:absolute;'
     switch (direction) {
@@ -30,10 +36,15 @@ var createTriangle = (direction) => {
     return oDiv;
 }
 
-Vue.directive('tips', function(params) {
+/*
+ * @param {string} direction tips出现位置
+ * @param {string} msg       tips信息
+ */
+
+Vue.directive('tips', function(param) {
     const target = this.el;
-    const direction = params[0];
-    const msg = params[1];
+    const direction = param[0];
+    const msg = param[1];
     $(target).on('mouseenter', function() {
         const _this = $(this);
         const oDiv = $(createTips(direction, msg));
@@ -81,7 +92,7 @@ Vue.directive('tips', function(params) {
     })
     $(target).on('mouseleave', function() {
         const _this = $(this);
-        const oDiv = $('body').find('.awesomeTips');
+        const oDiv = $('body').find('.tool_tip');
         switch (direction) {
             case 'left':
                 oDiv.removeClass('tipsInLeft');
@@ -110,11 +121,11 @@ Vue.directive('tips', function(params) {
 
 /* 
 // 样式
-.awesomeTips {position: absolute;box-sizing: border-box;-webkit-box-sizing: border-box;padding: 8px 15px;color: #fff;font-size: 12px;background: rgba(0, 0, 0, 0.7);border-radius: 8px;z-index: 9999;}
-.awesomeTips.tipsInLeft {-webkit-animation: tipsInLeft 0.4s ease 0.2s both;animation: tipsInLeft 0.4s ease 0.2s both;}
-.awesomeTips.tipsInRight {-webkit-animation: tipsInRight 0.4s ease 0.2s both;animation: tipsInRight 0.4s ease 0.2s both;}
-.awesomeTips.tipsInTop {-webkit-animation: tipsInTop 0.4s ease 0.2s both;animation: tipsInTop 0.4s ease 0.2s both;}
-.awesomeTips.tipsInBottom {-webkit-animation: tipsInBottom 0.4s ease 0.2s both;animation: tipsInBottom 0.4s ease 0.2s both;}
+.tool_tip {position: absolute;box-sizing: border-box;-webkit-box-sizing: border-box;padding: 8px 15px;color: #fff;font-size: 12px;background: rgba(0, 0, 0, 0.7);border-radius: 8px;z-index: 9999;}
+.tool_tip.tipsInLeft {-webkit-animation: tipsInLeft 0.4s ease 0.2s both;animation: tipsInLeft 0.4s ease 0.2s both;}
+.tool_tip.tipsInRight {-webkit-animation: tipsInRight 0.4s ease 0.2s both;animation: tipsInRight 0.4s ease 0.2s both;}
+.tool_tip.tipsInTop {-webkit-animation: tipsInTop 0.4s ease 0.2s both;animation: tipsInTop 0.4s ease 0.2s both;}
+.tool_tip.tipsInBottom {-webkit-animation: tipsInBottom 0.4s ease 0.2s both;animation: tipsInBottom 0.4s ease 0.2s both;}
 @-webkit-keyframes tipsInLeft {
     0% {opacity: 0;-webkit-transform: translateX(-10px);}
     100% {opacity: 1;-webkit-transform: translateX(0);}
@@ -131,10 +142,10 @@ Vue.directive('tips', function(params) {
     0% {opacity: 0;-webkit-transform: translateY(10px);}
     100% {opacity: 1;-webkit-transform: translateY(0);}
 }
-.awesomeTips.tipsOutLeft {-webkit-animation: tipsOutLeft 0.4s ease 0.1s both;animation: tipsOutLeft 0.4s ease 0.1s both;}
-.awesomeTips.tipsOutRight {-webkit-animation: tipsOutRight 0.4s ease 0.1s both;animation: tipsOutRight 0.4s ease 0.1s both;}
-.awesomeTips.tipsOutTop {-webkit-animation: tipsOutTop 0.4s ease 0.1s both;animation: tipsOutTop 0.4s ease 0.1s both;}
-.awesomeTips.tipsOutBottom {-webkit-animation: tipsOutBottom 0.4s ease 0.1s both;animation: tipsOutBottom 0.4s ease 0.1s both;}
+.tool_tip.tipsOutLeft {-webkit-animation: tipsOutLeft 0.4s ease 0.1s both;animation: tipsOutLeft 0.4s ease 0.1s both;}
+.tool_tip.tipsOutRight {-webkit-animation: tipsOutRight 0.4s ease 0.1s both;animation: tipsOutRight 0.4s ease 0.1s both;}
+.tool_tip.tipsOutTop {-webkit-animation: tipsOutTop 0.4s ease 0.1s both;animation: tipsOutTop 0.4s ease 0.1s both;}
+.tool_tip.tipsOutBottom {-webkit-animation: tipsOutBottom 0.4s ease 0.1s both;animation: tipsOutBottom 0.4s ease 0.1s both;}
 @-webkit-keyframes tipsOutLeft {
     0% {opacity: 1; -webkit-transform: translateX(0);}
     100% {opacity: 0;-webkit-transform: translateX(-10px);}

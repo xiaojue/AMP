@@ -4,7 +4,6 @@
  * @date 2016-05-03
  */
  import Router from 'koa-router';
- import db from '../models/mysql';
 
  const api = Router();
  /**
@@ -13,7 +12,7 @@
 var checkUrl = async(ctx,type)=>{
     let url = ctx.request.url,
         sql = 'select * from urls where url = "' + url + '" and type = "'+ type +'"',
-        res = await db.query(sql,ctx.query,{
+        res = await ctx.mysqlQuery(sql,ctx.query,{
             type: "GET"
         });
     return res;
@@ -23,7 +22,7 @@ var checkUrl = async(ctx,type)=>{
 **/
 var getResult = async(ctx,item_id)=>{
     let sql = 'select * from results where url_id = ' + item_id,
-        res = await db.query(sql,ctx.query,{
+        res = await ctx.mysqlQuery(sql,ctx.query,{
             type: "GET"
         });
     return res;
@@ -37,33 +36,35 @@ var getContent = (res)=>{
     }
     return res;
 }
-
-api.get("*",async (ctx,next)=> {
-    let urls = await checkUrl(ctx,'GET');
+api.all("*",async (ctx,next)=>{
+    let urls = await checkUrl(ctx,ctx.request.method);
     if(!urls.length){
-        ctx.status = 404;
+        // ctx.status = 404;
+        ctx.body = {
+            code: 404,
+            data: '',
+            iserror: 1,
+            msg: '404'
+        }
         return;
     }
     let res = await getResult(ctx,urls[0]["id"]);
     if(!res.length){
-        ctx.status = 404;
+        // ctx.status = 404;
+        ctx.body = {
+            code: 404,
+            data: '',
+            iserror: 1,
+            msg: '404'
+        }
         return;
     }
-    ctx.body = getContent(res[0]);
-});
-
-api.post("*",async (ctx,next)=> {
-    let urls = await checkUrl(ctx,'POST');
-    if(!urls.length){
-        ctx.status = 404;
-        return;
-    }
-    let res = await getResult(ctx,urls[0]["id"]);
-    if(!res.length){
-        ctx.status = 404;
-        return;
-    }
-    ctx.body = getContent(res[0]);
+    ctx.body = {
+        code: 200,
+        data: getContent(res[0]),
+        iserror: 0,
+        msg: ''
+    };
 });
 
 module.exports = api;

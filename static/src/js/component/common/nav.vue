@@ -1,13 +1,13 @@
 <template>
-	<div class="con text_shadow">
+	<nav class="con text_shadow">
 		<div class="user_info">
 			<div class="avatar">
-				<img src="http://aqvatarius.com/themes/taurus_v12/html/img/example/user/dmitry_b.jpg">
+				<img :src="userInfo.avatar">
 			</div>
 			<div class="desc">
-				<p>骆也</p>
-				<p>前端工程师</p>
-				<p>luoye@gomeplus.com</p>
+				<p>{{userInfo.userName}}</p>
+				<p>{{userInfo.role}}</p>
+				<p>{{userInfo.email}}</p>
 			</div>
 		</div>
 		<div class="item_con">
@@ -18,7 +18,7 @@
 						<p>我的项目</p>
 						<i class="iconfont">&#xe604;</i>
 					</li>
-					<li>
+					<li v-link="{name: 'apiList', params: {type: 'mine'}}">
 						<span class="iconfont">&#xe605;</span>
 						<p>我的API</p>
 						<i class="iconfont">&#xe604;</i>
@@ -32,7 +32,7 @@
 						<p>我参与的项目</p>
 						<i class="iconfont">&#xe604;</i>
 					</li>
-					<li>
+					<li v-link="{name: 'apiList', params: {type: 'coverme'}}">
 						<span class="iconfont">&#xe605;</span>
 						<p>我参与的API</p>
 						<i class="iconfont">&#xe604;</i>
@@ -46,7 +46,7 @@
 						<p>全部项目</p>
 						<i class="iconfont">&#xe604;</i>
 					</li>
-					<li>
+					<li v-link="{name: 'apiList', params: {type: 'all'}}">
 						<span class="iconfont">&#xe605;</span>
 						<p>全部API</p>
 						<i class="iconfont">&#xe604;</i>
@@ -54,7 +54,7 @@
 				</ul>
 			</div>
 		</div>
-	</div>
+	</nav>
 </template>
 
 <style scoped>
@@ -156,13 +156,22 @@
 
 </style>
 
-<script lang="babel">
+<script>
+
+import store from '../../store/index.js';
 
 export default {
 	name: 'Left',
 	data() {
 		return {
 
+		}
+	},
+	vuex: {
+		getters: {
+			userInfo: () => {
+				return store.state.userInfo;
+			}
 		}
 	},
 	methods: {

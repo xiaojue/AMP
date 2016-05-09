@@ -1,3 +1,4 @@
+/* jshint ignore:start */
 /*
  * AMP 入口文件
  */
@@ -9,7 +10,7 @@ import Router from 'koa-router';
 import Static from 'koa-static';
 import Logger from 'koa-logger';
 import Send from 'koa-send';
-import KoaBodyParser  from 'koa-better-body'
+import KoaBodyParser  from 'koa-better-body';
 import fs from 'fs';
 import https from 'https';
 
@@ -18,15 +19,17 @@ import session from './koa-session2';
 // koa1中间件转换
 import convert from 'koa-convert';
 
-import routers from './routes'
-import db from './config/db.json'
+import routers from './routes';
+import db from './config/db.json';
+import mysqlMiddleware from './middleware/mysql';
 
 const app = new Koa();
-const port = 9090;
+const httpPort = 9090;
+const httpsPort = 8989;
 const options = {
     key: fs.readFileSync('./privatekey.pem'),
     cert: fs.readFileSync('./certificate.pem')
-}
+};
 
 
 app.use(KoaBodyParser());
@@ -37,17 +40,14 @@ app.use(
     })
 );
 
-const index = Router();
-index.get('/', async (ctx, next) => {
-	await Send(ctx, './views/index.html');
-})
-
 // middleware
+app.use(mysqlMiddleware);
+
 app.use(convert(Logger()));
 
 app.use(convert(Static(path.join(__dirname, 'static'))));
-// routers
-app.use(index.routes());
+
+
 for(let item of routers){
     app.use(item.routes(),item.allowedMethods());
 }
@@ -57,5 +57,5 @@ app.on('error', (err, ctx) => {
     console.error('server error', err, ctx);
 });
 
-app.listen(port);
-https.createServer(options, app.callback()).listen(8989);
+app.listen(httpPort);
+https.createServer(options, app.callback()).listen(httpsPort);

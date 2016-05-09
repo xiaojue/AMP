@@ -4,7 +4,6 @@
  * @date 2016-05-04
  */
 import Router from 'koa-router';
-import db from '../models/mysql';
 import ldap from 'ldapjs'
 
 const router = Router({
@@ -16,12 +15,20 @@ const password = '5P=/d_Xp';
 
 router.get('/login',async (ctx,next)=>{
     if(ctx.session.isLogin){
-        //ctx.redirect("/");
-        ctx.status = 301;
-        ctx.body = 301;
+        ctx.body = {
+            code: 200,
+            data: ctx.session.userinfo,
+            iserror: 0,
+            msg: ''
+        };
     }else{
-        ctx.status = 401
-        ctx.body = 401;
+        // ctx.status = 401;
+        ctx.body = {
+            code: 401,
+            data: '',
+            iserror: 1,
+             msg: '请登录'
+        };
     }
 })
 router.post('/login',async (ctx,next)=>{
@@ -29,25 +36,49 @@ router.post('/login',async (ctx,next)=>{
         pwd = ctx.body.password,
         remember = ctx.body.remember;
     if(!email || !pwd){
-        ctx.status = 400;
-        ctx.body = '请填写邮箱和密码'
+        // ctx.status = 400;
+        ctx.body = {
+            code: 400,
+            data: '',
+            iserror: 1,
+            msg: '请填写邮箱和密码'
+        }
         return;
     }
     await ldapClient(ctx,email,pwd,remember,next).then(function(res){
-        ctx.body = res;
+        ctx.body = {
+            code: 200,
+            data: res,
+            iserror: 0,
+            msg: ''
+        };
     },function(res){
-        ctx.body = res;
+        ctx.body = {
+            code: 400,
+            data: '',
+            msg: res,
+            iserror: 1
+        };
     });
 });
 router.post('/logout',async (ctx,next)=>{
     ctx.session = null;
-    // ctx.redirect = '/login';
-    ctx.body = 'ok';
+    ctx.body = {
+        code: '200',
+        data: '',
+        iserror: 0,
+        msg: '注销成功'
+    };
 });
 router.all('*',async (ctx,next)=>{
     if(!ctx.session.isLogin){
-        ctx.status = 401;
-        ctx.body = 401;
+        // ctx.status = 401;
+        ctx.body = {
+            code: 401,
+            data: '',
+            iserror: 1,
+            msg: '请登录'
+        };
         return;
     }
     await next();
@@ -71,8 +102,8 @@ var ldapClient = function(ctx,email,pwd,remember,next){
         client.bind(username, password, function(err) {
             if (err) {
                 unbind(client, next);
-                ctx.status = 400;
-                resolve(err);
+                // ctx.status = 400;
+                reject(err);
             } else {
                 if (email.indexOf("@") < 0) {
                     email += '@gomeplus.com';
@@ -93,11 +124,11 @@ var ldapClient = function(ctx,email,pwd,remember,next){
                                 //验证成功
                                 if (err) {
                                     unbind(client, next);
-                                    ctx.status = 400;
-                                    resolve('密码和账户不正确');
+                                    // ctx.status = 400;
+                                    reject('密码和账户不正确');
                                 } else {
                                     let sql = "select * from users where username = '" + email + "'";
-                                    db.query(sql,{},{
+                                    ctx.mysqlQuery(sql,{},{
                                         type: "GET"
                                     }).then(function(res){
                                         return res;
@@ -112,7 +143,7 @@ var ldapClient = function(ctx,email,pwd,remember,next){
                                                     username: email,
                                                     email: email
                                                 };
-                                            db.query(sql,querys,{
+                                            ctx.mysqlQuery(sql,querys,{
                                                 type: "POST"
                                             });
                                             saveLogin(ctx,querys);
@@ -123,8 +154,8 @@ var ldapClient = function(ctx,email,pwd,remember,next){
                             });
                         } else {
                             unbind(client, next);
-                            ctx.status = 401;
-                            resolve("401");
+                            // ctx.status = 401;
+                            reject("用户名填写错误");
                         }
                     });
                 });
