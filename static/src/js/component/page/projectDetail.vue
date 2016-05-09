@@ -5,7 +5,12 @@
 			<p class="title">项目详情</p>
 		</div>
 		<div class="middle">
-			<h1>detail</h1>
+			<div class="item_con">
+				<div class="item">
+					<span>项目名称：</span>
+					<p>{{projectDetail.name}}</p>
+				</div>
+			</div>
 		</div>
 		<div class="bottom">
 			<div class="btn_con">
@@ -31,6 +36,10 @@
 
 <script>
 
+import $ from 'jquery';
+
+import store from '../../store/index.js';
+import actions from '../../store/actions/index.js';
 
 export default {
 	name: 'ProjectDetail',
@@ -42,10 +51,32 @@ export default {
 			test: {}
 		}
 	},
+	vuex: {
+		getters: {
+
+		},
+		actions: actions
+	},
+	methods: {
+		getProjectDetail(id) {
+			actions.loading(store, true);
+			$.ajax({
+				url: '/api/collection',
+				type: 'get',
+				data: {
+					id: id
+				},
+				success: (res) => {
+					this.projectDetail = res.data[0];
+					actions.loading(store, false);
+				}
+			})
+		}
+	},
 	route: {
 		data(transtion) {
-			console.log(transtion.to.params.id);
-			// 拿到id请求数据赋值projectDetail渲染界面
+			var id = transtion.to.params.id;
+			this.getProjectDetail(id);
 		}
 	}
 }

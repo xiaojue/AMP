@@ -168,10 +168,10 @@ export default {
 				},
 				success: (res) => {
 					this.projects = res.data;
-					actions.loading(store, false);
 					this.projects.forEach((item, index) => {
 						Vue.set(this.showMenu, index, false);
 					});
+					actions.loading(store, false);
 				}
 			})
 		}
