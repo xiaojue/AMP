@@ -70,6 +70,7 @@ router.redirect({
 	'*': '/main/project/list/mine'
 })
 
-
 import App from './component/app.vue';
 router.start(App, '#app');
+
+export const debugApp = router.app;

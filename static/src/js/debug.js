@@ -8,3 +8,6 @@ import actions from 'actions';
 
 window.store = store;
 window.actions = actions;
+
+import {debugApp} from './app.js';
+window.app = debugApp;
