@@ -3,9 +3,12 @@
  */
 
 import Vue from 'vue';
-import Router from 'vue-router';
 
+import Router from 'vue-router';
 Vue.use(Router);
+
+import VueAjax from 'vue-resource';
+Vue.use(VueAjax);
 
 const router = new Router({
 	saveScrollPosition: true
@@ -15,7 +18,7 @@ const router = new Router({
 import './filter/index.js';
 
 // directive
-import './directive/tips.js';
+// import './directive/tips.js';
 
 import Index from './component/page/index.vue';
 import Main from './component/page/main.vue';

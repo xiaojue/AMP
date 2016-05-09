@@ -108,7 +108,7 @@
 
 import Vue from 'vue';
 
-import store from '../../store/index.js';
+import store from 'store';
 
 export default {
 	name: 'Loading',

@@ -31,10 +31,10 @@ var webpackConfig = {
         amp: './src/js/app.js',
         vendor: [
             'vue', 
-            'jquery', 
             'vuex', 
             'vue-router',
-            'vue-form'
+            'vue-form',
+            'vue-resource'
         ]
     },
     output: {
@@ -62,7 +62,9 @@ var webpackConfig = {
     resolve: {
         extensions: ['', '.js', '.json', '.scss'],
         alias: {
-
+            utils: path.join(pwd, './src/js/util/index.js'),
+            store: path.join(pwd, './src/js/store/index.js'),
+            actions: path.join(pwd, './src/js/store/actions/index.js'),
         }
     },
 };

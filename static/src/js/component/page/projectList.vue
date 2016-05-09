@@ -118,12 +118,11 @@
 <script>
 
 import Vue from 'vue';
-import $ from 'jquery';
 
 import Pagination from '../base/pagination.vue';
 
-import store from '../../store/index.js';
-import actions from '../../store/actions/index.js';
+import store from 'store';
+import actions from 'actions';
 
 export default {
 	name: 'ProjectList',
@@ -160,19 +159,19 @@ export default {
 		},
 		getProjectData(type) {
 			actions.loading(store, true);
-			$.ajax({
+			this.$http({
 				url: '/api/collection',
 				type: 'get',
 				data: {
 
-				},
-				success: (res) => {
-					this.projects = res.data;
-					this.projects.forEach((item, index) => {
-						Vue.set(this.showMenu, index, false);
-					});
-					actions.loading(store, false);
 				}
+			}).then((res) => {
+				var resData = res.data;
+				this.projects = resData.data;
+				this.projects.forEach((item, index) => {
+					Vue.set(this.showMenu, index, false);
+				});
+				actions.loading(store, false);
 			})
 		}
 	},

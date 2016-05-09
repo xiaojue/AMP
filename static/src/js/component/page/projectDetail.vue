@@ -36,10 +36,8 @@
 
 <script>
 
-import $ from 'jquery';
-
-import store from '../../store/index.js';
-import actions from '../../store/actions/index.js';
+import store from 'store';
+import actions from 'actions';
 
 export default {
 	name: 'ProjectDetail',
@@ -60,16 +58,15 @@ export default {
 	methods: {
 		getProjectDetail(id) {
 			actions.loading(store, true);
-			$.ajax({
+			this.$http({
 				url: '/api/collection',
 				type: 'get',
 				data: {
 					id: id
-				},
-				success: (res) => {
-					this.projectDetail = res.data[0];
-					actions.loading(store, false);
 				}
+			}).then((res) => {
+				this.projectDetail = res.data.data[0];
+				actions.loading(store, false);
 			})
 		}
 	},

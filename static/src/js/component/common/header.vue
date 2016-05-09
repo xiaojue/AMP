@@ -67,10 +67,8 @@ header>div{
 
 <script>
 
-import $ from 'jquery';
-
-import store from '../../store/index.js';
-import actions from '../../store/actions/index.js';
+import store from 'store';
+import actions from 'actions';
 	
 export default{
 	name: 'Header',
@@ -84,13 +82,12 @@ export default{
 	},
 	methods: {
 		logout() {
-			$.ajax({
+			this.$http({
 				url: '/api/logout',
 				type: 'post',
-				success: (res) => {
-					if(!res.iserror){
-						this.$route.router.go('/');
-					}
+			}).then((res) => {
+				if(!res.data.iserror){
+					this.$route.router.go('/');
 				}
 			})
 		}

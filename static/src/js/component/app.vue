@@ -6,13 +6,11 @@
 
 <script>
 
-import $ from 'jquery';
 
-import store from '../store/index.js';
-import actions from '../store/actions/index.js';
+import store from 'store';
+import actions from 'actions';
 
-
-import utils from '../util/index.js';
+import utils from 'utils';
 
 export default {
 	name: 'App',
@@ -34,18 +32,18 @@ export default {
 
 	},
 	created() {
-		$.ajax({
+		this.$http({
 			url: '/api/login',
 			type: 'get',
-			success: (res) => {
-				if(res.iserror && res.code === 401){
-					// 未登录，跳转到登录页面
-					this.$route.router.go('/');
-				}else{
-					actions.setUserInfo(store, utils.formatUserInfo(res.data));
-					// 设置背景图片，功能未开
-					// store.dispatch('SETBGURL', res.data.bgUlr);
-				}
+		}).then((res) => {
+			var resData = res.data;
+			if(resData.iserror && resData.code === 401){
+				// 未登录，跳转到登录页面
+				this.$route.router.go('/');
+			}else{
+				actions.setUserInfo(store, utils.formatUserInfo(resData.data));
+				// 设置背景图片，功能未开
+				// store.dispatch('SETBGURL', resData.data.bgUlr);
 			}
 		})
 	}
