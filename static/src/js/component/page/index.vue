@@ -33,7 +33,6 @@
 					<p>{{extraErr}}</p>
 				</div>
 				<button class="submit" type="submit">登录</button>
-				<a v-link="{name: 'projectList', params: {type: 'mine'}}">假装登录成功</a>
 			</form>
 		</div>
 	</section>
@@ -208,6 +207,8 @@ Vue.use(vueForm);
 import store from '../../store/index.js';
 import actions from '../../store/actions/index.js';
 
+import utils from '../../util/index.js';
+
 export default {
 	name: 'Index',
 	data(){
@@ -231,22 +232,21 @@ export default {
 	},
 	methods: {
 		login(){
-			var _this = this;
 			// 登录验证，获取用户基本信息
 			$.ajax({
 				url: '/api/login',
 				type: 'post',
 				data: {
-					email: _this.model.email,
-					password: _this.model.passowrd,
-					remember: _this.model.remember ? 1 : 0
+					email: this.model.email,
+					password: this.model.passowrd,
+					remember: this.model.remember ? 1 : 0
 				},
 				success: (res) => {
-					if(res.iserro && res.code === '401'){
-						_this.extraErr = '密码或账号错误';
+					if(res.iserror && res.code === 400){
+						this.extraErr = res.msg;
 					}else{
-						actions.setUserInfo(store, res.data);
-						_this.$route.router.go('/main/project/list/mine');
+						actions.setUserInfo(store,utils.formatUserInfo(res.data));
+						this.$route.router.go('/main/project/list/mine');
 					}
 				}
 			})

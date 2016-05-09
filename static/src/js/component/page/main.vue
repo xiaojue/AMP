@@ -4,6 +4,7 @@
 		<m-left></m-left>
 		<router-view></router-view>
 		<m-loading></m-loading>
+		<m-alert></m-alert>
 	</div>
 </template>
 
@@ -15,7 +16,7 @@
 
 
 import Loading from '../base/loading.vue';
-
+import Alert from '../base/alert.vue';
 
 import Head from '../common/header.vue';
 import Nav from '../common/nav.vue';
@@ -29,6 +30,7 @@ export default {
 	},
 	components: {
 		'm-loading': Loading,
+		'm-alert': Alert,
 		'm-head': Head,
 		'm-left': Nav
 	}

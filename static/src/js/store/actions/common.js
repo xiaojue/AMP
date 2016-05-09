@@ -2,8 +2,8 @@
 import $ from 'jquery';
 
 
-export const loading = (store, params) => {
-	store.dispatch('LOADING', params);
+export const loading = (store, showOrHide) => {
+	store.dispatch('LOADING', showOrHide);
 }
 
 export const alert = (store, params) => {

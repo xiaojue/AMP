@@ -11,6 +11,9 @@ import $ from 'jquery';
 import store from '../store/index.js';
 import actions from '../store/actions/index.js';
 
+
+import utils from '../util/index.js';
+
 export default {
 	name: 'App',
 	store: store,
@@ -22,7 +25,7 @@ export default {
 	vuex: {
 		getters: {
 			bgImgUrl: () => {
-				return store.state.bgImgUrl
+				return store.state.bgImgUrl;
 			}
 		},
 		actions: actions
@@ -31,16 +34,15 @@ export default {
 
 	},
 	created() {
-		var _this = this;
 		$.ajax({
 			url: '/api/login',
 			type: 'get',
 			success: (res) => {
-				if(res.iserro && res.code === 401){
+				if(res.iserror && res.code === 401){
 					// 未登录，跳转到登录页面
-					_this.$route.router.go('/');
+					this.$route.router.go('/');
 				}else{
-					actions.setUserInfo(store, res.data);
+					actions.setUserInfo(store, utils.formatUserInfo(res.data));
 					// 设置背景图片，功能未开
 					// store.dispatch('SETBGURL', res.data.bgUlr);
 				}

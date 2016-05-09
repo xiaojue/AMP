@@ -1,6 +1,6 @@
 
-export const LOADING = (state, params) => {
-	state.loading = params;
+export const LOADING = (state, showOrHide) => {
+	state.loading = showOrHide;
 }
 
 export const ALERT = (state, params) => {
