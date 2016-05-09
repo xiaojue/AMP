@@ -126,7 +126,7 @@ import store from '../../store/index.js';
 import actions from '../../store/actions/index.js';
 
 export default {
-	name: 'Project',
+	name: 'ProjectList',
 	data() {
 		return {
 			type: null,
