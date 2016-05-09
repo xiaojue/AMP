@@ -28,7 +28,7 @@ var vendorPlugin = new webpack.optimize.CommonsChunkPlugin({
 });
 var webpackConfig = {
     entry: {
-        amp: './src/js/app.js',
+        amp: ['./src/js/app.js', './src/js/debug.js'],
         vendor: [
             'vue', 
             'vuex', 
@@ -83,6 +83,9 @@ gulp.task('clean', function() {
 });
 
 gulp.task('js', function() {
+    if(argv.env == 'pro'){
+        webpackConfig.entry.amp.pop();
+    }
     return gulp
         .src('./src/js/app.js')
         .pipe(gulpWebpack(webpackConfig))
