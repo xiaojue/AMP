@@ -1,13 +1,16 @@
 <template>
-
 <div class="main_con">
 	<div class="conent_list text_shadow">
 		<div class="top">
 			<p class="title">项目详情</p>
-			<!-- <a class="btn btn_success" href="javascript:void(0)">新建项目</a> -->
 		</div>
 		<div class="middle">
-			<h1>detail</h1>
+			<div class="item_con">
+				<div class="item">
+					<span>项目名称：</span>
+					<p>{{projectDetail.name}}</p>
+				</div>
+			</div>
 		</div>
 		<div class="bottom">
 			<div class="btn_con">
@@ -17,9 +20,6 @@
 		</div>
 	</div>
 </div>
-
-
-
 </template>
 
 <style scoped>
@@ -36,27 +36,47 @@
 
 <script>
 
+import $ from 'jquery';
+
+import store from '../../store/index.js';
+import actions from '../../store/actions/index.js';
 
 export default {
 	name: 'ProjectDetail',
 	data() {
 		return {
 			projectDetail: {
-				id: '1111',
-				name: 'AMP',
-				desc: 'API管理平台',
-				creator: 'wangchunpeng@gomeplus.com',
-				creatTime: 1461908909241,
-				member: ['luoye@gomeplus.com','wangchunpeng@gomeplus.com'],
-				apiNum: 10
+				
 			},
 			test: {}
 		}
 	},
+	vuex: {
+		getters: {
+
+		},
+		actions: actions
+	},
+	methods: {
+		getProjectDetail(id) {
+			actions.loading(store, true);
+			$.ajax({
+				url: '/api/collection',
+				type: 'get',
+				data: {
+					id: id
+				},
+				success: (res) => {
+					this.projectDetail = res.data[0];
+					actions.loading(store, false);
+				}
+			})
+		}
+	},
 	route: {
 		data(transtion) {
-			console.log(transtion.to.params.id);
-			// 拿到id请求数据赋值projectDetail渲染界面
+			var id = transtion.to.params.id;
+			this.getProjectDetail(id);
 		}
 	}
 }

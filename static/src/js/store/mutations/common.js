@@ -1,6 +1,6 @@
 
-export const LOADING = (state, params) => {
-	state.loading = params;
+export const LOADING = (state, showOrHide) => {
+	state.loading = showOrHide;
 }
 
 export const ALERT = (state, params) => {
@@ -24,4 +24,14 @@ export const CONFIRM = (state, params) => {
 
 export const HIDECONFIRM = (state) => {
     state.confirmConfig.show = false;
+}
+
+// 设置自定义背景url
+export const SETBGURL = (state, url) => {
+	state.bgImgUrl = url;
+}
+
+// 设置用户信息
+export const SETUSERINFO = (state, userInfo) => {
+	state.userInfo = userInfo;
 }

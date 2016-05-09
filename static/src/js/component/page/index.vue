@@ -23,17 +23,16 @@
 						<p v-if="loginForm.passowrd.$error.required">密码不能为空</p>
 					</div>
 				</label>
-				<div class="remeber">
+				<div class="remember">
 					<label>
-						<input type="checkbox" v-model="model.remeber"></input>
+						<input type="checkbox" v-model="model.remember"></input>
 						<span>保存密码</span>				
 					</label>
 				</div>
 				<div class="errors">
-					<p>密码不能为空</p>
+					<p>{{extraErr}}</p>
 				</div>
 				<button class="submit" type="submit">登录</button>
-				<a v-link="{name: 'projectList', params: {type: 'mine'}}">假装登录成功</a>
 			</form>
 		</div>
 	</section>
@@ -145,7 +144,7 @@
 .login form label:first-child{
 	margin-top: 0px;
 }
-.remeber{
+.remember{
 	color: #fff;
 	font-size: 12px;
 	line-height: 32px;
@@ -153,10 +152,10 @@
 	-webkit-user-select: none;
 	margin-top: 15px;
 }
-.remeber>label{
+.remember>label{
 	cursor: pointer;
 }
-.remeber>label input {
+.remember>label input {
 	display: inline-block;
 	vertical-align: middle;
 	margin-right: 5px;
@@ -198,20 +197,34 @@
 
 <script>
 
+import $ from 'jquery';
+
 import Vue from 'vue';
 import * as vueForm from 'vue-form'; 
 
 Vue.use(vueForm);
+
+import store from '../../store/index.js';
+import actions from '../../store/actions/index.js';
+
+import utils from '../../util/index.js';
 
 export default {
 	name: 'Index',
 	data(){
 		return {
 			model: {
-				remeber: true
+				remember: true
 			},
-			loginForm: {}
+			loginForm: {},
+			extraErr: null
 		}
+	},
+	vuex: {
+		getters: {
+
+		},
+		actions: actions
 	},
 	created(){
 
@@ -219,9 +232,25 @@ export default {
 	},
 	methods: {
 		login(){
-			console.log(this.model);
 			// 登录验证，获取用户基本信息
-			// console.log('Index');
+			$.ajax({
+				url: '/api/login',
+				type: 'post',
+				data: {
+					email: this.model.email,
+					password: this.model.passowrd,
+					remember: this.model.remember ? 1 : 0
+				},
+				success: (res) => {
+					if(res.iserror && res.code === 400){
+						this.extraErr = res.msg;
+					}else{
+						actions.setUserInfo(store,utils.formatUserInfo(res.data));
+						this.$route.router.go('/main/project/list/mine');
+					}
+				}
+			})
+
 		}
 	}
 }

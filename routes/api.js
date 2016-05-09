@@ -13,7 +13,7 @@ const router = Router({
 for(let item of tables){
     router
         .get('/'+item, async (ctx,next) => {
-            console.log('getttttttt');
+            console.log('get');
             let sql = "select * from " + item,
                 res = await ctx.mysqlQuery(sql,ctx.query,{
                     type: "GET"
@@ -42,35 +42,72 @@ for(let item of tables){
                 msg: ''
             };
         })
-        .put('/'+item+'/:id', async (ctx,next) => {
+        .put('/'+item, async (ctx,next) => {
             console.log("put");
+            let res = await checkId(ctx,item);
+            if(res){
+                ctx.body = {
+                    code: 400,
+                    data: '',
+                    iserror: 1,
+                    msg: res
+                }
+                return;
+            }
             let sql = 'update '+item,
-                res = await ctx.mysqlQuery(sql,ctx.body,{
+                res1 = await ctx.mysqlQuery(sql,ctx.body,{
                     type: 'PUT',
-                    params: {id: ctx.params.id}
+                    params: {id: ctx.query.id}
+                }),
+                sql2 = "select * from "+ item + " where id= " + ctx.query.id,
+                result = await db.query(sql2,{},{
+                    type: "GET"
                 });
             ctx.body = {
                 code: 200,
-                data: res,
+                data: result,
                 iserror: 0,
                 msg: ''
             };
         })
-        .del('/'+ item +'/:id', async (ctx, next)=> {
+        .del('/'+ item, async (ctx, next)=> {
             console.log("del");
+            let res = await checkId(ctx,item);
+            if(res){
+                ctx.body = {
+                    code: 400,
+                    data: '',
+                    iserror: 1,
+                    msg: res
+                }
+                return;
+            }
             let sql = 'delete from '+item,
-                res = await ctx.mysqlQuery(sql,{},{
+                result = await ctx.mysqlQuery(sql,{},{
                     type: 'DELETE',
-                    params: {id: ctx.params.id}
+                    params: {id: ctx.query.id}
                 });
             ctx.body = {
                 code: 200,
-                data: res,
+                data: result,
                 iserror: 0,
                 msg: ''
             };
         })
 }
+var checkId = async(ctx,item)=>{
+    let id = ctx.query.id;
+    if(!id){
+        return '请填写接口的ID';
+    }
+    let sql = 'select * from ' + item + " where id = " + id,
+        items = await db.query(sql,{},{
+            type: "GET"
+        });
+    if(!items.length){
+        return '请填写正确的Id';
+    }
+    return;
+}
 
 module.exports = router;
-

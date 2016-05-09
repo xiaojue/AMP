@@ -8,6 +8,4 @@ import * as common from './common.js';
 utils.mixin(mutations, common);
 
 
-
-
 export default mutations;
