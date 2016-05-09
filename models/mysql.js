@@ -79,6 +79,7 @@ const DecSql = {
         return sql;
     }
 }
+
 module.exports.query = function(sql,values,options){
     sql = DecSql[options.type](sql,values,options);
     console.log(sql);
