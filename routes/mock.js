@@ -4,7 +4,6 @@
  * @date 2016-05-03
  */
  import Router from 'koa-router';
- import db from '../models/mysql';
 
  const api = Router();
  /**
@@ -13,7 +12,7 @@
 var checkUrl = async(ctx,type)=>{
     let url = ctx.request.url,
         sql = 'select * from urls where url = "' + url + '" and type = "'+ type +'"',
-        res = await db.query(sql,ctx.query,{
+        res = await ctx.mysqlQuery(sql,ctx.query,{
             type: "GET"
         });
     return res;
@@ -23,7 +22,7 @@ var checkUrl = async(ctx,type)=>{
 **/
 var getResult = async(ctx,item_id)=>{
     let sql = 'select * from results where url_id = ' + item_id,
-        res = await db.query(sql,ctx.query,{
+        res = await ctx.mysqlQuery(sql,ctx.query,{
             type: "GET"
         });
     return res;

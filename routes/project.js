@@ -4,14 +4,13 @@
  * @date 2016-05-03
  */
 import Router from 'koa-router';
-import db from '../models/mysql';
 const router = Router({
     prefix: '/api'
 });
 
 router.get('/urls/all', async (ctx,next)=>{
     let sql = "select * from urls",
-        urls = await db.query(sql,ctx.query,{
+        urls = await ctx.mysqlQuery(sql,ctx.query,{
             type: "GET"
         }),
         arr_res = [];
@@ -19,10 +18,10 @@ router.get('/urls/all', async (ctx,next)=>{
         let res = {},
             sql2 = 'select * from arguments where url_id = ' + url["id"],
             sql3 = 'select * from results where url_id = ' + url["id"],
-            args = await db.query(sql2,{},{
+            args = await ctx.mysqlQuery(sql2,{},{
                 type: "GET"
             }),
-            results = await db.query(sql3,{},{
+            results = await ctx.mysqlQuery(sql3,{},{
                 type: "GET"
             });
 

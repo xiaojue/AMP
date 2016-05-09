@@ -4,7 +4,6 @@
  * @date 2016-04-29
  */
 import Router from 'koa-router';
-import db from '../models/mysql';
 
 const tables = ['urls','collection','results','arguments']
 const router = Router({
@@ -16,7 +15,7 @@ for(let item of tables){
         .get('/'+item, async (ctx,next) => {
             console.log('getttttttt');
             let sql = "select * from " + item,
-                res = await db.query(sql,ctx.query,{
+                res = await ctx.mysqlQuery(sql,ctx.query,{
                     type: "GET"
                 });
             ctx.body = {
@@ -29,11 +28,11 @@ for(let item of tables){
         .post('/'+item,async (ctx,next) => {
             console.log("post");
             let sql = "insert into " + item,
-                res = await db.query(sql,ctx.body,{
+                res = await ctx.mysqlQuery(sql,ctx.body,{
                     type: "POST"
                 }),
                 sql2 = "select * from "+ item + " where id=" + res['insertId'],
-                result = await db.query(sql2,{},{
+                result = await ctx.mysqlQuery(sql2,{},{
                     type: "GET"
                 });
             ctx.body = {
@@ -46,7 +45,7 @@ for(let item of tables){
         .put('/'+item+'/:id', async (ctx,next) => {
             console.log("put");
             let sql = 'update '+item,
-                res = await db.query(sql,ctx.body,{
+                res = await ctx.mysqlQuery(sql,ctx.body,{
                     type: 'PUT',
                     params: {id: ctx.params.id}
                 });
@@ -60,7 +59,7 @@ for(let item of tables){
         .del('/'+ item +'/:id', async (ctx, next)=> {
             console.log("del");
             let sql = 'delete from '+item,
-                res = await db.query(sql,{},{
+                res = await ctx.mysqlQuery(sql,{},{
                     type: 'DELETE',
                     params: {id: ctx.params.id}
                 });
