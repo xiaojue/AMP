@@ -1,4 +1,7 @@
 
+import $ from 'jquery';
+
+
 export const loading = (store, params) => {
 	store.dispatch('LOADING', params);
 }
@@ -12,4 +15,12 @@ export const alert = (store, params) => {
 
 export const confirm = (store, params) => {
 	store.dispatch('CONFIRM', params);
+}
+
+export const setBgUrl = (store, url) => {
+	store.dispatch('SETBGURL', url);
+}
+
+export const setUserInfo = (store, userInfo) => {
+	store.dispatch('SETUSERINFO', userInfo);
 }

@@ -23,14 +23,14 @@
 						<p v-if="loginForm.passowrd.$error.required">密码不能为空</p>
 					</div>
 				</label>
-				<div class="remeber">
+				<div class="remember">
 					<label>
-						<input type="checkbox" v-model="model.remeber"></input>
+						<input type="checkbox" v-model="model.remember"></input>
 						<span>保存密码</span>				
 					</label>
 				</div>
 				<div class="errors">
-					<p>密码不能为空</p>
+					<p>{{extraErr}}</p>
 				</div>
 				<button class="submit" type="submit">登录</button>
 				<a v-link="{name: 'projectList', params: {type: 'mine'}}">假装登录成功</a>
@@ -145,7 +145,7 @@
 .login form label:first-child{
 	margin-top: 0px;
 }
-.remeber{
+.remember{
 	color: #fff;
 	font-size: 12px;
 	line-height: 32px;
@@ -153,10 +153,10 @@
 	-webkit-user-select: none;
 	margin-top: 15px;
 }
-.remeber>label{
+.remember>label{
 	cursor: pointer;
 }
-.remeber>label input {
+.remember>label input {
 	display: inline-block;
 	vertical-align: middle;
 	margin-right: 5px;
@@ -198,20 +198,32 @@
 
 <script>
 
+import $ from 'jquery';
+
 import Vue from 'vue';
 import * as vueForm from 'vue-form'; 
 
 Vue.use(vueForm);
+
+import store from '../../store/index.js';
+import actions from '../../store/actions/index.js';
 
 export default {
 	name: 'Index',
 	data(){
 		return {
 			model: {
-				remeber: true
+				remember: true
 			},
-			loginForm: {}
+			loginForm: {},
+			extraErr: null
 		}
+	},
+	vuex: {
+		getters: {
+
+		},
+		actions: actions
 	},
 	created(){
 
@@ -219,9 +231,26 @@ export default {
 	},
 	methods: {
 		login(){
-			console.log(this.model);
+			var _this = this;
 			// 登录验证，获取用户基本信息
-			// console.log('Index');
+			$.ajax({
+				url: '/api/login',
+				type: 'post',
+				data: {
+					email: _this.model.email,
+					password: _this.model.passowrd,
+					remember: _this.model.remember ? 1 : 0
+				},
+				success: (res) => {
+					if(res.iserro && res.code === '401'){
+						_this.extraErr = '密码或账号错误';
+					}else{
+						actions.setUserInfo(store, res.data);
+						_this.$route.router.go('/main/project/list/mine');
+					}
+				}
+			})
+
 		}
 	}
 }

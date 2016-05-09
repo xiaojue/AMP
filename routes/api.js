@@ -55,11 +55,11 @@ for(let item of tables){
 
 module.exports = router;
 
-// create table collection{
+// create table collection(
 //     id int not null AUTO_INCREMENT,
 //     name varchar(50),
 //     PRIMARY KEY (`id`)
-// }
+// );
 
 // CREATE TABLE urls (
 //       id int not null  AUTO_INCREMENT,

@@ -9,6 +9,7 @@
 import $ from 'jquery';
 
 import store from '../store/index.js';
+import actions from '../store/actions/index.js';
 
 export default {
 	name: 'App',
@@ -23,18 +24,28 @@ export default {
 			bgImgUrl: () => {
 				return store.state.bgImgUrl
 			}
-		}
+		},
+		actions: actions
 	},
 	methods: {
-		getUserInfo: () => {
 
-		}
 	},
 	created() {
-		// 设置背景图片（自定义主题）
-		$('#app').css('background-image', 'url(' + this.bgImgUrl + ')');
-		// 初次加载获取用户信息，如未登录跳转到 '/'，如登录跳转到 '/main/project'
-		// console.log('app.vue');
+		var _this = this;
+		$.ajax({
+			url: '/api/login',
+			type: 'get',
+			success: (res) => {
+				if(res.iserro && res.code === 401){
+					// 未登录，跳转到登录页面
+					_this.$route.router.go('/');
+				}else{
+					actions.setUserInfo(store, res.data);
+					// 设置背景图片，功能未开
+					// store.dispatch('SETBGURL', res.data.bgUlr);
+				}
+			}
+		})
 	}
 }
 

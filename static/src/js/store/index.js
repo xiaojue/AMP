@@ -22,9 +22,7 @@ const state = {
 		apply: 'func',
 		cancle: 'func'
 	},
-	userInfo: {
-
-	}
+	userInfo: {}
 }
 
 import actions from './actions/index.js';
