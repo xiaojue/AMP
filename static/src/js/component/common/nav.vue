@@ -2,12 +2,12 @@
 	<nav class="con text_shadow">
 		<div class="user_info">
 			<div class="avatar">
-				<img src="http://aqvatarius.com/themes/taurus_v12/html/img/example/user/dmitry_b.jpg">
+				<img :src="userInfo.avatar">
 			</div>
 			<div class="desc">
-				<p>骆也</p>
-				<p>前端工程师</p>
-				<p>luoye@gomeplus.com</p>
+				<p>{{userInfo.userName}}</p>
+				<p>{{userInfo.role}}</p>
+				<p>{{userInfo.email}}</p>
 			</div>
 		</div>
 		<div class="item_con">
@@ -158,11 +158,20 @@
 
 <script>
 
+import store from '../../store/index.js';
+
 export default {
 	name: 'Left',
 	data() {
 		return {
 
+		}
+	},
+	vuex: {
+		getters: {
+			userInfo: () => {
+				return store.state.userInfo;
+			}
 		}
 	},
 	methods: {

@@ -3,7 +3,7 @@
 		<div class="conent_list text_shadow">
 			<div class="top">
 				<p class="title">{{titleMap[type]}}</p>
-				<a class="btn btn_success" v-tips="['bottom', '标题']" href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: 'new'}}">新建项目</a>
+				<a class="btn btn_success" href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: 'new'}}">新建项目</a>
 			</div>
 			<div class="middle">
 				<div class="item_con">
@@ -12,9 +12,9 @@
 						<p>{{item.desc}}</p>
 						<a class="email" :href="'mailto:' + item.creator">{{item.creator}}</a>
 						<span>{{item.creatTime | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
-						<div class="check_detail text_shadow" v-show="showMenu[$index]" v-link="{path: '/main/project/detail', params: {id: item._id}}" :class="{in: showMenu[$index], out: !showMenu[$index]}">
-							<a href="javascript:void(0)" v-link="{name: 'projectDetail', params: {id: item._id}}">项目详情</a>
-							<a href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: item._id}}">修改项目</a>
+						<div class="check_detail text_shadow" v-show="showMenu[$index]" v-link="{path: '/main/project/detail', params: {id: item.id}}" :class="{in: showMenu[$index], out: !showMenu[$index]}">
+							<a href="javascript:void(0)" v-link="{name: 'projectDetail', params: {id: item.id}}">项目详情</a>
+							<a href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: item.id}}">修改项目</a>
 							<a href="javascript:void(0)">接口列表</a>
 						</div>
 					</div>
@@ -116,12 +116,17 @@
 </style>
 
 <script>
+
 import Vue from 'vue';
+import $ from 'jquery';
 
 import Pagination from '../base/pagination.vue';
 
+import store from '../../store/index.js';
+import actions from '../../store/actions/index.js';
+
 export default {
-	name: 'Project',
+	name: 'ProjectList',
 	data() {
 		return {
 			type: null,
@@ -139,127 +144,45 @@ export default {
 					// 回调
 				}
 			},
-			projects: [
-				{
-					_id: '123123123',
-					name: 'DataPlatform',
-					desc: '美信数据平台',
-					creator: 'fuqiang-ds1@gomeplus.com',
-					creatTime: 1461908775821,
-					member: ['yanglei-ds1@gomeplus.com', 'luoye@gomeplus.com'],
-					apiNum: 60,
-					public: true
-				},
-				{
-					_id: '456456456',
-					name: 'AMP',
-					desc: 'API管理平台',
-					creator: 'wangchunpeng@gomeplus.com',
-					creatTime: 1461908909241,
-					member: ['luoye@gomeplus.com'],
-					apiNum: 10,
-					public: true
-				},
-				{
-					_id: '123123123',
-					name: 'DataPlatform',
-					desc: '美信数据平台',
-					creator: 'fuqiang-ds1@gomeplus.com',
-					creatTime: 1461908775821,
-					member: ['yanglei-ds1@gomeplus.com', 'luoye@gomeplus.com'],
-					apiNum: 60,
-					public: true
-				},
-				{
-					_id: '456456456',
-					name: 'AMP',
-					desc: 'API管理平台',
-					creator: 'wangchunpeng@gomeplus.com',
-					creatTime: 1461908909241,
-					member: ['luoye@gomeplus.com'],
-					apiNum: 10,
-					public: true
-				},
-				{
-					_id: '456456456',
-					name: 'AMP',
-					desc: 'API管理平台',
-					creator: 'wangchunpeng@gomeplus.com',
-					creatTime: 1461908909241,
-					member: ['luoye@gomeplus.com'],
-					apiNum: 10,
-					public: true
-				},
-				{
-					_id: '456456456',
-					name: 'AMP',
-					desc: 'API管理平台',
-					creator: 'wangchunpeng@gomeplus.com',
-					creatTime: 1461908909241,
-					member: ['luoye@gomeplus.com'],
-					apiNum: 10,
-					public: true
-				},
-				{
-					_id: '456456456',
-					name: 'AMP',
-					desc: 'API管理平台',
-					creator: 'wangchunpeng@gomeplus.com',
-					creatTime: 1461908909241,
-					member: ['luoye@gomeplus.com'],
-					apiNum: 10,
-					public: true
-				},
-				{
-					_id: '456456456',
-					name: 'AMP',
-					desc: 'API管理平台',
-					creator: 'wangchunpeng@gomeplus.com',
-					creatTime: 1461908909241,
-					member: ['luoye@gomeplus.com'],
-					apiNum: 10,
-					public: true
-				},
-				{
-					_id: '456456456',
-					name: 'AMP',
-					desc: 'API管理平台',
-					creator: 'wangchunpeng@gomeplus.com',
-					creatTime: 1461908909241,
-					member: ['luoye@gomeplus.com'],
-					apiNum: 10,
-					public: true
-				},
-				{
-					_id: '456456456',
-					name: 'AMP',
-					desc: 'API管理平台',
-					creator: 'wangchunpeng@gomeplus.com',
-					creatTime: 1461908909241,
-					member: ['luoye@gomeplus.com'],
-					apiNum: 10,
-					public: true
-				}
-			],
+			projects: [],
 			showMenu: {}
 		}
 	},
-	methods: {
-		test(msg, ev) {
-			console.log(ev.target);
+	vuex: {
+		getters: {
+
 		},
+		actions: actions
+	},
+	methods: {
 		toggleMenu(index) {
 			this.showMenu[index] = !this.showMenu[index];
+		},
+		getProjectData(type) {
+			actions.loading(store, true);
+			$.ajax({
+				url: '/api/collection',
+				type: 'get',
+				data: {
+
+				},
+				success: (res) => {
+					this.projects = res.data;
+					this.projects.forEach((item, index) => {
+						Vue.set(this.showMenu, index, false);
+					});
+					actions.loading(store, false);
+				}
+			})
 		}
 	},
 	created() {
-		this.projects.forEach((item, index) => {
-			Vue.set(this.showMenu, index, false);
-		})
+		
 	},
 	route: {
 	    data(transition) {
 	    	this.type = transition.to.params.type;
+	    	this.getProjectData(this.type);
 	    }
 	},
 	components: {

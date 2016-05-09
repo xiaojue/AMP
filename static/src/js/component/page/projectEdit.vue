@@ -34,7 +34,6 @@ export default {
 	},
 	route: {
 		data(transtion) {
-			// console.log(transtion.to.params.id);
 			this.id = transtion.to.params.id;
 		}
 	}
