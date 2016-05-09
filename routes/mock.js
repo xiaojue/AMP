@@ -37,23 +37,8 @@ var getContent = (res)=>{
     }
     return res;
 }
-
-api.get("*",async (ctx,next)=> {
-    let urls = await checkUrl(ctx,'GET');
-    if(!urls.length){
-        ctx.status = 404;
-        return;
-    }
-    let res = await getResult(ctx,urls[0]["id"]);
-    if(!res.length){
-        ctx.status = 404;
-        return;
-    }
-    ctx.body = getContent(res[0]);
-});
-
-api.post("*",async (ctx,next)=> {
-    let urls = await checkUrl(ctx,'POST');
+api.all("*",async (ctx,next)=>{
+    let urls = await checkUrl(ctx,ctx.request.method);
     if(!urls.length){
         ctx.status = 404;
         return;

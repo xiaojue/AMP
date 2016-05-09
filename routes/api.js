@@ -38,7 +38,7 @@ for(let item of tables){
             let sql = 'update '+item,
                 res = await db.query(sql,ctx.body,{
                     type: 'PUT',
-                    params: ctx.params
+                    params: {id: ctx.params.id}
                 });
             ctx.body = res;
         })
@@ -47,7 +47,7 @@ for(let item of tables){
             let sql = 'delete from '+item,
                 res = await db.query(sql,{},{
                     type: 'DELETE',
-                    params: ctx.params
+                    params: {id: ctx.params.id}
                 });
             ctx.body = res;
         })
@@ -55,6 +55,11 @@ for(let item of tables){
 
 module.exports = router;
 
+// create table collection{
+//     id int not null AUTO_INCREMENT,
+//     name varchar(50),
+//     PRIMARY KEY (`id`)
+// }
 
 // CREATE TABLE urls (
 //       id int not null  AUTO_INCREMENT,
@@ -63,7 +68,7 @@ module.exports = router;
 //       collection_id INT NOT NULL,
 //       PRIMARY KEY (`id`),
 //       CONSTRAINT FOREIGN KEY (collection_id) REFERENCES collection(id)
-//       ON DELETE  RESTRICT  ON UPDATE CASCADE
+//       ON DELETE CASCADE ON UPDATE CASCADE
 // );
 
 // CREATE TABLE results (
@@ -72,7 +77,7 @@ module.exports = router;
 //       url_id INT NOT NULL,
 //       PRIMARY KEY (`id`),
 //       CONSTRAINT FOREIGN KEY (url_id) REFERENCES urls(id)
-//       ON DELETE  RESTRICT  ON UPDATE CASCADE
+//       ON DELETE CASCADE ON UPDATE CASCADE
 // );
 
 // CREATE TABLE arguments (
@@ -83,7 +88,7 @@ module.exports = router;
 //       url_id INT NOT NULL,
 //       PRIMARY KEY (`id`),
 //       CONSTRAINT FOREIGN KEY (url_id) REFERENCES urls(id)
-//       ON DELETE  RESTRICT  ON UPDATE CASCADE
+//       ON DELETE CASCADE ON UPDATE CASCADE
 // );
 
 // CREATE TABLE users (
