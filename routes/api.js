@@ -19,7 +19,12 @@ for(let item of tables){
                 res = await db.query(sql,ctx.query,{
                     type: "GET"
                 });
-            ctx.body = res;
+            ctx.body = {
+                code: 200,
+                data: res,
+                iserror: 0,
+                msg: ''
+            };
         })
         .post('/'+item,async (ctx,next) => {
             console.log("post");
@@ -31,7 +36,12 @@ for(let item of tables){
                 result = await db.query(sql2,{},{
                     type: "GET"
                 });
-            ctx.body = result[0];
+            ctx.body = {
+                code: 200,
+                data: result[0],
+                iserror: 0,
+                msg: ''
+            };
         })
         .put('/'+item+'/:id', async (ctx,next) => {
             console.log("put");
@@ -40,7 +50,12 @@ for(let item of tables){
                     type: 'PUT',
                     params: {id: ctx.params.id}
                 });
-            ctx.body = res;
+            ctx.body = {
+                code: 200,
+                data: res,
+                iserror: 0,
+                msg: ''
+            };
         })
         .del('/'+ item +'/:id', async (ctx, next)=> {
             console.log("del");
@@ -49,7 +64,12 @@ for(let item of tables){
                     type: 'DELETE',
                     params: {id: ctx.params.id}
                 });
-            ctx.body = res;
+            ctx.body = {
+                code: 200,
+                data: res,
+                iserror: 0,
+                msg: ''
+            };
         })
 }
 

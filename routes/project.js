@@ -31,6 +31,11 @@ router.get('/urls/all', async (ctx,next)=>{
         res["results"] = results;
         arr_res.push(res);
     }
-    ctx.body = arr_res;
+    ctx.body = {
+        code: 200,
+        data: arr_res,
+        iserror: 0,
+        msg: ''
+    };
 });
 module.exports = router;
