@@ -46,7 +46,7 @@ export default {
 	created() {
 		this.$http({
 			url: '/api/login',
-			type: 'get',
+			method: 'get',
 		}).then((res) => {
 			var resData = res.data;
 			if(resData.iserror && resData.code === 401){
@@ -54,6 +54,7 @@ export default {
 				this.$route.router.go('/');
 			}else{
 				actions.setUserInfo(store, utils.formatUserInfo(resData.data));
+				this.$route.router.go('/main/project/list/mine');
 				// 设置背景图片，功能未开
 				// store.dispatch('SETBGURL', resData.data.bgUlr);
 			}

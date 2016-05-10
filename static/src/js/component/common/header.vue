@@ -84,7 +84,7 @@ export default{
 		logout() {
 			this.$http({
 				url: '/api/logout',
-				type: 'post',
+				method : 'post',
 			}).then((res) => {
 				if(!res.data.iserror){
 					this.$route.router.go('/');

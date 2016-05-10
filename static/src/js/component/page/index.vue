@@ -233,7 +233,7 @@ export default {
 			// 登录验证，获取用户基本信息
 			this.$http({
 				url: '/api/login',
-				type: 'post',
+				method: 'post',
 				data: {
 					email: this.model.email,
 					password: this.model.passowrd,

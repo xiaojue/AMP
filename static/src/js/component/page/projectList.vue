@@ -161,7 +161,7 @@ export default {
 			actions.loading(store, true);
 			this.$http({
 				url: '/api/collection',
-				type: 'get',
+				method: 'get',
 				data: {
 
 				}
