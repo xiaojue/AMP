@@ -70,6 +70,26 @@ router.redirect({
 	'*': '/main/project/list/mine'
 })
 
+import store from 'store';
+import actions from 'actions';
+Vue.http.interceptors.push({
+    request: function (request) {
+        return request;
+    },
+    response: function (response) {
+    	const resData = response.data;
+    	// 全局的统一权限认证
+    	if(resData.iserror && resData.code === 401){
+    		// 未登录，跳转到登录页面
+    		this.$route.router.go('/');
+    		actions.checkLogin(store, false);
+    	}else{
+    		actions.checkLogin(store, true);
+    	}
+        return response;
+    }
+});
+
 import App from './component/app.vue';
 router.start(App, '#app');
 

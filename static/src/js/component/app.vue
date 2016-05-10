@@ -31,6 +31,9 @@ export default {
 		getters: {
 			bgImgUrl: () => {
 				return store.state.bgImgUrl;
+			},
+			isLogin: () => {
+				return store.state.isLogin;
 			}
 		},
 		actions: actions
@@ -48,11 +51,8 @@ export default {
 			url: '/api/login',
 			method: 'get',
 		}).then((res) => {
-			var resData = res.data;
-			if(resData.iserror && resData.code === 401){
-				// 未登录，跳转到登录页面
-				this.$route.router.go('/');
-			}else{
+			if(this.isLogin){
+				var resData = res.data;
 				actions.setUserInfo(store, utils.formatUserInfo(resData.data));
 				this.$route.router.go('/main/project/list/mine');
 				// 设置背景图片，功能未开

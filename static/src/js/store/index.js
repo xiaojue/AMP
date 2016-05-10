@@ -22,6 +22,7 @@ const state = {
 		apply: 'func',
 		cancle: 'func'
 	},
+	isLogin: false,
 	userInfo: {}
 }
 

@@ -20,3 +20,7 @@ export const setBgUrl = (store, url) => {
 export const setUserInfo = (store, userInfo) => {
 	store.dispatch('SETUSERINFO', userInfo);
 }
+
+export const checkLogin = (store, isLogin) => {
+	store.dispatch('CHECKLOGIN', isLogin);	
+}

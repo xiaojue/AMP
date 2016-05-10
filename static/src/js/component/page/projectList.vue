@@ -149,7 +149,9 @@ export default {
 	},
 	vuex: {
 		getters: {
-
+			isLogin: () => {
+				return store.state.isLogin;
+			}
 		},
 		actions: actions
 	},
@@ -166,17 +168,14 @@ export default {
 
 				}
 			}).then((res) => {
-				var resData = res.data;
-				if(resData.iserror && resData.code === 401){
-					// 未登录，跳转到登录页面
-					this.$route.router.go('/');
-				}else{
+				if(this.isLogin){
+					var resData = res.data;
 					this.projects = resData.data;
 					this.projects.forEach((item, index) => {
 						Vue.set(this.showMenu, index, false);
 					});
-					actions.loading(store, false);
 				}
+				actions.loading(store, false);
 			})
 		}
 	},

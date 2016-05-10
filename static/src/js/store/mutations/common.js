@@ -35,3 +35,7 @@ export const SETBGURL = (state, url) => {
 export const SETUSERINFO = (state, userInfo) => {
 	state.userInfo = userInfo;
 }
+
+export const CHECKLOGIN = (state, isLogin) => {
+	state.isLogin = isLogin;
+}
