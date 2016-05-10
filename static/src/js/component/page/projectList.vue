@@ -167,16 +167,23 @@ export default {
 				}
 			}).then((res) => {
 				var resData = res.data;
-				this.projects = resData.data;
-				this.projects.forEach((item, index) => {
-					Vue.set(this.showMenu, index, false);
-				});
-				actions.loading(store, false);
+				if(resData.iserror && resData.code === 401){
+					// 未登录，跳转到登录页面
+					this.$route.router.go('/');
+				}else{
+					this.projects = resData.data;
+					this.projects.forEach((item, index) => {
+						Vue.set(this.showMenu, index, false);
+					});
+					actions.loading(store, false);
+				}
 			})
 		}
 	},
 	created() {
-		
+		this.paginationConf.onChange = () => {
+			console.log(this);
+		}
 	},
 	route: {
 	    data(transition) {
