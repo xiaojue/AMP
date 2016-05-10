@@ -1,30 +1,28 @@
 <template>
-	<div class="main_con">
-		<div class="conent_list text_shadow">
-			<div class="top">
-				<p class="title">{{titleMap[type]}}</p>
-				<a class="btn btn_success" href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: 'new'}}">新建项目</a>
-			</div>
-			<div class="middle">
-				<div class="item_con">
-					<div class="item" v-for="item in projects" @mouseenter="toggleMenu($index)" @mouseleave="toggleMenu($index)">
-						<h2>{{item.name}}</h2>
-						<p>{{item.desc}}</p>
-						<a class="email" :href="'mailto:' + item.creator">{{item.creator}}</a>
-						<span>{{item.creatTime | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
-						<div class="check_detail text_shadow" v-show="showMenu[$index]" v-link="{path: '/main/project/detail', params: {id: item.id}}" :class="{in: showMenu[$index], out: !showMenu[$index]}">
-							<a href="javascript:void(0)" v-link="{name: 'projectDetail', params: {id: item.id}}">项目详情</a>
-							<a href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: item.id}}">修改项目</a>
-							<a href="javascript:void(0)">接口列表</a>
-						</div>
+	<m-main-con>
+		<m-top>
+			<p class="title">{{titleMap[type]}}</p>
+			<a class="btn btn_success" href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: 'new'}}">新建项目</a>
+		</m-top>
+		<m-middle>
+			<div class="item_con">
+				<div class="item" v-for="item in projects" @mouseenter="toggleMenu($index)" @mouseleave="toggleMenu($index)">
+					<h2>{{item.name}}</h2>
+					<p>{{item.desc}}</p>
+					<a class="email" :href="'mailto:' + item.creator">{{item.creator}}</a>
+					<span>{{item.creatTime | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
+					<div class="check_detail text_shadow" v-show="showMenu[$index]" v-link="{path: '/main/project/detail', params: {id: item.id}}" :class="{in: showMenu[$index], out: !showMenu[$index]}">
+						<a href="javascript:void(0)" v-link="{name: 'projectDetail', params: {id: item.id}}">项目详情</a>
+						<a href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: item.id}}">修改项目</a>
+						<a href="javascript:void(0)">接口列表</a>
 					</div>
 				</div>
 			</div>
-			<div class="bottom">
-				<m-pagination :pagination-conf="paginationConf"></m-pagination>
-			</div>
-		</div>
-	</div>
+		</m-middle>
+		<m-bottom>
+			<m-pagination :pagination-conf="paginationConf"></m-pagination>
+		</m-bottom>
+	</m-main-con>
 </template>
 
 <style scoped>
@@ -124,6 +122,12 @@ import Pagination from '../base/pagination.vue';
 import store from 'store';
 import actions from 'actions';
 
+// container component
+import con_main from '../container/main.vue';
+import con_top from '../container/top.vue';
+import con_middle from '../container/middle.vue';
+import con_bottom from '../container/bottom.vue';
+
 export default {
 	name: 'ProjectList',
 	data() {
@@ -154,6 +158,12 @@ export default {
 			}
 		},
 		actions: actions
+	},
+	components: {
+		'm-main-con': con_main,
+		'm-top': con_top,
+		'm-middle': con_middle,
+		'm-bottom': con_bottom
 	},
 	methods: {
 		toggleMenu(index) {

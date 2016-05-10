@@ -1,25 +1,23 @@
 <template>
-<div class="main_con">
-	<div class="conent_list text_shadow">
-		<div class="top">
+	<m-main-con>
+		<m-top>
 			<p class="title">项目详情</p>
-		</div>
-		<div class="middle">
+		</m-top>
+		<m-middle>
 			<div class="item_con">
 				<div class="item">
 					<span>项目名称：</span>
 					<p>{{projectDetail.name}}</p>
 				</div>
 			</div>
-		</div>
-		<div class="bottom">
+		</m-middle>
+		<m-bottom>
 			<div class="btn_con">
 				<a href="javascript:void(0)" class="btn btn_success" v-link="{name: 'projectEdit', params: {id: projectDetail.id}}">修改</a>
 				<a href="javascript:void(0)" class="btn btn_default" @click="deleteProject()">删除</a>
 			</div>
-		</div>
-	</div>
-</div>
+		</m-bottom>
+	</m-main-con>
 </template>
 
 <style scoped>
@@ -38,6 +36,12 @@
 import store from 'store';
 import actions from 'actions';
 
+// container component
+import con_main from '../container/main.vue';
+import con_top from '../container/top.vue';
+import con_middle from '../container/middle.vue';
+import con_bottom from '../container/bottom.vue';
+
 export default {
 	name: 'ProjectDetail',
 	data() {
@@ -55,6 +59,12 @@ export default {
 			}
 		},
 		actions: actions
+	},
+	components: {
+		'm-main-con': con_main,
+		'm-top': con_top,
+		'm-middle': con_middle,
+		'm-bottom': con_bottom
 	},
 	methods: {
 		getProjectDetail(id) {

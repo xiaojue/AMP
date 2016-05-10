@@ -20,16 +20,16 @@ import './filter/index.js';
 // directive
 // import './directive/tips.js';
 
-import Index from './component/page/index.vue';
-import Main from './component/page/main.vue';
+import Index from './component/main/index.vue';
+import Main from './component/main/main.vue';
 
-import ProjectList from './component/page/projectList.vue';
-import ProjectDetail from './component/page/projectDetail.vue';
-import ProjectEdit from './component/page/projectEdit.vue';
+import ProjectList from './component/project/projectList.vue';
+import ProjectDetail from './component/project/projectDetail.vue';
+import ProjectEdit from './component/project/projectEdit.vue';
 
-import ApiList from './component/page/apiList.vue';
-import ApiDetail from './component/page/apiDetail.vue';
-import ApiEdit from './component/page/apiEdit.vue';
+import ApiList from './component/api/apiList.vue';
+import ApiDetail from './component/api/apiDetail.vue';
+import ApiEdit from './component/api/apiEdit.vue';
 
 router.map({
     '/': {
