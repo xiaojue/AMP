@@ -22,7 +22,6 @@ module.exports = {
             str = str.slice(0,-4);
             sql += ' where ' + str;
         }
-        console.info(typeof values['pageIndex']);
         if(values['pageIndex'] || values['pageIndex'] == 0 && values['pageSize']){
             sql += " limit " + values['pageIndex']*20 + "," + values['pageSize'];
         }

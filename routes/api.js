@@ -18,10 +18,20 @@ for(let item of tables){
             let sql = "select * from " + item,
                 res = await ctx.mysqlQuery(sql,ctx.query,{
                     type: "GET"
+                }),
+                data = res;
+            if(ctx.query['pageSize']){
+                let items = await ctx.mysqlQuery(sql,{},{
+                    type: 'GET'
                 });
+                data = {
+                    result: res,
+                    total: items.length
+                }
+            }
             ctx.body = {
                 code: 200,
-                data: res,
+                data: data,
                 iserror: 0,
                 msg: ''
             };
