@@ -4,6 +4,7 @@
  * @date 2016-04-29
  */
 import Router from 'koa-router';
+import tborm from '../models/orm'
 
 const tables = ['urls','collection','results','arguments']
 const router = Router({
@@ -17,16 +18,36 @@ for(let item of tables){
             let sql = "select * from " + item,
                 res = await ctx.mysqlQuery(sql,ctx.query,{
                     type: "GET"
+                }),
+                data = res;
+            if(ctx.query['pageSize']){
+                let items = await ctx.mysqlQuery(sql,{},{
+                    type: 'GET'
                 });
+                data = {
+                    result: res,
+                    total: items.length
+                }
+            }
             ctx.body = {
                 code: 200,
-                data: res,
+                data: data,
                 iserror: 0,
                 msg: ''
             };
         })
         .post('/'+item,async (ctx,next) => {
             console.log("post");
+            let res_check = await checkForeignkey(ctx,item);
+            if(!res_check){
+                ctx.body = {
+                    code: 400,
+                    data: '',
+                    iserror: 1,
+                    msg: '请输入正确的字段值'
+                }
+                return;
+            }
             let sql = "insert into " + item,
                 res = await ctx.mysqlQuery(sql,ctx.body,{
                     type: "POST"
@@ -60,7 +81,7 @@ for(let item of tables){
                     params: {id: ctx.query.id}
                 }),
                 sql2 = "select * from "+ item + " where id= " + ctx.query.id,
-                result = await db.query(sql2,{},{
+                result = await ctx.mysqlQuery(sql2,{},{
                     type: "GET"
                 });
             ctx.body = {
@@ -95,19 +116,33 @@ for(let item of tables){
             };
         })
 }
-var checkId = async(ctx,item)=>{
+var checkId = async(ctx,item)=>{ //检测：在put delete中通过字符串参数传递过来的值是否是对的
     let id = ctx.query.id;
     if(!id){
         return '请填写接口的ID';
     }
     let sql = 'select * from ' + item + " where id = " + id,
-        items = await db.query(sql,{},{
+        items = await ctx.mysqlQuery(sql,{},{
             type: "GET"
         });
     if(!items.length){
         return '请填写正确的Id';
     }
     return;
+}
+var checkForeignkey = async(ctx,item)=>{ //检测：在post的传递过来的外键是否正确
+    let tb = tborm['relyon'][item];
+    if(tb){
+        let sql = "select * from " + tb["tbname"] + " where id = " + ctx.body[tb.forkey],
+            res = await ctx.mysqlQuery(sql,{},{
+                type: "GET"
+            });
+        if(res.length){
+            return true;
+        }
+        return false;
+    }
+    return true;
 }
 
 module.exports = router;
