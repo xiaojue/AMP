@@ -12,12 +12,8 @@
 
 <script>
 
-
-
-
 import Head from '../common/header.vue';
 import Nav from '../common/nav.vue';
-
 
 export default {
 	name: 'Main',

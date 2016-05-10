@@ -1,5 +1,5 @@
 <template>
-	<div class="alert" transition="fade" v-show="alertConfig.show">
+	<div class="alert transition" transition="fade" v-show="alertConfig.show">
 		<div class="alert_tip" :class="alertConfig.type">
 			<span class="iconfont" v-show="alertConfig.type === 'success'">&#xe608;</span>
 			<span class="iconfont" v-show="alertConfig.type === 'info'">&#xe60a;</span>
