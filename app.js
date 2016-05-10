@@ -14,7 +14,7 @@ import KoaBodyParser  from 'koa-better-body';
 import fs from 'fs';
 import https from 'https';
 
-import session from './koa-session2';
+import session from './koa2-cookie-session';
 
 // koa1中间件转换
 import convert from 'koa-convert';
@@ -33,12 +33,7 @@ const options = {
 
 
 app.use(KoaBodyParser());
-app.use(
-    session({
-        key: "SESSIONID",
-        maxAge: 60*60*24*1000
-    })
-);
+app.use(session());
 
 
 // middleware
