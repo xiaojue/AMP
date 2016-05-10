@@ -5,6 +5,7 @@
  */
 import Router from 'koa-router';
 import db from '../models/mysql';
+import tborm from '../models/orm'
 
 const tables = ['urls','collection','results','arguments']
 const router = Router({
@@ -27,7 +28,17 @@ for(let item of tables){
             };
         })
         .post('/'+item,async (ctx,next) => {
-            console.log("post");
+            console.log("posttttttttt");
+            let res_check = await checkForeignkey(ctx,item);
+            if(!res_check){
+                ctx.body = {
+                    code: 400,
+                    data: '',
+                    iserror: 1,
+                    msg: '请输入正确的字段值'
+                }
+                return;
+            }
             let sql = "insert into " + item,
                 res = await db.query(sql,ctx.body,{
                     type: "POST"
@@ -109,6 +120,20 @@ var checkId = async(ctx,item)=>{
         return '请填写正确的Id';
     }
     return;
+}
+var checkForeignkey = async(ctx,item)=>{
+    let tb = tborm['relyon'][item];
+    if(tb){
+        let sql = "select * from " + tb["tbname"] + " where id = " + ctx.body[tb.forkey],
+            res = await db.query(sql,{},{
+                type: "GET"
+            });
+        if(res.length){
+            return true;
+        }
+        return false;
+    }
+    return true;
 }
 
 module.exports = router;
