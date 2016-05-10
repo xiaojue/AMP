@@ -7,20 +7,20 @@
 			<div class="edit_form">
 				<div class="item">
 					<p class="title">项目名称</p>
-					<div class="form">
+					<div class="main_form">
 						<span class="iconfont">&#xe600;</span>
 						<input type="text" placeholder="请输入项目名称" v-model="projectDetail.name"></input>
 					</div>
 				</div>
 				<div class="item">
 					<p class="title">项目描述</p>
-					<div class="form">
+					<div class="main_form">
 						<textarea style="resize: none;" placeholder="请输入项目描述">{{projectDetail.desc}}</textarea>
 					</div>
 				</div>
 				<div class="item">
 					<p class="title">项目成员</p>
-					<div class="form">
+					<div class="main_form">
 						<input type="text" placeholder="请输入邮箱进行查询" v-model="memberQuery"></input>
 						<ul class="member_query_list">
 							<li v-for="item in memberQueryResult">{{item.emil}}</li>
