@@ -83,6 +83,7 @@ Vue.http.interceptors.push({
     		// 未登录，跳转到登录页面
     		this.$route.router.go('/');
     		actions.checkLogin(store, false);
+    		actions.loading(store, false);
     	}else{
     		actions.checkLogin(store, true);
     	}

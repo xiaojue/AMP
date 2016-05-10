@@ -1,5 +1,5 @@
 <template>
-<div class="loading_con transition" transition="fade" v-show="loading">
+<div class="loading_con transition" transition="loading_fade" v-show="loading">
 	<div class="loading all_center">
 		<span></span>
 		<span></span>
@@ -102,6 +102,8 @@
 
 <script>
 
+import $ from 'jquery';
+
 import Vue from 'vue';
 
 import store from 'store';
@@ -121,5 +123,47 @@ export default {
 		}
 	}
 }
+
+var loadingBeginTime = Date.now();
+Vue.transition('loading_fade', {
+	css: false,
+    beforeEnter: function (el) {
+		loadingBeginTime = Date.now();
+    },
+    enter: function (el, done) {
+    	$(el).css('opacity', 1).animate({ 
+            opacity: 1 
+        }, 300, done)
+    },
+    afterEnter: function (el) {
+        
+    },
+    enterCancelled: function (el) {
+    	$(el).stop();
+    },
+    beforeLeave: function (el) {
+        
+    },
+    leave: function (el, done) {
+        if(Date.now() - loadingBeginTime < 300){
+        	setTimeout(function(){
+        		$(el).animate({ 
+                    opacity: 0 
+                }, 300, done)
+        	}, 300);
+        }else{
+        	$(el).animate({ 
+                opacity: 0 
+            }, 300, done)
+        }
+    },
+    afterLeave: function (el) {
+        
+    },
+    leaveCancelled: function (el) {
+        $(el).stop();
+    }
+})
+
 
 </script>

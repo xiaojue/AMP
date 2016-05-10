@@ -34,7 +34,8 @@ var webpackConfig = {
             'vuex', 
             'vue-router',
             'vue-form',
-            'vue-resource'
+            'vue-resource',
+            'jquery'
         ]
     },
     output: {

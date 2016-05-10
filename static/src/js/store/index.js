@@ -11,7 +11,7 @@ const state = {
 	loading: false,
 	alertConfig: {
 		show: false,
-		msg: '提示信息',
+		msg: '',
 		type: 'info', // info/warning/success/danger
 		delay: 2500
 	},

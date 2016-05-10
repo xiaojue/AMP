@@ -14,8 +14,8 @@
 		</div>
 		<div class="bottom">
 			<div class="btn_con">
-				<a href="javascript:void(0)" class="btn btn_success" v-link="{name: 'projectEdit', params: {id: '1111'}}">修改</a>
-				<a href="javascript:void(0)" class="btn btn_default">删除</a>
+				<a href="javascript:void(0)" class="btn btn_success" v-link="{name: 'projectEdit', params: {id: projectDetail.id}}">修改</a>
+				<a href="javascript:void(0)" class="btn btn_default" @click="deleteProject()">删除</a>
 			</div>
 		</div>
 	</div>
@@ -50,7 +50,9 @@ export default {
 	},
 	vuex: {
 		getters: {
-
+			isLogin: () => {
+				return store.state.isLogin;
+			}
 		},
 		actions: actions
 	},
@@ -64,9 +66,32 @@ export default {
 					id: id
 				}
 			}).then((res) => {
-				this.projectDetail = res.data.data[0];
-				actions.loading(store, false);
+				if(this.isLogin){
+					var resData = res.data;
+					this.projectDetail = res.data.data[0];
+					actions.loading(store, false);
+				}
 			})
+		},
+		deleteProject() {
+			var _this = this;
+			actions.confirm(store, {
+				show: true,
+				msg: '是否删除本项目？',
+				apply() {
+					_this.$http({
+						url: '/api/collection?id=' + _this.projectDetail.id,
+						method: 'delete'
+					}).then((res) => {
+						actions.alert(store, {
+							show: true,
+							msg: '删除成功',
+							type: 'success'
+						})
+						_this.$route.router.go('/main/project/list/mine');
+					})
+				}
+			});
 		}
 	},
 	route: {

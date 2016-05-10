@@ -17,7 +17,7 @@ export const HIDEALERT = (state, params) => {
 export const CONFIRM = (state, params) => {
 	state.confirmConfig.show = params.show;
 	state.confirmConfig.title = params.title || '弹窗';
-	state.confirmConfig.msg = params.msg || '提示信息';
+	state.confirmConfig.msg = params.msg || '';
 	state.confirmConfig.apply = params.apply || function(){};
 	state.confirmConfig.cancle = params.cancle || function(){};
 }

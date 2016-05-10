@@ -2,8 +2,8 @@
 	<div class="confirm transition" transition="fade" v-show="confirmConfig.show">
 		<div class="msg">{{confirmConfig.msg}}</div>
 		<div class="btn_con">
-			<a href="javascript:void(0)" class="btn btn_success" @click="apply()">确认</a>
-			<a href="javascript:void(0)" class="btn btn_default" @click="cancel()">取消</a>
+			<a href="javascript:void(0)" class="btn btn_success" @click="apply(),hide()">确认</a>
+			<a href="javascript:void(0)" class="btn btn_default" @click="cancel(),hide()">取消</a>
 		</div>
 	</div>
 </template>
@@ -42,6 +42,7 @@
 <script>
 	
 import store from 'store';
+import actions from 'actions';
 
 export default {
 	name: 'Confirm',
@@ -58,6 +59,11 @@ export default {
 		},
 		cancel() {
 			this.confirmConfig.cancle && this.confirmConfig.cancle();	
+		},
+		hide() {
+			actions.confirm(store, {
+				show: false
+			})
 		}
 	}
 }
