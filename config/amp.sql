@@ -50,3 +50,13 @@ CREATE TABLE users (
   `export` varchar(255) DEFAULT NULL COMMENT '导出权限',
   PRIMARY KEY (`id`)
 );
+
+CREATE TABLE members(
+      id int not null  AUTO_INCREMENT,
+      username varchar(200) DEFAULT '',
+      email varchar(200) DEFAULT '',
+      collection_id INT NOT NULL,
+      PRIMARY KEY (`id`),
+      CONSTRAINT FOREIGN KEY (collection_id) REFERENCES collection(id)
+      ON DELETE CASCADE ON UPDATE CASCADE
+);

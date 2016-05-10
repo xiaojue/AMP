@@ -6,7 +6,7 @@
 import Router from 'koa-router';
 import tborm from '../models/orm'
 
-const tables = ['urls','collection','results','arguments']
+const tables = ['urls','collection','results','arguments','members']
 const router = Router({
     prefix: '/api'
 });
@@ -14,14 +14,16 @@ const router = Router({
 for(let item of tables){
     router
         .get('/'+item, async (ctx,next) => {
-            console.log('get');
+            // console.log('get');
             let sql = "select * from " + item,
-                res = await ctx.mysqlQuery(sql,ctx.query,{
+                querys = ctx.query,
+                res = await ctx.mysqlQuery(sql,querys,{
                     type: "GET"
                 }),
                 data = res;
-            if(ctx.query['pageSize']){
-                let items = await ctx.mysqlQuery(sql,{},{
+            if(querys['pageSize']){
+                delete querys['pageSize'];
+                let items = await ctx.mysqlQuery(sql,querys,{
                     type: 'GET'
                 });
                 data = {
@@ -37,7 +39,7 @@ for(let item of tables){
             };
         })
         .post('/'+item,async (ctx,next) => {
-            console.log("post");
+            // console.log("post");
             let res_check = await checkForeignkey(ctx,item);
             if(!res_check){
                 ctx.body = {
@@ -64,7 +66,7 @@ for(let item of tables){
             };
         })
         .put('/'+item, async (ctx,next) => {
-            console.log("put");
+            // console.log("put");
             let res = await checkId(ctx,item);
             if(res){
                 ctx.body = {
@@ -92,7 +94,7 @@ for(let item of tables){
             };
         })
         .del('/'+ item, async (ctx, next)=> {
-            console.log("del");
+            // console.log("del");
             let res = await checkId(ctx,item);
             if(res){
                 ctx.body = {
@@ -119,7 +121,7 @@ for(let item of tables){
 var checkId = async(ctx,item)=>{ //检测：在put delete中通过字符串参数传递过来的值是否是对的
     let id = ctx.query.id;
     if(!id){
-        return '请填写接口的ID';
+        return '请填写接口的Id';
     }
     let sql = 'select * from ' + item + " where id = " + id,
         items = await ctx.mysqlQuery(sql,{},{
@@ -131,9 +133,13 @@ var checkId = async(ctx,item)=>{ //检测：在put delete中通过字符串参�
     return;
 }
 var checkForeignkey = async(ctx,item)=>{ //检测：在post的传递过来的外键是否正确
-    let tb = tborm['relyon'][item];
+    let tb = tborm['relyon'][item],
+        id = ctx.body[tb.forkey];
+    if(!id){
+        return false;
+    }
     if(tb){
-        let sql = "select * from " + tb["tbname"] + " where id = " + ctx.body[tb.forkey],
+        let sql = "select * from " + tb["tbname"] + " where id = " + id,
             res = await ctx.mysqlQuery(sql,{},{
                 type: "GET"
             });

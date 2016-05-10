@@ -14,6 +14,9 @@ module.exports = {
         },
         arguments: {
             tbname: 'urls',forkey: 'url_id'
+        },
+        members: {
+            tbname: 'collection',forkey: 'collection_id'
         }
     }
 }
