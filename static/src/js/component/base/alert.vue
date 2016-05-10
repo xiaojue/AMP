@@ -7,7 +7,6 @@
 			<span class="iconfont" v-show="alertConfig.type === 'danger'">&#xe607;</span>
 		</div>
 		<div class="alert_msg">{{alertConfig.msg}}</div>
-		<!-- <div class="close">关闭</div> -->
 	</div>
 </template>
 
@@ -35,6 +34,5 @@ export default {
 		}
 	}
 }
-
 
 </script>
