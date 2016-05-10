@@ -4,7 +4,6 @@
  * @date 2016-04-29
  */
 import Router from 'koa-router';
-import db from '../models/mysql';
 import tborm from '../models/orm'
 
 const tables = ['urls','collection','results','arguments']
@@ -72,7 +71,7 @@ for(let item of tables){
                     params: {id: ctx.query.id}
                 }),
                 sql2 = "select * from "+ item + " where id= " + ctx.query.id,
-                result = await db.query(sql2,{},{
+                result = await ctx.mysqlQuery(sql2,{},{
                     type: "GET"
                 });
             ctx.body = {
@@ -113,7 +112,7 @@ var checkId = async(ctx,item)=>{
         return '请填写接口的ID';
     }
     let sql = 'select * from ' + item + " where id = " + id,
-        items = await db.query(sql,{},{
+        items = await ctx.mysqlQuery(sql,{},{
             type: "GET"
         });
     if(!items.length){
@@ -125,7 +124,7 @@ var checkForeignkey = async(ctx,item)=>{
     let tb = tborm['relyon'][item];
     if(tb){
         let sql = "select * from " + tb["tbname"] + " where id = " + ctx.body[tb.forkey],
-            res = await db.query(sql,{},{
+            res = await ctx.mysqlQuery(sql,{},{
                 type: "GET"
             });
         if(res.length){
