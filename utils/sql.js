@@ -12,14 +12,19 @@ function addQuote(value){
 
 module.exports = {
     GET: (sql,values)=> {
-        let str = '';
+        let str = '',
+            reserved = ['pageIndex','pageSize']; //预留的一些字段不在这里进行处理
         for(let key in values){
-            if(!values[key]){continue;}
+            if(!values[key] || reserved.indexOf(key) >=0){continue;}
             str += key + " = " + addQuote(values[key]) + " and ";
         }
         if(str){
             str = str.slice(0,-4);
             sql += ' where ' + str;
+        }
+        console.info(typeof values['pageIndex']);
+        if(values['pageIndex'] || values['pageIndex'] == 0 && values['pageSize']){
+            sql += " limit " + values['pageIndex']*20 + "," + values['pageSize'];
         }
         return sql;
     },

@@ -27,7 +27,7 @@ for(let item of tables){
             };
         })
         .post('/'+item,async (ctx,next) => {
-            console.log("posttttttttt");
+            console.log("post");
             let res_check = await checkForeignkey(ctx,item);
             if(!res_check){
                 ctx.body = {
@@ -106,7 +106,7 @@ for(let item of tables){
             };
         })
 }
-var checkId = async(ctx,item)=>{
+var checkId = async(ctx,item)=>{ //检测：在put delete中通过字符串参数传递过来的值是否是对的
     let id = ctx.query.id;
     if(!id){
         return '请填写接口的ID';
@@ -120,7 +120,7 @@ var checkId = async(ctx,item)=>{
     }
     return;
 }
-var checkForeignkey = async(ctx,item)=>{
+var checkForeignkey = async(ctx,item)=>{ //检测：在post的传递过来的外键是否正确
     let tb = tborm['relyon'][item];
     if(tb){
         let sql = "select * from " + tb["tbname"] + " where id = " + ctx.body[tb.forkey],
