@@ -22,8 +22,10 @@ module.exports = {
             str = str.slice(0,-4);
             sql += ' where ' + str;
         }
-        if(values['pageIndex'] || values['pageIndex'] == 0 && values['pageSize']){
-            sql += " limit " + values['pageIndex']*20 + "," + values['pageSize'];
+        if(values['pageSize']){
+            let index = values['pageIndex'] || 0,
+                pageSize = values['pageSize'];
+            sql += " limit " + index*pageSize + "," + pageSize;
         }
         return sql;
     },
