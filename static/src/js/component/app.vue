@@ -1,18 +1,23 @@
 <template>
 	<div>
 		<router-view keep-alive></router-view>
+		<m-loading></m-loading>
+		<m-alert></m-alert>
+		<m-confirm></m-confirm>
 	</div>
 </template>
 
 <script>
 
-import $ from 'jquery';
 
-import store from '../store/index.js';
-import actions from '../store/actions/index.js';
+import store from 'store';
+import actions from 'actions';
 
+import utils from 'utils';
 
-import utils from '../util/index.js';
+import Loading from './base/loading.vue';
+import Alert from './base/alert.vue';
+import Confirm from './base/confirm.vue';
 
 export default {
 	name: 'App',
@@ -33,19 +38,25 @@ export default {
 	methods: {
 
 	},
+	components: {
+		'm-loading': Loading,
+		'm-alert': Alert,
+		'm-confirm': Confirm
+	},
 	created() {
-		$.ajax({
+		this.$http({
 			url: '/api/login',
-			type: 'get',
-			success: (res) => {
-				if(res.iserror && res.code === 401){
-					// 未登录，跳转到登录页面
-					this.$route.router.go('/');
-				}else{
-					actions.setUserInfo(store, utils.formatUserInfo(res.data));
-					// 设置背景图片，功能未开
-					// store.dispatch('SETBGURL', res.data.bgUlr);
-				}
+			method: 'get',
+		}).then((res) => {
+			var resData = res.data;
+			if(resData.iserror && resData.code === 401){
+				// 未登录，跳转到登录页面
+				this.$route.router.go('/');
+			}else{
+				actions.setUserInfo(store, utils.formatUserInfo(resData.data));
+				this.$route.router.go('/main/project/list/mine');
+				// 设置背景图片，功能未开
+				// store.dispatch('SETBGURL', resData.data.bgUlr);
 			}
 		})
 	}

@@ -21,6 +21,7 @@ import convert from 'koa-convert';
 
 import routers from './routes';
 import db from './config/db.json';
+import mysqlMiddleware from './middleware/mysql';
 
 const app = new Koa();
 const httpPort = 9090;
@@ -40,9 +41,12 @@ app.use(
 );
 
 // middleware
+app.use(mysqlMiddleware);
+
 app.use(convert(Logger()));
 
 app.use(convert(Static(path.join(__dirname, 'static'))));
+
 
 for(let item of routers){
     app.use(item.routes(),item.allowedMethods());

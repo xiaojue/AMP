@@ -1,6 +1,3 @@
-
-
-
 // 格式化用户信息
 export const formatUserInfo = (userInfo) => {
 	const result = {};

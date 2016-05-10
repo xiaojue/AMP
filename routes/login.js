@@ -4,7 +4,6 @@
  * @date 2016-05-04
  */
 import Router from 'koa-router';
-import db from '../models/mysql';
 import ldap from 'ldapjs'
 
 const router = Router({
@@ -129,7 +128,7 @@ var ldapClient = function(ctx,email,pwd,remember,next){
                                     reject('密码和账户不正确');
                                 } else {
                                     let sql = "select * from users where username = '" + email + "'";
-                                    db.query(sql,{},{
+                                    ctx.mysqlQuery(sql,{},{
                                         type: "GET"
                                     }).then(function(res){
                                         return res;
@@ -144,7 +143,7 @@ var ldapClient = function(ctx,email,pwd,remember,next){
                                                     username: email,
                                                     email: email
                                                 };
-                                            db.query(sql,querys,{
+                                            ctx.mysqlQuery(sql,querys,{
                                                 type: "POST"
                                             });
                                             saveLogin(ctx,querys);

@@ -1,16 +1,12 @@
 <template>
-<div class="main_con" v-show="loading">
-	<div class="conent_list text_shadow">
-		<div class="loading_con transition" transition="fade">
-			<div class="loading all_center">
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-		</div>	
+<div class="loading_con transition" transition="fade" v-show="loading">
+	<div class="loading all_center">
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
 	</div>
 </div>
 </template>
@@ -18,7 +14,7 @@
 <style scoped>
 
 .loading_con{
-	position: absolute;
+	position: fixed;
 	width: 100%;
 	height: 100%;
 	top: 0;
@@ -108,7 +104,7 @@
 
 import Vue from 'vue';
 
-import store from '../../store/index.js';
+import store from 'store';
 
 export default {
 	name: 'Loading',

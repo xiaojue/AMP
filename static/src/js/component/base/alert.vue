@@ -1,5 +1,5 @@
 <template>
-	<div class="alert" transition="fade" v-show="alertConfig.show">
+	<div class="alert transition" transition="fade" v-show="alertConfig.show">
 		<div class="alert_tip" :class="alertConfig.type">
 			<span class="iconfont" v-show="alertConfig.type === 'success'">&#xe608;</span>
 			<span class="iconfont" v-show="alertConfig.type === 'info'">&#xe60a;</span>
@@ -7,7 +7,6 @@
 			<span class="iconfont" v-show="alertConfig.type === 'danger'">&#xe607;</span>
 		</div>
 		<div class="alert_msg">{{alertConfig.msg}}</div>
-		<!-- <div class="close">关闭</div> -->
 	</div>
 </template>
 
@@ -23,7 +22,7 @@
 
 <script>
 
-import store from '../../store/index.js';
+import store from 'store';
 
 export default {
 	name: 'Alert',
@@ -35,6 +34,5 @@ export default {
 		}
 	}
 }
-
 
 </script>

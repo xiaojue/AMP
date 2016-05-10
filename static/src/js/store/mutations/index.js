@@ -1,5 +1,5 @@
 
-import utils from '../../util/index.js';
+import utils from 'utils';
 
 const mutations = {};
 

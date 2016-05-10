@@ -197,17 +197,15 @@
 
 <script>
 
-import $ from 'jquery';
-
 import Vue from 'vue';
-import * as vueForm from 'vue-form'; 
 
+import * as vueForm from 'vue-form'; 
 Vue.use(vueForm);
 
-import store from '../../store/index.js';
-import actions from '../../store/actions/index.js';
+import store from 'store';
+import actions from 'actions';
 
-import utils from '../../util/index.js';
+import utils from 'utils';
 
 export default {
 	name: 'Index',
@@ -233,21 +231,21 @@ export default {
 	methods: {
 		login(){
 			// 登录验证，获取用户基本信息
-			$.ajax({
+			this.$http({
 				url: '/api/login',
-				type: 'post',
+				method: 'post',
 				data: {
 					email: this.model.email,
 					password: this.model.passowrd,
 					remember: this.model.remember ? 1 : 0
-				},
-				success: (res) => {
-					if(res.iserror && res.code === 400){
-						this.extraErr = res.msg;
-					}else{
-						actions.setUserInfo(store,utils.formatUserInfo(res.data));
-						this.$route.router.go('/main/project/list/mine');
-					}
+				}
+			}).then((res) => {
+				var resData = res.data;
+				if(resData.iserror && resData.code === 400){
+					this.extraErr = resData.msg;
+				}else{
+					actions.setUserInfo(store,utils.formatUserInfo(resData.data));
+					this.$route.router.go('/main/project/list/mine');
 				}
 			})
 

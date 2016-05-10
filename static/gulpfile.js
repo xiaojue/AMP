@@ -28,13 +28,13 @@ var vendorPlugin = new webpack.optimize.CommonsChunkPlugin({
 });
 var webpackConfig = {
     entry: {
-        amp: './src/js/app.js',
+        amp: ['./src/js/app.js', './src/js/debug.js'],
         vendor: [
             'vue', 
-            'jquery', 
             'vuex', 
             'vue-router',
-            'vue-form'
+            'vue-form',
+            'vue-resource'
         ]
     },
     output: {
@@ -62,7 +62,9 @@ var webpackConfig = {
     resolve: {
         extensions: ['', '.js', '.json', '.scss'],
         alias: {
-
+            utils: path.join(pwd, './src/js/util/index.js'),
+            store: path.join(pwd, './src/js/store/index.js'),
+            actions: path.join(pwd, './src/js/store/actions/index.js'),
         }
     },
 };
@@ -81,6 +83,9 @@ gulp.task('clean', function() {
 });
 
 gulp.task('js', function() {
+    if(argv.env == 'pro'){
+        webpackConfig.entry.amp.pop();
+    }
     return gulp
         .src('./src/js/app.js')
         .pipe(gulpWebpack(webpackConfig))

@@ -17,7 +17,7 @@ for(let item of tables){
         .get('/'+item, async (ctx,next) => {
             console.log('get');
             let sql = "select * from " + item,
-                res = await db.query(sql,ctx.query,{
+                res = await ctx.mysqlQuery(sql,ctx.query,{
                     type: "GET"
                 });
             ctx.body = {
@@ -40,11 +40,11 @@ for(let item of tables){
                 return;
             }
             let sql = "insert into " + item,
-                res = await db.query(sql,ctx.body,{
+                res = await ctx.mysqlQuery(sql,ctx.body,{
                     type: "POST"
                 }),
                 sql2 = "select * from "+ item + " where id=" + res['insertId'],
-                result = await db.query(sql2,{},{
+                result = await ctx.mysqlQuery(sql2,{},{
                     type: "GET"
                 });
             ctx.body = {
@@ -67,7 +67,7 @@ for(let item of tables){
                 return;
             }
             let sql = 'update '+item,
-                res1 = await db.query(sql,ctx.body,{
+                res1 = await ctx.mysqlQuery(sql,ctx.body,{
                     type: 'PUT',
                     params: {id: ctx.query.id}
                 }),
@@ -95,7 +95,7 @@ for(let item of tables){
                 return;
             }
             let sql = 'delete from '+item,
-                result = await db.query(sql,{},{
+                result = await ctx.mysqlQuery(sql,{},{
                     type: 'DELETE',
                     params: {id: ctx.query.id}
                 });
