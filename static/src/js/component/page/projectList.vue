@@ -136,8 +136,8 @@ export default {
 			},
 			paginationConf: {
 				currentPage: 1,     // 当前页
-				totalItems: 30,     // 总条数
-				itemsPerPage: 4,    // 每页条数
+				totalItems: 0,     // 总条数
+				itemsPerPage: 10,    // 每页条数
 				pagesLength: 5,     // 显示几页( 1,2,3 / 1,2,3,4,5)
 				onChange: function() {
 					// 回调
@@ -165,12 +165,14 @@ export default {
 				url: '/api/collection',
 				method: 'get',
 				data: {
-
+					pageSize: this.paginationConf.itemsPerPage,
+					pageIndex: this.paginationConf.currentPage - 1
 				}
 			}).then((res) => {
 				if(this.isLogin){
 					var resData = res.data;
-					this.projects = resData.data;
+					this.projects = resData.data.result;
+					this.paginationConf.totalItems = resData.data.total;
 					this.projects.forEach((item, index) => {
 						Vue.set(this.showMenu, index, false);
 					});
@@ -181,7 +183,7 @@ export default {
 	},
 	created() {
 		this.paginationConf.onChange = () => {
-			console.log(this);
+			this.getProjectData();
 		}
 	},
 	route: {
