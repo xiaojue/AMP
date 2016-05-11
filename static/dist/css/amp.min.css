@@ -3361,3 +3361,21 @@ textarea {
   display: inline-block;
   vertical-align: middle;
 }
+/* 编辑页面样式 */
+/* 详情页面样式 */
+.detail {
+  box-sizing: border-box;
+  padding: 0 15px;
+}
+.detail .item p.title {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 26px;
+}
+.detail .item span {
+  color: #eee;
+  font-size: 14px;
+  line-height: 26px;
+}

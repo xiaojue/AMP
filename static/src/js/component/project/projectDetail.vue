@@ -4,10 +4,26 @@
 			<p class="title">项目详情</p>
 		</m-top>
 		<m-middle>
-			<div class="item_con">
+			<div class="detail">
 				<div class="item">
-					<span>项目名称：</span>
-					<p>{{projectDetail.name}}</p>
+					<p class="title">1 项目名称</p>
+					<span>{{projectDetail.name}}</span>
+				</div>
+				<div class="item">
+					<p class="title">2 项目描述</p>
+					<span>{{projectDetail.name}}</span>
+				</div>
+				<div class="item">
+					<p class="title">3 创建人</p>
+					<span>{{projectDetail.name}}</span>
+				</div>
+				<div class="item">
+					<p class="title">4 创建时间</p>
+					<span>{{projectDetail.name}}</span>
+				</div>
+				<div class="item">
+					<p class="title">5 项目成员</p>
+					<span>{{projectDetail.name}}</span>
 				</div>
 			</div>
 		</m-middle>
