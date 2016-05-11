@@ -4,22 +4,35 @@
 			<p class="title">{{id === 'new' ? '新建项目' : '修改项目'}}</p>
 		</m-top>
 		<m-middle>
-			<div class="edit_form">
+			<div class="detail">
 				<div class="item">
-					<p class="title">项目名称</p>
+					<p class="title">1 项目名称</p>
 					<div class="main_form">
 						<span class="iconfont">&#xe600;</span>
 						<input type="text" placeholder="请输入项目名称" v-model="projectDetail.name"></input>
 					</div>
 				</div>
 				<div class="item">
-					<p class="title">项目描述</p>
+					<p class="title">2 项目描述</p>
 					<div class="main_form">
-						<textarea style="resize: none;" placeholder="请输入项目描述">{{projectDetail.desc}}</textarea>
+						<textarea maxlength="200" placeholder="请输入项目描述" v-model="projectDetail.desc">{{projectDetail.desc}}</textarea>
+						<div class="char_num">{{projectDetail.desc | length}}/200</div>
 					</div>
 				</div>
 				<div class="item">
-					<p class="title">项目成员</p>
+					<p class="title">3 创建人</p>
+					<div class="main_form">
+						<input type="text" disabled="disabled" v-model="projectDetail.name"></input>
+					</div>
+				</div>
+				<div class="item">
+					<p class="title">4 创建时间</p>
+					<div class="main_form">
+						<input type="text" disabled="disabled" v-model="projectDetail.name"></input>
+					</div>
+				</div>
+				<div class="item">
+					<p class="title">5 成员</p>
 					<div class="main_form">
 						<input type="text" placeholder="请输入邮箱进行查询" v-model="memberQuery"></input>
 						<ul class="member_query_list">
@@ -60,9 +73,16 @@ export default {
 	data() {
 		return {
 			id: null,
-			projectDetail: {},
+			projectDetail: {
+				// name: '',
+				// desc: '',
+				// creator: '',
+				// createTime: '',
+				// member: []
+			},
 			memberQuery: '',
-			memberQueryResult: []
+			memberQueryResult: [],
+			canQuit: false
 		}
 	},
 	vuex: {
@@ -79,6 +99,25 @@ export default {
 		'm-middle': con_middle,
 		'm-bottom': con_bottom
 	},
+	created() {
+		const _this = this;
+		this.$route.router.beforeEach((transition) => {
+			if(!this.canQuit){
+				transition.abort();
+				actions.confirm(store, {
+					show: true,
+					msg: '是否放弃修改？',
+					apply() {
+						_this.canQuit = true;
+						_this.$route.router.go(transition.to.path);
+					}
+				});
+				return;
+			}else{
+				transition.next();
+			}
+		})
+	},
 	methods: {
 		save() {
 			if(this.inputCheck()){
@@ -92,7 +131,7 @@ export default {
 				}
 			}).then((res) => {
 				if(this.isLogin){
-					var resData = res.data;
+					const resData = res.data;
 					actions.alert(store, {
 						show: true,
 						type: 'success',
@@ -103,18 +142,11 @@ export default {
 			})
 		},
 		cancel() {
-			var _this = this;
-			actions.confirm(store, {
-				show: true,
-				msg: '是否放弃修改？',
-				apply() {
-					if(_this.id === 'new'){
-						_this.$route.router.go('/main/project/list/mine');
-					}else{
-						_this.$route.router.go('/main/project/detail/' + _this.projectDetail.id);
-					}
-				}
-			});
+			if(this.id === 'new'){
+				this.$route.router.go('/main/project/list/mine');
+			}else{
+				this.$route.router.go('/main/project/detail/' + this.projectDetail.id);
+			}
 		},
 		inputCheck() {
 			// 错误检查
@@ -141,7 +173,7 @@ export default {
 					}
 				}).then((res) => {
 					if(this.isLogin){
-						var resData = res.data;
+						const resData = res.data;
 						this.projectDetail = resData.data[0];
 						actions.loading(store, false);
 					}

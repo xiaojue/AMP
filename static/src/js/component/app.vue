@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div :style="{backgroundImage: 'url(' + bgImgUrl + ')'}">
 		<router-view keep-alive></router-view>
 		<m-loading></m-loading>
 		<m-alert></m-alert>
@@ -52,7 +52,7 @@ export default {
 			method: 'get',
 		}).then((res) => {
 			if(this.isLogin){
-				var resData = res.data;
+				const resData = res.data;
 				actions.setUserInfo(store, utils.formatUserInfo(resData.data));
 				// 设置背景图片，功能未开
 				// store.dispatch('SETBGURL', resData.data.bgUlr);

@@ -186,7 +186,7 @@ export default {
 				}
 			}).then((res) => {
 				if(this.isLogin){
-					var resData = res.data;
+					const resData = res.data;
 					this.projects = resData.data.result;
 					this.paginationConf.totalItems = resData.data.total;
 					this.projects.forEach((item, index) => {

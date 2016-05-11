@@ -1,8 +1,8 @@
 // 格式化用户信息
 export const formatUserInfo = (userInfo) => {
 	const result = {};
-	var name = userInfo.name;
-	var _arr1 = name.split('-');
+	const name = userInfo.name;
+	const _arr1 = name.split('-');
 	result.userName = _arr1[0];
 	result.role = _arr1[2];
 	result.email = userInfo.email;

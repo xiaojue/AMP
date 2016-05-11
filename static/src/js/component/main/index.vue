@@ -240,7 +240,7 @@ export default {
 					remember: this.model.remember ? 1 : 0
 				}
 			}).then((res) => {
-				var resData = res.data;
+				const resData = res.data;
 				if(resData.iserror && resData.code === 400){
 					this.extraErr = resData.msg;
 				}else{
