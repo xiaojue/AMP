@@ -36,7 +36,7 @@
 					<div class="main_form">
 						<input type="text" placeholder="请输入邮箱进行查询" v-model="memberQuery" debounce="500"></input>
 						<ul class="member_query_list">
-							<li v-for="item in memberQueryResult">{{item.emil}}</li>
+							<li v-for="item in memberQueryResult" @click="addMember(item)">{{item.name}}</li>
 						</ul>
 						<div class="memer_list">
 							<div class="member_item">
@@ -173,6 +173,7 @@ export default {
 	},
 	methods: {
 		save() {
+			const _this = this;
 			if(this.inputCheck()){
 				return;
 			}
@@ -185,6 +186,16 @@ export default {
 				}
 			}).then((res) => {
 				if(this.isLogin){
+					// 修改成员
+					_this.$http({
+						url: '/api/members/',
+						method: 'post',
+						data: {
+							collection_id: _this.projectDetail.id,
+							
+						}
+
+					})
 					const resData = res.data;
 					actions.alert(store, {
 						show: true,
@@ -215,14 +226,20 @@ export default {
 			}
 		},
 		queryMember() {
-			// console.log(this.memberQuery);
+			const _this = this;
 			this.$http({
 				url: '/api/members/search',
 				method: 'get',
 				data: {
-					
+					query: this.memberQuery
 				}
+			}).then((res) => {
+				const resDate = res.data;
+				_this.memberQueryResult = resDate;
 			})
+		},
+		addMember(member) {
+			this.memberQueryResult.push(member);
 		}
 	},
 	route: {
