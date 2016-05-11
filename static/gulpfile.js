@@ -130,9 +130,10 @@ gulp.task('rev', function() {
 
 gulp.task('watch', function() {
     webpackConfig.watch = argv.env != 'pro';
-    gulp.start('js');
+    gulp.start(['js', 'img', 'css', 'font']);
     gulp.watch('./src/css/*', ['css']);
     gulp.watch('./src/img/*', ['img']);
+    gulp.watch('./src/font/*', ['font']);
 })
 
 gulp.task('build', ['js', 'css', 'img', 'font']);

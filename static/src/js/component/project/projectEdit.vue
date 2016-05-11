@@ -15,37 +15,27 @@
 				<div class="item">
 					<p class="title">2 项目描述</p>
 					<div class="main_form">
-						<textarea maxlength="200" placeholder="请输入项目描述" v-model="projectDetail.desc">{{projectDetail.desc}}</textarea>
-						<div class="char_num">{{projectDetail.desc | length}}/200</div>
+						<textarea maxlength="200" placeholder="请输入项目描述" v-model="projectDetail.descr">{{projectDetail.descr}}</textarea>
+						<div class="char_num">{{projectDetail.descr | length}}/200</div>
 					</div>
 				</div>
 				<div class="item">
 					<p class="title">3 创建人</p>
 					<div class="main_form">
-						<input type="text" disabled="disabled" v-model="userInfo.email"></input>
+						<input type="text" disabled="disabled" v-model="projectDetail.creater"></input>
 					</div>
 				</div>
 				<div class="item">
 					<p class="title">4 创建时间</p>
 					<div class="main_form">
-						<input type="text" disabled="disabled" value="NOW"></input>
+						<input type="text" disabled="disabled" v-model="projectDetail.ctime"></input>
 					</div>
 				</div>
 				<div class="item">
 					<p class="title">5 成员</p>
 					<div class="main_form">
-						<input type="text" placeholder="请输入邮箱进行查询" v-model="memberQuery"></input>
+						<input type="text" placeholder="请输入邮箱进行查询" v-model="memberQuery" debounce="500"></input>
 						<ul class="member_query_list">
-							<li>骆也</li>
-							<li>骆也</li>
-							<li>骆也</li>
-							<li>骆也</li>
-							<li>骆也</li>
-							<li>骆也</li>
-							<li>骆也</li>
-							<li>骆也</li>
-							<li>骆也</li>
-							<li>骆也</li>
 							<li v-for="item in memberQueryResult">{{item.emil}}</li>
 						</ul>
 						<div class="memer_list">
@@ -135,9 +125,9 @@ export default {
 			id: null,
 			projectDetail: {
 				// name: '',
-				// desc: '',
-				// creator: '',
-				// createTime: '',
+				// descr: '',
+				// creater: '',
+				// ctime: '',
 				// member: []
 			},
 			memberQuery: '',
@@ -190,7 +180,8 @@ export default {
 				url: '/api/collection' + (this.id === 'new' ? '' : '?id=' + this.id),
 				method: this.id === 'new' ? 'post' : 'put',
 				data: {
-					name: this.projectDetail.name
+					name: this.projectDetail.name,
+					descr: this.projectDetail.descr
 				}
 			}).then((res) => {
 				if(this.isLogin){
@@ -200,6 +191,7 @@ export default {
 						type: 'success',
 						msg: this.id === 'new' ? '新建成功' : '修改成功'
 					})
+					this.canQuit = true;
 					this.id === 'new' ? this.$route.router.go('/main/project/detail/' + resData.data.id) : null;
 				}
 			})
@@ -221,6 +213,15 @@ export default {
 				})
 				return true;
 			}
+		},
+		queryMember() {
+			// console.log(this.memberQuery);
+			this.$http({
+				url: '/api/members/search',
+				method: 'get',
+				
+			})
+
 		}
 	},
 	route: {
@@ -241,6 +242,13 @@ export default {
 						actions.loading(store, false);
 					}
 				})
+			}
+		}
+	},
+	watch: {
+		memberQuery: {
+			handler(val) {
+				this.queryMember();
 			}
 		}
 	}
