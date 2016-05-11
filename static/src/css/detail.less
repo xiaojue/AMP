@@ -1,0 +1,73 @@
+/* 详情页面样式 */
+
+
+.detail{
+	box-sizing: border-box;
+	padding: 0 20px 50px;
+	.item{
+		p.title{
+			margin-top: 30px;
+			margin-bottom: 10px;
+			font-size: 18px;
+			font-weight: bold;
+			line-height: 26px;
+		}
+		span.main_p{
+			color: #eee;
+			font-size: 14px;
+			line-height: 26px;
+		}
+		.main_form{
+			position: relative;
+			margin-left: 20px;
+			.iconfont{
+				position: absolute;
+				font-size: 14px;
+				color: #ff5151;
+				left: -20px;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+			input{
+				width: 350px;
+				padding: 6px 7px;
+				height: 32px;
+				display: inline-block;
+				cursor: text;
+				line-height: 1.5;
+				font-size: 12px;
+				color: #666;
+				background-color: #fff;
+				border: 1px solid #d9d9d9;
+				border-radius: 4px;
+				box-sizing: border-box;
+				transition: all ease 0.2s;
+			}
+			input[disabled="disabled"]{
+				cursor: not-allowed;
+				background-color: #ddd;
+			}
+			textarea{
+				width: 350px;
+				height: 150px;
+				padding: 6px 7px;
+				display: inline-block;
+				cursor: text;
+				line-height: 1.5;
+				font-size: 12px;
+				color: #666;
+				background-color: #fff;
+				border: 1px solid #d9d9d9;
+				border-radius: 4px;
+				box-sizing: border-box;
+				transition: all ease 0.2s;
+				overflow: auto;
+			}
+			.char_num{
+				font-size: 12px;
+				color: #ff5151;
+			}
+
+		}
+	}
+}

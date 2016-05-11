@@ -50,7 +50,7 @@ export default {
 		}
 	},
 	created: function(){
-		var _this = this;
+		const _this = this;
 		this.paginationConf.pagesLength = parseInt(this.paginationConf.pagesLength) ? parseInt(this.paginationConf.pagesLength) : 9;
 		if (this.paginationConf.pagesLength % 2 === 0) {
 		    this.paginationConf.pagesLength = this.paginationConf.pagesLength - 1;
@@ -78,7 +78,7 @@ export default {
 		    }
 		},
 		getPagination: function(newValue, oldValue) {
-			var _this = this;
+			const _this = this;
 		    _this.paginationConf.currentPage = parseInt(_this.paginationConf.currentPage) ? parseInt(_this.paginationConf.currentPage) : 1;
 		    _this.paginationConf.totalItems = parseInt(_this.paginationConf.totalItems) ? parseInt(_this.paginationConf.totalItems) : 0;
 		    _this.paginationConf.itemsPerPage = parseInt(_this.paginationConf.itemsPerPage) ? parseInt(_this.paginationConf.itemsPerPage) : 8;
@@ -95,7 +95,7 @@ export default {
 		            _this.pageList.push(i);
 		        }
 		    } else {
-		        var offset = (_this.paginationConf.pagesLength + 1) / 2;
+		        const offset = (_this.paginationConf.pagesLength + 1) / 2;
 		        if (_this.paginationConf.currentPage <= offset) {
 		            for (var i = 1; i <= _this.paginationConf.pagesLength; i++) {
 		                _this.pageList.push(i);

@@ -141,7 +141,7 @@ export default {
 			paginationConf: {
 				currentPage: 1,     // 当前页
 				totalItems: 0,     // 总条数
-				itemsPerPage: 10,    // 每页条数
+				itemsPerPage: 15,    // 每页条数
 				pagesLength: 5,     // 显示几页( 1,2,3 / 1,2,3,4,5)
 				onChange: function() {
 					// 回调
@@ -186,7 +186,7 @@ export default {
 				}
 			}).then((res) => {
 				if(this.isLogin){
-					var resData = res.data;
+					const resData = res.data;
 					this.projects = resData.data.result;
 					this.paginationConf.totalItems = resData.data.total;
 					this.projects.forEach((item, index) => {
