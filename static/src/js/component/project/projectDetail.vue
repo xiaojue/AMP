@@ -11,15 +11,15 @@
 				</div>
 				<div class="item">
 					<p class="title">2 项目描述</p>
-					<span class="main_p">{{projectDetail.name}}</span>
+					<span class="main_p">{{projectDetail.descr}}</span>
 				</div>
 				<div class="item">
 					<p class="title">3 创建人</p>
-					<span class="main_p">{{projectDetail.name}}</span>
+					<span class="main_p">{{projectDetail.creater}}</span>
 				</div>
 				<div class="item">
 					<p class="title">4 创建时间</p>
-					<span class="main_p">{{projectDetail.name}}</span>
+					<span class="main_p">{{projectDetail.ctime | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
 				</div>
 				<div class="item">
 					<p class="title">5 项目成员</p>

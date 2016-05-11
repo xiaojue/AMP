@@ -8,40 +8,44 @@
 				<div class="item">
 					<p class="title">1 项目名称</p>
 					<div class="main_form">
-						<span class="iconfont">&#xe600;</span>
+						<span class="iconfont required">&#xe600;</span>
 						<input type="text" placeholder="请输入项目名称" v-model="projectDetail.name"></input>
 					</div>
 				</div>
 				<div class="item">
 					<p class="title">2 项目描述</p>
 					<div class="main_form">
-						<textarea maxlength="200" placeholder="请输入项目描述" v-model="projectDetail.desc">{{projectDetail.desc}}</textarea>
-						<div class="char_num">{{projectDetail.desc | length}}/200</div>
+						<textarea maxlength="200" placeholder="请输入项目描述" v-model="projectDetail.descr">{{projectDetail.descr}}</textarea>
+						<div class="char_num">{{projectDetail.descr | length}}/200</div>
 					</div>
 				</div>
 				<div class="item">
 					<p class="title">3 创建人</p>
 					<div class="main_form">
-						<input type="text" disabled="disabled" v-model="projectDetail.name"></input>
+						<input type="text" disabled="disabled" v-model="projectDetail.creater"></input>
 					</div>
 				</div>
 				<div class="item">
 					<p class="title">4 创建时间</p>
 					<div class="main_form">
-						<input type="text" disabled="disabled" v-model="projectDetail.name"></input>
+						<input type="text" disabled="disabled" v-model="projectDetail.ctime"></input>
 					</div>
 				</div>
 				<div class="item">
 					<p class="title">5 成员</p>
 					<div class="main_form">
-						<input type="text" placeholder="请输入邮箱进行查询" v-model="memberQuery"></input>
+						<input type="text" placeholder="请输入邮箱进行查询" v-model="memberQuery" debounce="500"></input>
 						<ul class="member_query_list">
 							<li v-for="item in memberQueryResult">{{item.emil}}</li>
 						</ul>
 						<div class="memer_list">
+							<div class="member_item">
+								<span>{{userInfo.userName}}</span>
+								<!-- <a href="javascript:void(0)" class="iconfont close">&#xe609;</a> -->
+							</div>
 							<div class="member_item" v-for="item in projectDetail.member">
 								<span>{{item.email}}</span>
-								<a href="javascript:void(0)" class="iconfont">&#xe609;</a>
+								<a href="javascript:void(0)" class="iconfont close">&#xe609;</a>
 							</div>
 						</div>
 					</div>
@@ -57,8 +61,54 @@
 	</m-main-con>
 </template>
 
-<script>
+<style scoped>
+.member_query_list{
+	position: absolute;
+	width: 350px;
+	box-sizing: border-box;
+	background-color: #fff;
+	border-radius: 4px;
+	margin-top: 3px;
+	z-index: 9999;
+	max-height: 168px;
+	overflow: auto;
+}
+.member_query_list::-webkit-scrollbar {
+    width: 8px;
+    background-color: rgba(0, 0, 0, 0);
+}
+.member_query_list li{
+	font-size: 14px;
+	line-height: 28px;
+	color: #333;
+	text-shadow: none;
+	padding: 0 10px;
+	cursor: pointer;
+	transition: all ease 0.2s;
+}
+.member_query_list li:hover{
+	background-color: rgba(82,215,105,0.9);
+	color: #fff;
+	border-radius: 4px;
+}
+.memer_list{
 	
+}
+.memer_list .member_item{
+	display: inline-block;vertical-align: middle;padding: 8px 25px 8px 15px;background-color: #fff;color: #333;border: 1px solid #d9d9d9;border-radius: 15px;font-size: 14px;line-height: 12px;text-shadow: none;
+	position: relative;margin-top: 15px;
+}
+.memer_list .member_item .iconfont.close{
+	position: absolute;font-size: 14px;color: #111;text-decoration: none;right: 6px;display: block;top: 50%;transform: translateY(-50%);font-weight: 600;transition: all ease 0.2s;text-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+.memer_list .member_item .iconfont.close:hover{
+	color: #666;
+}
+
+</style>
+
+<script>
+  
 import store from 'store';
 import actions from 'actions';
 
@@ -75,9 +125,9 @@ export default {
 			id: null,
 			projectDetail: {
 				// name: '',
-				// desc: '',
-				// creator: '',
-				// createTime: '',
+				// descr: '',
+				// creater: '',
+				// ctime: '',
 				// member: []
 			},
 			memberQuery: '',
@@ -89,6 +139,9 @@ export default {
 		getters: {
 			isLogin: () => {
 				return store.state.isLogin;
+			},
+			userInfo: () => {
+				return store.state.userInfo;
 			}
 		},
 		actions: actions
@@ -127,7 +180,8 @@ export default {
 				url: '/api/collection' + (this.id === 'new' ? '' : '?id=' + this.id),
 				method: this.id === 'new' ? 'post' : 'put',
 				data: {
-					name: this.projectDetail.name
+					name: this.projectDetail.name,
+					descr: this.projectDetail.descr
 				}
 			}).then((res) => {
 				if(this.isLogin){
@@ -137,6 +191,7 @@ export default {
 						type: 'success',
 						msg: this.id === 'new' ? '新建成功' : '修改成功'
 					})
+					this.canQuit = true;
 					this.id === 'new' ? this.$route.router.go('/main/project/detail/' + resData.data.id) : null;
 				}
 			})
@@ -158,6 +213,16 @@ export default {
 				})
 				return true;
 			}
+		},
+		queryMember() {
+			// console.log(this.memberQuery);
+			this.$http({
+				url: '/api/members/search',
+				method: 'get',
+				data: {
+					
+				}
+			})
 		}
 	},
 	route: {
@@ -178,6 +243,13 @@ export default {
 						actions.loading(store, false);
 					}
 				})
+			}
+		}
+	},
+	watch: {
+		memberQuery: {
+			handler(val) {
+				this.queryMember();
 			}
 		}
 	}

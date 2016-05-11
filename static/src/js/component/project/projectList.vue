@@ -8,9 +8,9 @@
 			<div class="item_con">
 				<div class="item" v-for="item in projects" @mouseenter="toggleMenu($index)" @mouseleave="toggleMenu($index)">
 					<h2>{{item.name}}</h2>
-					<p>{{item.desc}}</p>
-					<a class="email" :href="'mailto:' + item.creator">{{item.creator}}</a>
-					<span>{{item.creatTime | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
+					<p>{{item.descr}}</p>
+					<a class="email" :href="'mailto:' + item.creater">{{item.creater}}</a>
+					<span>{{item.ctime | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
 					<div class="check_detail text_shadow" v-show="showMenu[$index]" v-link="{path: '/main/project/detail', params: {id: item.id}}" :class="{in: showMenu[$index], out: !showMenu[$index]}">
 						<a href="javascript:void(0)" v-link="{name: 'projectDetail', params: {id: item.id}}">项目详情</a>
 						<a href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: item.id}}">修改项目</a>
