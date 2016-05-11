@@ -37,19 +37,11 @@ router.get('/urls/all', async (ctx,next)=>{
         msg: ''
     };
 });
-router.get('/members/search',async (ctx,next)=>{
-    let username = ctx.query['username'],
-        email = ctx.query['email'],
-        sql = 'select * from members ',
-        arr = [];
-    if(email){
-        arr.push(" email like '%" + email + "%'");
-    }
-    if(username){
-        arr.push(" username like '%" + username + "%'");
-    }
-    if(arr.length){
-        sql += ' where ' + arr.join(' or ');
+router.get('/members/search',async (ctx,next)=>{ //成员的模糊搜索
+    let query = ctx.query['query'],
+        sql = 'select * from members ';
+    if(query){
+        sql += " where email like '%" + query + "%' or username like '%" + query + "%'";
     }
     let res = await ctx.mysqlQuery(sql,{},{
         type: "GET"
