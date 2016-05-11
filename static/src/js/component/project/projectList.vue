@@ -151,6 +151,11 @@ export default {
 			showMenu: {}
 		}
 	},
+	created() {
+		this.paginationConf.onChange = () => {
+			this.getProjectData();
+		}
+	},
 	vuex: {
 		getters: {
 			isLogin: () => {
@@ -163,7 +168,8 @@ export default {
 		'm-main-con': con_main,
 		'm-top': con_top,
 		'm-middle': con_middle,
-		'm-bottom': con_bottom
+		'm-bottom': con_bottom,
+		'm-pagination': Pagination
 	},
 	methods: {
 		toggleMenu(index) {
@@ -191,19 +197,11 @@ export default {
 			})
 		}
 	},
-	created() {
-		this.paginationConf.onChange = () => {
-			this.getProjectData();
-		}
-	},
 	route: {
 	    data(transition) {
 	    	this.type = transition.to.params.type;
 	    	this.getProjectData(this.type);
 	    }
-	},
-	components: {
-		'm-pagination': Pagination
 	}
 }
 

@@ -44,10 +44,6 @@
 	</m-main-con>
 </template>
 
-<style>
-	
-</style>
-
 <script>
 	
 import store from 'store';
@@ -60,7 +56,7 @@ import con_middle from '../container/middle.vue';
 import con_bottom from '../container/bottom.vue';
 
 export default {
-	name: 'projectEdit',
+	name: 'ProjectEdit',
 	data() {
 		return {
 			id: null,

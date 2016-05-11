@@ -1,7 +1,7 @@
 <template>
 <div class="main_con">
 	<div class="conent_list text_shadow">
-		<slot></slot>
+		<slot>maincon</slot>
 	</div>
 </div>
 </template>
