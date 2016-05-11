@@ -5,6 +5,7 @@
  */
 import Router from 'koa-router';
 import tborm from '../models/orm'
+import moment from 'moment'
 
 const tables = ['urls','collection','results','arguments','members']
 const router = Router({
@@ -50,8 +51,13 @@ for(let item of tables){
                 }
                 return;
             }
+            let data = ctx.body;
+            if(item === 'collection'){
+                data['ctime'] = moment().format('YYYY-MM-DD hh:mm:ss');
+                data['creater'] = ctx.session['userinfo']['username'];
+            }
             let sql = "insert into " + item,
-                res = await ctx.mysqlQuery(sql,ctx.body,{
+                res = await ctx.mysqlQuery(sql,data,{
                     type: "POST"
                 }),
                 sql2 = "select * from "+ item + " where id=" + res['insertId'],
@@ -133,8 +139,11 @@ var checkId = async(ctx,item)=>{ //检测：在put delete中通过字符串参�
     return;
 }
 var checkForeignkey = async(ctx,item)=>{ //检测：在post的传递过来的外键是否正确
-    let tb = tborm['relyon'][item],
-        id = ctx.body[tb.forkey];
+    let tb = tborm['relyon'][item];
+    if(!tb){
+        return true;
+    }
+    let id = ctx.body[tb.forkey];
     if(!id){
         return false;
     }

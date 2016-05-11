@@ -2,6 +2,9 @@ use amp;
 create table collection (
     id int not null AUTO_INCREMENT,
     name varchar(50),
+    descr varchar(200) DEFAULT '',
+    creater varchar(100) DEFAULT '',
+    ctime  datetime null,
     PRIMARY KEY (`id`)
 );
 
@@ -60,3 +63,12 @@ CREATE TABLE members(
       CONSTRAINT FOREIGN KEY (collection_id) REFERENCES collection(id)
       ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+
+<!--以下是在已有表的基础上增加字段的sql语句-->
+
+#2016-05-11
+
+alter table collection add column descr varchar(200) DEFAULT '';
+alter table collection add column creater varchar(100) DEFAULT '';
+alter table collection add column ctime  datetime null;
