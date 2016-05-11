@@ -4,6 +4,7 @@
  * @date 2016-05-03
  */
 import Router from 'koa-router';
+import ldapConnect from '../libs/ldapConnect'
 const router = Router({
     prefix: '/api'
 });
@@ -40,6 +41,30 @@ router.get('/urls/all', async (ctx,next)=>{
 router.get('/members/search',async (ctx,next)=>{ //成员的模糊搜索
     let query = ctx.query['query'],
         sql = 'select * from members ';
+    if(query){
+        sql += " where email like '%" + query + "%' or username like '%" + query + "%'";
+    }
+    let res = await ctx.mysqlQuery(sql,{},{
+        type: "GET"
+    });
+    ctx.body = {
+        code: 200,
+        data: res,
+        iserror: 0,
+        msg: ''
+    }
+});
+router.post('/members/batch', async (ctx,next)=>{ //批量添加成员
+    let ids = ctx.body['ids'],
+        sql = 'select * from users where id in (' + ids +')',
+        users = await ctx.mysqlQuery(sql,{},{
+            type: "GET"
+        });
+    ctx.body = users;
+});
+router.get('/users/search', async (ctx,next)=>{ //用户的模糊搜索
+    let query = ctx.query['query'],
+        sql = 'select * from users ';
     if(query){
         sql += " where email like '%" + query + "%' or username like '%" + query + "%'";
     }
