@@ -8,7 +8,7 @@
 				<div class="item">
 					<p class="title">1 项目名称</p>
 					<div class="main_form">
-						<span class="iconfont">&#xe600;</span>
+						<span class="iconfont required">&#xe600;</span>
 						<input type="text" placeholder="请输入项目名称" v-model="projectDetail.name"></input>
 					</div>
 				</div>
@@ -22,13 +22,13 @@
 				<div class="item">
 					<p class="title">3 创建人</p>
 					<div class="main_form">
-						<input type="text" disabled="disabled" v-model="projectDetail.name"></input>
+						<input type="text" disabled="disabled" v-model="userInfo.email"></input>
 					</div>
 				</div>
 				<div class="item">
 					<p class="title">4 创建时间</p>
 					<div class="main_form">
-						<input type="text" disabled="disabled" v-model="projectDetail.name"></input>
+						<input type="text" disabled="disabled" value="NOW"></input>
 					</div>
 				</div>
 				<div class="item">
@@ -36,12 +36,26 @@
 					<div class="main_form">
 						<input type="text" placeholder="请输入邮箱进行查询" v-model="memberQuery"></input>
 						<ul class="member_query_list">
+							<li>骆也</li>
+							<li>骆也</li>
+							<li>骆也</li>
+							<li>骆也</li>
+							<li>骆也</li>
+							<li>骆也</li>
+							<li>骆也</li>
+							<li>骆也</li>
+							<li>骆也</li>
+							<li>骆也</li>
 							<li v-for="item in memberQueryResult">{{item.emil}}</li>
 						</ul>
 						<div class="memer_list">
+							<div class="member_item">
+								<span>{{userInfo.userName}}</span>
+								<!-- <a href="javascript:void(0)" class="iconfont close">&#xe609;</a> -->
+							</div>
 							<div class="member_item" v-for="item in projectDetail.member">
 								<span>{{item.email}}</span>
-								<a href="javascript:void(0)" class="iconfont">&#xe609;</a>
+								<a href="javascript:void(0)" class="iconfont close">&#xe609;</a>
 							</div>
 						</div>
 					</div>
@@ -56,6 +70,52 @@
 		</m-bottom>
 	</m-main-con>
 </template>
+
+<style scoped>
+.member_query_list{
+	position: absolute;
+	width: 350px;
+	box-sizing: border-box;
+	background-color: #fff;
+	border-radius: 4px;
+	margin-top: 3px;
+	z-index: 9999;
+	max-height: 168px;
+	overflow: auto;
+}
+.member_query_list::-webkit-scrollbar {
+    width: 8px;
+    background-color: rgba(0, 0, 0, 0);
+}
+.member_query_list li{
+	font-size: 14px;
+	line-height: 28px;
+	color: #333;
+	text-shadow: none;
+	padding: 0 10px;
+	cursor: pointer;
+	transition: all ease 0.2s;
+}
+.member_query_list li:hover{
+	background-color: rgba(82,215,105,0.9);
+	color: #fff;
+	border-radius: 4px;
+}
+.memer_list{
+	
+}
+.memer_list .member_item{
+	display: inline-block;vertical-align: middle;padding: 8px 25px 8px 15px;background-color: #fff;color: #333;border: 1px solid #d9d9d9;border-radius: 15px;font-size: 14px;line-height: 12px;text-shadow: none;
+	position: relative;margin-top: 15px;
+}
+.memer_list .member_item .iconfont.close{
+	position: absolute;font-size: 14px;color: #111;text-decoration: none;right: 6px;display: block;top: 50%;transform: translateY(-50%);font-weight: 600;transition: all ease 0.2s;text-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+.memer_list .member_item .iconfont.close:hover{
+	color: #666;
+}
+
+</style>
 
 <script>
 	
@@ -89,6 +149,9 @@ export default {
 		getters: {
 			isLogin: () => {
 				return store.state.isLogin;
+			},
+			userInfo: () => {
+				return store.state.userInfo;
 			}
 		},
 		actions: actions
