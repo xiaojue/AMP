@@ -219,9 +219,10 @@ export default {
 			this.$http({
 				url: '/api/members/search',
 				method: 'get',
-				
+				data: {
+					
+				}
 			})
-
 		}
 	},
 	route: {
