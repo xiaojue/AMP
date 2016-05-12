@@ -6,37 +6,37 @@
 		<m-middle>
 			<div class="detail">
 				<div class="item">
-					<p class="title">1 项目名称</p>
+					<p class="title"># 项目名称</p>
 					<div class="main_form">
 						<span class="iconfont required">&#xe600;</span>
 						<input type="text" placeholder="请输入项目名称" v-model="projectDetail.name"></input>
 					</div>
 				</div>
 				<div class="item">
-					<p class="title">2 项目描述</p>
+					<p class="title"># 项目描述</p>
 					<div class="main_form">
 						<textarea maxlength="200" placeholder="请输入项目描述" v-model="projectDetail.descr">{{projectDetail.descr}}</textarea>
 						<div class="char_num">{{projectDetail.descr | length}}/200</div>
 					</div>
 				</div>
-				<div class="item">
-					<p class="title">3 创建人</p>
+				<div class="item" v-if="id !== 'new'">
+					<p class="title"># 创建人</p>
 					<div class="main_form">
 						<input type="text" disabled="disabled" v-model="projectDetail.creater"></input>
 					</div>
 				</div>
-				<div class="item">
-					<p class="title">4 创建时间</p>
+				<div class="item" v-if="id !== 'new'">
+					<p class="title"># 创建时间</p>
 					<div class="main_form">
 						<input type="text" disabled="disabled" v-model="projectDetail.ctime"></input>
 					</div>
 				</div>
 				<div class="item">
-					<p class="title">5 成员</p>
+					<p class="title"># 成员</p>
 					<div class="main_form">
-						<input type="text" placeholder="请输入邮箱进行查询" v-model="memberQuery" debounce="500"></input>
+						<input type="text" placeholder="请输入邮箱进行查询" v-model="memberQuery" debounce="300"></input>
 						<ul class="member_query_list">
-							<li v-for="item in memberQueryResult" @click="addMember(item)">{{item.name}}</li>
+							<li v-for="item in members" @click="addMember(item)">{{item.name}}</li>
 						</ul>
 						<div class="memer_list">
 							<div class="member_item">
@@ -131,6 +131,7 @@ export default {
 				// member: []
 			},
 			memberQuery: '',
+			members: [],
 			memberQueryResult: [],
 			canQuit: false
 		}
@@ -192,7 +193,6 @@ export default {
 						method: 'post',
 						data: {
 							collection_id: _this.projectDetail.id,
-							
 						}
 
 					})
@@ -228,14 +228,14 @@ export default {
 		queryMember() {
 			const _this = this;
 			this.$http({
-				url: '/api/members/search',
+				url: '/api/users/search',
 				method: 'get',
 				data: {
 					query: this.memberQuery
 				}
 			}).then((res) => {
 				const resDate = res.data;
-				_this.memberQueryResult = resDate;
+				_this.members = resDate.data;
 			})
 		},
 		addMember(member) {
@@ -266,7 +266,12 @@ export default {
 	watch: {
 		memberQuery: {
 			handler(val) {
-				this.queryMember();
+				if(val === ''){
+					this.members = [];
+				}
+				if(val !== ''){
+					this.queryMember();
+				}
 			}
 		}
 	}

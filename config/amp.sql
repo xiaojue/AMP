@@ -55,7 +55,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE members(
-      id int not null  AUTO_INCREMENT,
+      id int not null AUTO_INCREMENT,
       username varchar(200) DEFAULT '',
       email varchar(200) DEFAULT '',
       collection_id INT NOT NULL,

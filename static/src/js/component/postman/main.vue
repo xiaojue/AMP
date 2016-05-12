@@ -26,6 +26,32 @@
 				</div>
 				<div class="request request_result">
 					<p>RESULT</p>
+					<pre>
+						<code class="json">
+							{
+							    "code": 200,
+							    "data": [
+							        {
+							            "id": 4,
+							            "name": "hahaui",
+							            "descr": "",
+							            "creater": "",
+							            "ctime": null
+							        },
+							        {
+							            "id": 5,
+							            "name": "haha",
+							            "descr": "",
+							            "creater": "",
+							            "ctime": null
+							        }
+							    ],
+							    "iserror": 0,
+							    "msg": ""
+							}
+						</code>
+					</pre>
+					
 				</div>
 			</div>
 		</m-middle>
@@ -95,12 +121,37 @@ import con_main from '../container/main.vue';
 import con_top from '../container/top.vue';
 import con_middle from '../container/middle.vue';
 import con_bottom from '../container/bottom.vue';
+
+// import Highlight from 'highlight';
+// console.log(Highlight);
+import * as hljs from "../../lib/highlight.min.js";
 	
 export default {
 	name: 'PostMan',
 	data() {
 		return {
-
+			json: {
+			    "code": 200,
+			    "data": [
+			        {
+			            "id": 4,
+			            "name": "hahaui",
+			            "descr": "",
+			            "creater": "",
+			            "ctime": null
+			        },
+			        {
+			            "id": 5,
+			            "name": "haha",
+			            "descr": "",
+			            "creater": "",
+			            "ctime": null
+			        }
+			    ],
+			    "iserror": 0,
+			    "msg": ""
+			},
+			jsonHtml: null
 		}
 	},
 	components: {
@@ -109,6 +160,15 @@ export default {
 		'm-middle': con_middle,
 		'm-bottom': con_bottom
 	},
+	created() {
+		hljs.configure({
+		  	tabReplace: '    ', 
+		})
+		hljs.initHighlighting();
+		// this.jsonHtml = hljs.highlightAuto(this.json, 'json');
+		// console.log(hljs.highlightAuto(JSON.stringify(this.json), 'json'));
+		console.log(JSON.stringify(this.json));
+	}
 }
 
 </script>

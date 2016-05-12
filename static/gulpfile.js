@@ -35,7 +35,8 @@ var webpackConfig = {
             'vue-router',
             'vue-form',
             'vue-resource',
-            'jquery'
+            'jquery',
+            './src/js/lib/highlight.min.js'
         ]
     },
     output: {
