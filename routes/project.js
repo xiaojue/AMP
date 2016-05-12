@@ -21,7 +21,7 @@ router.get('/urls/all', async (ctx,next)=>{
         res["results"] = results;
         arr_res.push(res);
     }
-    success(ctx,arr_res);
+    ctx.success(arr_res);
 });
 router.get('/members/search',async (ctx,next)=>{ //成员的模糊搜索
     let query = ctx.query['query'],
@@ -30,18 +30,18 @@ router.get('/members/search',async (ctx,next)=>{ //成员的模糊搜索
         },{
             or: true
         });
-    success(ctx,res);
+    ctx.success(res);
 });
 router.post('/members/batch', async (ctx,next)=>{ //批量添加成员
     let collection_id = ctx.body["collection_id"],
         collections = await ctx.mysqlQuery('collection').get({"id": collection_id});
     if(!collections.length){
-        fail(ctx,400,'没找到对应的collection');
+        ctx.fail(400,'没找到对应的collection');
         return;
     }
     let ids = ctx.body["users"];
     if(!ids){
-        fail(ctx,400,'没有ids');
+        ctx.fail(400,'没有ids');
         return;
     }
     ids = ids.split(',');
@@ -57,20 +57,20 @@ router.post('/members/batch', async (ctx,next)=>{ //批量添加成员
             });
         }
     }
-    success(ctx,results);
+    ctx.success(results);
 });
 router.del('/members', async (ctx,next)=>{ //删除成员
     let id = ctx.query["id"];
     if(!id){
-        fail(ctx,400,'请填写要删除的成员Id');
+        ctx.fail(400,'请填写要删除的成员Id');
         return;
     }
     let members = await ctx.mysqlQuery("members").get({"id": id});
     if(members.length){
         await ctx.mysqlQuery("members").delete({"id": id});
-        success(ctx,"删除成功!");
+        ctx.success("删除成功!");
     }else{
-        fail(ctx,400,"没找到对应的member");
+        ctx.fail(400,"没找到对应的member");
     }
 });
 router.get('/users/search', async (ctx,next)=>{ //用户的模糊搜索
@@ -80,23 +80,7 @@ router.get('/users/search', async (ctx,next)=>{ //用户的模糊搜索
         },{
             or: true
         });
-    success(ctx,res);
+    ctx.success(res);
 });
 
-var success = function(ctx,result){
-    ctx.body = {
-        code: 200,
-        data: result,
-        iserror: 0,
-        msg: ''
-    }
-}
-var fail = function(ctx,code,msg){
-    ctx.body = {
-        code: code,
-        data: '',
-        iserror: 1,
-        msg: msg
-    }
-}
 module.exports = router;

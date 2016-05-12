@@ -38,32 +38,15 @@ var getContent = (res)=>{
 api.all("*",async (ctx,next)=>{
     let urls = await checkUrl(ctx,ctx.request.method);
     if(!urls.length){
-        // ctx.status = 404;
-        ctx.body = {
-            code: 404,
-            data: '',
-            iserror: 1,
-            msg: '404'
-        }
+        ctx.fail(404,'404');
         return;
     }
     let res = await getResult(ctx,urls[0]["id"]);
     if(!res.length){
-        // ctx.status = 404;
-        ctx.body = {
-            code: 404,
-            data: '',
-            iserror: 1,
-            msg: '404'
-        }
+        ctx.fail(404,'404');
         return;
     }
-    ctx.body = {
-        code: 200,
-        data: getContent(res[0]),
-        iserror: 0,
-        msg: ''
-    };
+    ctx.success(getContent(res[0]));
 });
 
 module.exports = api;

@@ -22,6 +22,7 @@ import convert from 'koa-convert';
 import routers from './routes';
 import db from './config/db.json';
 import mysqlMiddleware from './middleware/mysql';
+import responseMiddleware from './middleware/response'
 
 const app = new Koa();
 const httpPort = 9090;
@@ -38,6 +39,7 @@ app.use(session());
 
 // middleware
 app.use(mysqlMiddleware);
+app.use(responseMiddleware);
 
 app.use(convert(Logger()));
 

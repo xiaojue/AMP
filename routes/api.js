@@ -47,22 +47,12 @@ for(let item of tables){
                     total: items.length
                 }
             }
-            ctx.body = {
-                code: 200,
-                data: data,
-                iserror: 0,
-                msg: ''
-            };
+            ctx.success(data);
         })
         .post('/'+item,async (ctx,next) => {
             let res_check = await checkForeignkey(ctx,item);
             if(!res_check){
-                ctx.body = {
-                    code: 400,
-                    data: '',
-                    iserror: 1,
-                    msg: '请输入正确的字段值'
-                }
+                ctx.fail(400,'请输入正确的字段值');
                 return;
             }
             let data = ctx.body;
@@ -72,51 +62,26 @@ for(let item of tables){
             }
             let res = await ctx.mysqlQuery(item).post(data),
                 result = await ctx.mysqlQuery(item).get({id: res['insertId']});
-            ctx.body = {
-                code: 200,
-                data: result[0],
-                iserror: 0,
-                msg: ''
-            };
+            ctx.success(result[0]);
         })
         .put('/'+item, async (ctx,next) => {
             let res = await checkId(ctx,item);
             if(res){
-                ctx.body = {
-                    code: 400,
-                    data: '',
-                    iserror: 1,
-                    msg: res
-                }
+                ctx.fail(400,res);
                 return;
             }
             let res1 = await ctx.mysqlQuery(item).put(ctx.body,{id: ctx.query.id}),
                 result = await ctx.mysqlQuery(item).get({id: ctx.query.id});
-            ctx.body = {
-                code: 200,
-                data: result,
-                iserror: 0,
-                msg: ''
-            };
+            ctx.success(result);
         })
         .del('/'+ item, async (ctx, next)=> {
             let res = await checkId(ctx,item);
             if(res){
-                ctx.body = {
-                    code: 400,
-                    data: '',
-                    iserror: 1,
-                    msg: res
-                }
+                ctx.fail(400,res);
                 return;
             }
             let result = await ctx.mysqlQuery(item).delete({id: ctx.query.id});
-            ctx.body = {
-                code: 200,
-                data: result,
-                iserror: 0,
-                msg: ''
-            };
+            ctx.success(result);
         })
 }
 var checkId = async(ctx,item)=>{ //检测：在put delete中通过字符串参数传递过来的值是否是对的
@@ -150,3 +115,4 @@ var checkForeignkey = async(ctx,item)=>{ //检测：在post的传递过来的外
 }
 
 module.exports = router;
+
