@@ -53,7 +53,7 @@ for(let item of tables){
             }
             let data = ctx.body;
             if(item === 'collection'){
-                data['ctime'] = moment().format('YYYY-MM-DD hh:mm:ss');
+                data['ctime'] = (new Date()).valueOf();
                 data['creater'] = ctx.session['userinfo']['username'];
             }
             let sql = "insert into " + item,

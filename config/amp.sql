@@ -4,7 +4,7 @@ create table collection (
     name varchar(50),
     descr varchar(200) DEFAULT '',
     creater varchar(100) DEFAULT '',
-    ctime  datetime null,
+    ctime  bigint DEFAULT 0,
     PRIMARY KEY (`id`)
 );
 
@@ -71,4 +71,4 @@ CREATE TABLE members(
 
 alter table collection add column descr varchar(200) DEFAULT '';
 alter table collection add column creater varchar(100) DEFAULT '';
-alter table collection add column ctime  datetime null;
+alter table collection add column ctime  bigint default 0;
