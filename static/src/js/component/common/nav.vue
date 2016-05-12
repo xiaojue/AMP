@@ -53,6 +53,15 @@
 					</li>
 				</ul>
 			</div>
+			<div class="item">
+				<ul>
+					<li v-link="{name: 'postMan'}">
+						<span class="iconfont">&#xe60c;</span>
+						<p>接口测试</p>
+						<i class="iconfont">&#xe604;</i>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</nav>
 </template>
