@@ -15,18 +15,21 @@ const router = Router({
 for(let item of tables){
     router
         .get('/'+item, async (ctx,next) => {
-            // console.log('get');
-            let sql = "select * from " + item,
-                querys = ctx.query,
-                res = await ctx.mysqlQuery(sql,querys,{
-                    type: "GET"
-                }),
-                data = res;
+            let querys = ctx.query,
+                opts = {};
             if(querys['pageSize']){
+                let index = querys['pageIndex'] || 0,
+                    pageSize = parseInt(querys['pageSize']);
+                opts = {
+                    limit: [index*pageSize,pageSize]
+                };
                 delete querys['pageSize'];
-                let items = await ctx.mysqlQuery(sql,querys,{
-                    type: 'GET'
-                });
+                delete querys['pageIndex'];
+            }
+            let res = await ctx.mysqlQuery(item).get(querys,opts),
+                data = res;
+            if(opts.limit){
+                let items = await ctx.mysqlQuery(item).get(querys);
                 data = {
                     result: res,
                     total: items.length
@@ -40,7 +43,6 @@ for(let item of tables){
             };
         })
         .post('/'+item,async (ctx,next) => {
-            // console.log("post");
             let res_check = await checkForeignkey(ctx,item);
             if(!res_check){
                 ctx.body = {
@@ -56,14 +58,8 @@ for(let item of tables){
                 data['ctime'] = (new Date()).valueOf();
                 data['creater'] = ctx.session['userinfo']['username'];
             }
-            let sql = "insert into " + item,
-                res = await ctx.mysqlQuery(sql,data,{
-                    type: "POST"
-                }),
-                sql2 = "select * from "+ item + " where id=" + res['insertId'],
-                result = await ctx.mysqlQuery(sql2,{},{
-                    type: "GET"
-                });
+            let res = await ctx.mysqlQuery(item).post(data),
+                result = await ctx.mysqlQuery(item).get({id: res['insertId']});
             ctx.body = {
                 code: 200,
                 data: result[0],
@@ -72,7 +68,6 @@ for(let item of tables){
             };
         })
         .put('/'+item, async (ctx,next) => {
-            // console.log("put");
             let res = await checkId(ctx,item);
             if(res){
                 ctx.body = {
@@ -83,15 +78,8 @@ for(let item of tables){
                 }
                 return;
             }
-            let sql = 'update '+item,
-                res1 = await ctx.mysqlQuery(sql,ctx.body,{
-                    type: 'PUT',
-                    params: {id: ctx.query.id}
-                }),
-                sql2 = "select * from "+ item + " where id= " + ctx.query.id,
-                result = await ctx.mysqlQuery(sql2,{},{
-                    type: "GET"
-                });
+            let res1 = await ctx.mysqlQuery(item).put(ctx.body,{id: ctx.query.id}),
+                result = await ctx.mysqlQuery(item).get({id: ctx.query.id});
             ctx.body = {
                 code: 200,
                 data: result,
@@ -100,7 +88,6 @@ for(let item of tables){
             };
         })
         .del('/'+ item, async (ctx, next)=> {
-            // console.log("del");
             let res = await checkId(ctx,item);
             if(res){
                 ctx.body = {
@@ -111,11 +98,7 @@ for(let item of tables){
                 }
                 return;
             }
-            let sql = 'delete from '+item,
-                result = await ctx.mysqlQuery(sql,{},{
-                    type: 'DELETE',
-                    params: {id: ctx.query.id}
-                });
+            let result = await ctx.mysqlQuery(item).delete({id: ctx.query.id});
             ctx.body = {
                 code: 200,
                 data: result,
@@ -129,10 +112,7 @@ var checkId = async(ctx,item)=>{ //检测：在put delete中通过字符串参�
     if(!id){
         return '请填写接口的Id';
     }
-    let sql = 'select * from ' + item + " where id = " + id,
-        items = await ctx.mysqlQuery(sql,{},{
-            type: "GET"
-        });
+    let items = await ctx.mysqlQuery(item).get({id: id});
     if(!items.length){
         return '请填写正确的Id';
     }
@@ -148,10 +128,7 @@ var checkForeignkey = async(ctx,item)=>{ //检测：在post的传递过来的外
         return false;
     }
     if(tb){
-        let sql = "select * from " + tb["tbname"] + " where id = " + id,
-            res = await ctx.mysqlQuery(sql,{},{
-                type: "GET"
-            });
+        let res = await ctx.mysqlQuery(item).get({id: id});
         if(res.length){
             return true;
         }

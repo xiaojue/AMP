@@ -13,21 +13,18 @@
  */
 var checkUrl = async(ctx,type)=>{
     let url = ctx.request.url,
-        sql = 'select * from urls where url = "' + url + '" and type = "'+ type +'"',
-        res = await ctx.mysqlQuery(sql,ctx.query,{
-            type: "GET"
-        });
-    return res;
+        attrs = ctx.query;
+    attrs['url'] = url;
+    attrs['type'] = type;
+    return await ctx.mysqlQuery("urls").get(attrs);
 }
 /*
 * title: 获取该url模拟返回的数据结果
 **/
 var getResult = async(ctx,item_id)=>{
-    let sql = 'select * from results where url_id = ' + item_id,
-        res = await ctx.mysqlQuery(sql,ctx.query,{
-            type: "GET"
-        });
-    return res;
+    let attrs = ctx.query;
+    attrs['url_id'] = item_id;
+    return await ctx.mysqlQuery('results').get(attrs);
 }
 
 var getContent = (res)=>{
