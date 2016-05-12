@@ -5,7 +5,9 @@
  */
  import Router from 'koa-router';
 
- const api = Router();
+ const api = Router({
+    prefix: '/mock'
+ });
  /**
  * title: 检测url是否正确(如果能在urls数据库中查询到)
  */
