@@ -28,6 +28,18 @@ for(let item of tables){
             }
             let res = await ctx.mysqlQuery(item).get(querys,opts),
                 data = res;
+            if(item === 'collection'){
+                for(let i=0,l=res.length;i<l;i++){
+                    let item = res[i],
+                        members = await ctx.mysqlQuery('members').get({"collection_id": item["id"]});
+                    item["members"] = [];
+                    for(let j=0,k=members.length;j<k;j++){
+                        let member = members[j],
+                            user = await ctx.mysqlQuery("users").get({"id": member["user_id"]});
+                        item["members"] = item["members"].concat(user);
+                    }
+                }
+            }
             if(opts.limit){ //如果是分页获取的，那需要获取总数total
                 let items = await ctx.mysqlQuery(item).get(querys);
                 data = {
