@@ -7,7 +7,7 @@ import Router from 'koa-router';
 import tborm from '../models/orm'
 import moment from 'moment'
 
-const tables = ['urls','collection','results','arguments','members']
+const tables = ['urls','collection','results','arguments']
 const router = Router({
     prefix: '/api'
 });
@@ -28,7 +28,7 @@ for(let item of tables){
             }
             let res = await ctx.mysqlQuery(item).get(querys,opts),
                 data = res;
-            if(opts.limit){
+            if(opts.limit){ //如果是分页获取的，那需要获取总数total
                 let items = await ctx.mysqlQuery(item).get(querys);
                 data = {
                     result: res,
