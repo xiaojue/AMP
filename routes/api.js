@@ -30,11 +30,10 @@ for(let item of tables){
             if(item === 'collection'){ //如果是collection，需要返回members;
                 for(let i=0,l=res.length;i<l;i++){
                     let item = res[i],
-                        members = await ctx.mysqlQuery('members').get({"collection_id": item["id"]});
+                        members = item.members.split(",");
                     item["members"] = [];
                     for(let j=0,k=members.length;j<k;j++){
-                        let member = members[j],
-                            user = await ctx.mysqlQuery("users").get({"id": member["user_id"]});
+                        let user = await ctx.mysqlQuery("users").get({"id": members[j]});
                         item["members"] = item["members"].concat(user);
                     }
                 }

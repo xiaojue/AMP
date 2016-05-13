@@ -5,6 +5,7 @@ create table collection (
     descr varchar(200) DEFAULT '',
     creater varchar(100) DEFAULT '',
     ctime  bigint DEFAULT 0,
+    members varchar(100) DEFAULT '',
     PRIMARY KEY (`id`)
 );
 
@@ -54,15 +55,6 @@ CREATE TABLE users (
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE members(
-      id int not null  AUTO_INCREMENT,
-      collection_id INT NOT NULL,
-      user_id bigint(20) NOT NULL,
-      PRIMARY KEY (`id`),
-      FOREIGN KEY (collection_id) REFERENCES collection(id),
-      FOREIGN KEY (user_id) REFERENCES users(id)
-      ON DELETE CASCADE ON UPDATE CASCADE
-);
 
 
 <!--以下是在已有表的基础上增加字段的sql语句-->
@@ -72,3 +64,6 @@ CREATE TABLE members(
 alter table collection add column descr varchar(200) DEFAULT '';
 alter table collection add column creater varchar(100) DEFAULT '';
 alter table collection add column ctime  bigint default 0;
+
+#2016-05-13
+alter table collection add column members varchar(100) DEFAULT '';
