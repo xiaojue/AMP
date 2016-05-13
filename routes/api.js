@@ -26,9 +26,8 @@ for(let item of tables){
                 delete querys['pageSize'];
                 delete querys['pageIndex'];
             }
-            let res = await ctx.mysqlQuery(item).get(querys,opts),
-                data = res;
-            if(item === 'collection'){
+            let res = await ctx.mysqlQuery(item).get(querys,opts);
+            if(item === 'collection'){ //如果是collection，需要返回members;
                 for(let i=0,l=res.length;i<l;i++){
                     let item = res[i],
                         members = await ctx.mysqlQuery('members').get({"collection_id": item["id"]});
@@ -40,6 +39,7 @@ for(let item of tables){
                     }
                 }
             }
+            let data = await getChildren(ctx,item,res);//获取子节点数据
             if(opts.limit){ //如果是分页获取的，那需要获取总数total
                 let items = await ctx.mysqlQuery(item).get(querys);
                 data = {
@@ -53,6 +53,10 @@ for(let item of tables){
             let res_check = await checkForeignkey(ctx,item);
             if(!res_check){
                 ctx.fail(400,'请输入正确的字段值');
+                return;
+            }
+            if(!await checkRepeat(ctx,item)){
+                ctx.fail('400','已经存在该mock url了');
                 return;
             }
             let data = ctx.body;
@@ -113,6 +117,32 @@ var checkForeignkey = async(ctx,item)=>{ //检测：在post的传递过来的外
     }
     return true;
 }
-
+var getChildren = async(ctx,item,results)=>{ //获取跟该item关联的子节点
+    let tb = tborm['children'][item];
+    if(!tb){
+        return results;
+    }
+    for(let i=0,l=results.length;i<l;i++){
+        var item = results[i];
+        for(let j=0,k=tb.length;j<k;j++){
+            var t = tb[j],attrs = {};
+            attrs[t.forkey] = item["id"];
+            item[t['tbname']] = await ctx.mysqlQuery(t['tbname']).get(attrs);
+        }
+    }
+    return results;
+}
+var checkRepeat = async (ctx,item)=>{ //去重
+    if(item === 'urls'){
+        let res = await ctx.mysqlQuery(item).get({
+            "url": ctx.body.url,
+            "type": ctx.body.type
+        });
+        if(res.length){
+            return false;
+        }
+    }
+    return true;
+}
 module.exports = router;
 

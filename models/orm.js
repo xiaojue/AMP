@@ -15,5 +15,11 @@ module.exports = {
         arguments: {
             tbname: 'urls',forkey: 'url_id'
         }
+    },
+    children: {
+        urls: [
+            {tbname: 'arguments',forkey: 'url_id'},
+            {tbname: 'results',forkey: 'url_id'}
+        ]
     }
 }
