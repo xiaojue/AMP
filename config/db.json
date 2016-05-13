@@ -1,7 +1,0 @@
-{
-	"username": "root",
-	"pwd": "",
-	"host": "localhost",
-    "port": "3306",
-	"dbname" : "amp"
-}
