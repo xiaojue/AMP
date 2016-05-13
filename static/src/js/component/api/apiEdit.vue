@@ -39,7 +39,7 @@ export default {
 	},
 	route: {
 		data(transition) {
-
+			
 		}
 	}
 }	
