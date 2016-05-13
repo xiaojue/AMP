@@ -12,19 +12,9 @@ const router = Router({
 
 router.get('/login',async (ctx,next)=>{
     if(ctx.session.isLogin){
-        ctx.body = {
-            code: 200,
-            data: ctx.session.userinfo,
-            iserror: 0,
-            msg: ''
-        };
+        ctx.success(ctx.session.userinfo);
     }else{
-        ctx.body = {
-            code: 401,
-            data: '',
-            iserror: 1,
-             msg: '请登录'
-        };
+        ctx.fail(401,'请登录');
     }
 })
 router.post('/login',async (ctx,next)=>{
@@ -32,48 +22,22 @@ router.post('/login',async (ctx,next)=>{
         pwd = ctx.body.password,
         remember = ctx.body.remember;
     if(!email || !pwd){
-        ctx.body = {
-            code: 400,
-            data: '',
-            iserror: 1,
-            msg: '请填写邮箱和密码'
-        }
+        ctx.fail(400,'请填写邮箱和密码');
         return;
     }
     await ldapClient(ctx,email,pwd,remember,next).then(function(res){
-        ctx.body = {
-            code: 200,
-            data: res,
-            iserror: 0,
-            msg: ''
-        };
+        ctx.success(res);
     },function(res){
-        ctx.body = {
-            code: 400,
-            data: '',
-            msg: res,
-            iserror: 1
-        };
+        ctx.fail(400,res);
     });
 });
 router.post('/logout',async (ctx,next)=>{
     ctx.session = null;
-    ctx.body = {
-        code: '200',
-        data: '',
-        iserror: 0,
-        msg: '注销成功'
-    };
+    ctx.success('注销成功');
 });
 router.all('*',async (ctx,next)=>{
     if(!ctx.session.isLogin){
-        // ctx.status = 401;
-        ctx.body = {
-            code: 401,
-            data: '',
-            iserror: 1,
-            msg: '请登录'
-        };
+        ctx.fail(401,'请登录');
         return;
     }
     await next();
