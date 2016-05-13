@@ -37,7 +37,8 @@ app.use(convert(Logger()));
 // static
 app.use(convert(Static(path.join(__dirname, 'static'))));
 
-for (let item of routers) {
+// use all route
+for (var item of routers) {
     app.use(item.routes(), item.allowedMethods());
 }
 
