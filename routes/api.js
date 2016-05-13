@@ -105,7 +105,7 @@ var checkForeignkey = async(ctx,item)=>{ //检测：在post的传递过来的外
         return false;
     }
     if(tb){
-        let res = await ctx.mysqlQuery(item).get({id: id});
+        let res = await ctx.mysqlQuery(tb.tbname).get({id: id});
         if(res.length){
             return true;
         }

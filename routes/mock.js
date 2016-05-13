@@ -14,7 +14,7 @@
 var checkUrl = async(ctx,type)=>{
     let url = ctx.request.url,
         attrs = ctx.query;
-    attrs['url'] = url;
+    attrs['url'] = url.substr(5);
     attrs['type'] = type;
     return await ctx.mysqlQuery("urls").get(attrs);
 }
@@ -22,9 +22,7 @@ var checkUrl = async(ctx,type)=>{
 * title: 获取该url模拟返回的数据结果
 **/
 var getResult = async(ctx,item_id)=>{
-    let attrs = ctx.query;
-    attrs['url_id'] = item_id;
-    return await ctx.mysqlQuery('results').get(attrs);
+    return await ctx.mysqlQuery('results').get({"url_id": item_id});
 }
 
 var getContent = (res)=>{
