@@ -59,8 +59,10 @@ CREATE TABLE members(
       username varchar(200) DEFAULT '',
       email varchar(200) DEFAULT '',
       collection_id INT NOT NULL,
+      user_id bigint(20) NOT NULL,
       PRIMARY KEY (`id`),
-      CONSTRAINT FOREIGN KEY (collection_id) REFERENCES collection(id)
+      FOREIGN KEY (collection_id) REFERENCES collection(id),
+      FOREIGN KEY (user_id) REFERENCES users(id)
       ON DELETE CASCADE ON UPDATE CASCADE
 );
 

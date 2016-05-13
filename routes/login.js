@@ -19,7 +19,6 @@ router.get('/login',async (ctx,next)=>{
             msg: ''
         };
     }else{
-        // ctx.status = 401;
         ctx.body = {
             code: 401,
             data: '',
@@ -33,7 +32,6 @@ router.post('/login',async (ctx,next)=>{
         pwd = ctx.body.password,
         remember = ctx.body.remember;
     if(!email || !pwd){
-        // ctx.status = 400;
         ctx.body = {
             code: 400,
             data: '',
@@ -113,23 +111,19 @@ var ldapClient = function(ctx,email,pwd,remember,next){
                             // ctx.status = 400;
                             reject('密码和账户不正确');
                         } else {
-                            let sql = "select * from users where username = '" + email + "'";
-                            ctx.mysqlQuery(sql,{},{
-                                type: "GET"
+                            ctx.mysqlQuery('users').get({
+                                "username": email
                             }).then(function(users){
                                 if(users.length){
                                     saveLogin(ctx,users[0]);
                                     resolve(users[0]);
                                 }else{
-                                    let sql = 'insert into users',
-                                        querys = {
-                                            name: entry.object.name,
-                                            username: email,
-                                            email: email
-                                        };
-                                    ctx.mysqlQuery(sql,querys,{
-                                        type: "POST"
-                                    }).then(function(){
+                                    let querys = {
+                                        name: entry.object.name,
+                                        username: email,
+                                        email: email
+                                    };
+                                    ctx.mysqlQuery('users').post(querys).then(function(){
                                         resolve(querys);
                                     });
                                     saveLogin(ctx,querys);

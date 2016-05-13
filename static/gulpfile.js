@@ -36,7 +36,9 @@ var webpackConfig = {
             'vue-form',
             'vue-resource',
             'jquery',
-            './src/js/lib/highlight.min.js'
+            'codemirror/lib/codemirror.js',
+            'codemirror/mode/javascript/javascript.js',
+            'js-beautify'
         ]
     },
     output: {
