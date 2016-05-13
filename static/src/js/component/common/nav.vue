@@ -25,7 +25,7 @@
 					</li>
 				</ul>
 			</div>
-			<div class="item">
+			<!-- <div class="item">
 				<ul>
 					<li v-link="{name: 'projectList', params: {type: 'coverme'}}">
 						<span class="iconfont">&#xe606;</span>
@@ -38,7 +38,7 @@
 						<i class="iconfont">&#xe604;</i>
 					</li>
 				</ul>
-			</div>
+			</div> -->
 			<div class="item">
 				<ul>
 					<li v-link="{name: 'projectList', params: {type: 'all'}}">

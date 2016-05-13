@@ -19,33 +19,30 @@
 						<div class="char_num">{{projectDetail.descr | length}}/200</div>
 					</div>
 				</div>
-				<div class="item" v-if="id !== 'new'">
+				<div class="item" v-show="id !== 'new'">
 					<p class="title"># 创建人</p>
 					<div class="main_form">
-						<input type="text" disabled="disabled" v-model="projectDetail.creater"></input>
+						<input type="text" disabled="disabled" :value="projectDetail.creater"></input>
 					</div>
 				</div>
-				<div class="item" v-if="id !== 'new'">
+				<div class="item" v-show="id !== 'new'">
 					<p class="title"># 创建时间</p>
 					<div class="main_form">
-						<input type="text" disabled="disabled" v-model="projectDetail.ctime"></input>
+						<input type="text" disabled="disabled" :value="projectDetail.ctime | Date 'yyyy-MM-dd hh:mm:ss'"></input>
 					</div>
 				</div>
 				<div class="item">
 					<p class="title"># 成员</p>
 					<div class="main_form">
-						<input type="text" placeholder="请输入邮箱进行查询" v-model="memberQuery" debounce="300"></input>
+						<input type="text" placeholder="请输入邮箱或姓名进行查询" v-model="memberQuery" debounce="300"></input>
 						<ul class="member_query_list">
+							<li class="no_one" v-show="showNoOne">无</li>
 							<li v-for="item in members" @click="addMember(item)">{{item.name}}</li>
 						</ul>
 						<div class="memer_list">
-							<div class="member_item">
-								<span>{{userInfo.userName}}</span>
-								<!-- <a href="javascript:void(0)" class="iconfont close">&#xe609;</a> -->
-							</div>
-							<div class="member_item" v-for="item in projectDetail.member">
-								<span>{{item.email}}</span>
-								<a href="javascript:void(0)" class="iconfont close">&#xe609;</a>
+							<div class="member_item" v-for="item in memberResult">
+								<span>{{item.name}}</span>
+								<a href="javascript:void(0)" class="iconfont close" @click="deleteMember($index, item.id)">&#xe609;</a>
 							</div>
 						</div>
 					</div>
@@ -86,20 +83,26 @@
 	cursor: pointer;
 	transition: all ease 0.2s;
 }
+.member_query_list li.no_one:hover{
+	background-color: #fff;
+	color: #333;
+	border-radius: 4px;
+}
 .member_query_list li:hover{
 	background-color: rgba(82,215,105,0.9);
 	color: #fff;
 	border-radius: 4px;
+	cursor: pointer;
 }
 .memer_list{
-	
+
 }
 .memer_list .member_item{
-	display: inline-block;vertical-align: middle;padding: 8px 25px 8px 15px;background-color: #fff;color: #333;border: 1px solid #d9d9d9;border-radius: 15px;font-size: 14px;line-height: 12px;text-shadow: none;
+	display: inline-block;vertical-align: middle;padding: 8px 15px;background-color: #fff;color: #333;border: 1px solid #d9d9d9;border-radius: 15px;font-size: 14px;line-height: 12px;text-shadow: none;
 	position: relative;margin-top: 15px;
 }
 .memer_list .member_item .iconfont.close{
-	position: absolute;font-size: 14px;color: #111;text-decoration: none;right: 6px;display: block;top: 50%;transform: translateY(-50%);font-weight: 600;transition: all ease 0.2s;text-shadow: 0 0 10px rgba(255,255,255,0.5);
+	font-size: 14px;color: #111;text-decoration: none;font-weight: 600;transition: all ease 0.2s;text-shadow: 0 0 10px rgba(255,255,255,0.5);
 }
 .memer_list .member_item .iconfont.close:hover{
 	color: #666;
@@ -132,8 +135,9 @@ export default {
 			},
 			memberQuery: '',
 			members: [],
-			memberQueryResult: [],
-			canQuit: false
+			memberResult: [],
+			canQuit: false,
+			showNoOne: false
 		}
 	},
 	vuex: {
@@ -173,11 +177,23 @@ export default {
 		})
 	},
 	methods: {
+		inputCheck() {
+			// 错误检查
+			if(this.projectDetail.name === '' || !this.projectDetail.name){
+				actions.alert(store, {
+					show: true,
+					msg: '输入信息有误，请检查',
+					type: 'danger'
+				})
+				return true;
+			}
+		},
 		save() {
 			const _this = this;
 			if(this.inputCheck()){
 				return;
 			}
+
 			this.$http({
 				url: '/api/collection' + (this.id === 'new' ? '' : '?id=' + this.id),
 				method: this.id === 'new' ? 'post' : 'put',
@@ -187,15 +203,6 @@ export default {
 				}
 			}).then((res) => {
 				if(this.isLogin){
-					// 修改成员
-					_this.$http({
-						url: '/api/members/',
-						method: 'post',
-						data: {
-							collection_id: _this.projectDetail.id,
-						}
-
-					})
 					const resData = res.data;
 					actions.alert(store, {
 						show: true,
@@ -214,17 +221,6 @@ export default {
 				this.$route.router.go('/main/project/detail/' + this.projectDetail.id);
 			}
 		},
-		inputCheck() {
-			// 错误检查
-			if(this.projectDetail.name === '' || !this.projectDetail.name){
-				actions.alert(store, {
-					show: true,
-					msg: '输入信息有误，请检查',
-					type: 'danger'
-				})
-				return true;
-			}
-		},
 		queryMember() {
 			const _this = this;
 			this.$http({
@@ -236,10 +232,35 @@ export default {
 			}).then((res) => {
 				const resDate = res.data;
 				_this.members = resDate.data;
+				_this.showNoOne = false;
+				if(_this.members.length === 0){
+					_this.showNoOne = true;
+				}
 			})
 		},
 		addMember(member) {
-			this.memberQueryResult.push(member);
+			this.memberResult.push(member);
+			this.memberQuery = '';
+			const _this = this;
+			// 添加成员
+			this.$http({
+				url: '/api/members/batch',
+				method: 'post',
+				data: {
+					collection_id: _this.projectDetail.id,
+					users: member.id.toString()
+				}
+			})
+		},
+		deleteMember(index, id) {
+			this.memberResult.splice(index, 1);
+			this.$http({
+				url: '/api/members',
+				method: 'delete',
+				params: {
+					id: id
+				}
+			})
 		}
 	},
 	route: {
@@ -257,6 +278,7 @@ export default {
 					if(this.isLogin){
 						const resData = res.data;
 						this.projectDetail = resData.data[0];
+						this.memberResult =  resData.data[0].members;
 						actions.loading(store, false);
 					}
 				})
@@ -268,6 +290,7 @@ export default {
 			handler(val) {
 				if(val === ''){
 					this.members = [];
+					this.showNoOne = false;
 				}
 				if(val !== ''){
 					this.queryMember();
