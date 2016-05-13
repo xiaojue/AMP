@@ -23,7 +23,9 @@
 				</div>
 				<div class="item">
 					<p class="title">5 项目成员</p>
-					<span class="main_p">{{projectDetail.name}}</span>
+					<div class="member_con">
+						<span v-for="item in projectDetail.members">{{item.userName}}</span>
+					</div>
 				</div>
 			</div>
 		</m-middle>
@@ -57,6 +59,8 @@ import con_main from '../container/main.vue';
 import con_top from '../container/top.vue';
 import con_middle from '../container/middle.vue';
 import con_bottom from '../container/bottom.vue';
+
+import utils from 'utils';
 
 export default {
 	name: 'ProjectDetail',
@@ -95,6 +99,10 @@ export default {
 				if(this.isLogin){
 					const resData = res.data;
 					this.projectDetail = res.data.data[0];
+					// for(var i = 0; i < this.projectDetail.members.length; i++){
+					// 	const _curr = this.projectDetail.members[i];
+					// 	this.projectDetail.members[i] = utils.formatUserInfo(_curr);
+					// }
 					actions.loading(store, false);
 				}
 			})

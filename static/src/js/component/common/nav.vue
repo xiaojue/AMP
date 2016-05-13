@@ -25,7 +25,7 @@
 					</li>
 				</ul>
 			</div>
-			<div class="item">
+			<!-- <div class="item">
 				<ul>
 					<li v-link="{name: 'projectList', params: {type: 'coverme'}}">
 						<span class="iconfont">&#xe606;</span>
@@ -38,7 +38,7 @@
 						<i class="iconfont">&#xe604;</i>
 					</li>
 				</ul>
-			</div>
+			</div> -->
 			<div class="item">
 				<ul>
 					<li v-link="{name: 'projectList', params: {type: 'all'}}">
@@ -49,6 +49,15 @@
 					<li v-link="{name: 'apiList', params: {type: 'all'}}">
 						<span class="iconfont">&#xe605;</span>
 						<p>全部API</p>
+						<i class="iconfont">&#xe604;</i>
+					</li>
+				</ul>
+			</div>
+			<div class="item">
+				<ul>
+					<li v-link="{name: 'postMan'}">
+						<span class="iconfont">&#xe60c;</span>
+						<p>接口测试</p>
 						<i class="iconfont">&#xe604;</i>
 					</li>
 				</ul>

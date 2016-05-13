@@ -31,6 +31,8 @@ import ApiList from './component/api/apiList.vue';
 import ApiDetail from './component/api/apiDetail.vue';
 import ApiEdit from './component/api/apiEdit.vue';
 
+import PostMan from './component/postman/main.vue';
+
 router.map({
     '/': {
         component: Index
@@ -61,6 +63,10 @@ router.map({
 	        '/api/edit/:id': {
 	        	name: 'apiEdit',
 	            component: ApiEdit
+	        },
+	        '/postman': {
+	        	name: 'postMan',
+	        	component: PostMan
 	        }
 	    }
 	}

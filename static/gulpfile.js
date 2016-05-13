@@ -35,7 +35,10 @@ var webpackConfig = {
             'vue-router',
             'vue-form',
             'vue-resource',
-            'jquery'
+            'jquery',
+            'codemirror/lib/codemirror.js',
+            'codemirror/mode/javascript/javascript.js',
+            'js-beautify'
         ]
     },
     output: {
