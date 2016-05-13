@@ -14,11 +14,14 @@ import KoaBodyParser from 'koa-better-body';
 import Session from 'koa2-cookie-session';
 import mongoose from 'mongoose';
 
+// koa1中间件转换
+import convert from 'koa-convert';
+
 // all routers
 import routers from './routers';
 
-// koa1中间件转换
-import convert from 'koa-convert';
+import response from './middleware/response.js';
+
 
 // db about
 import dbHandle from './database/dbHandle.js';
@@ -37,6 +40,7 @@ const options = {
 app.use(KoaBodyParser());
 app.use(Session());
 app.use(convert(Logger()));
+app.use(response);
 
 // static
 app.use(convert(Static(path.join(__dirname, 'static'))));

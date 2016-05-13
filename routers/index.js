@@ -3,5 +3,6 @@
  */
 
 import View from './view.js';
+import User from './user.js';
 
-export default [View]
+export default [View, User];
