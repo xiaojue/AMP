@@ -92,7 +92,7 @@ var ldapClient = function(ctx,email,pwd,remember,next){
                                     });
                                     saveLogin(ctx,querys);
                                 }
-                            });                                    
+                            });
                         }
                     });
                 } else {
