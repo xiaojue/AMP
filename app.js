@@ -12,11 +12,18 @@ import Static from 'koa-static';
 import Logger from 'koa-logger';
 import KoaBodyParser from 'koa-better-body';
 import Session from 'koa2-cookie-session';
+import mongoose from 'mongoose';
 
+// all routers
 import routers from './routers';
 
 // koa1中间件转换
 import convert from 'koa-convert';
+
+// db about
+import dbHandle from './database/dbHandle.js';
+global.dbHandle = dbHandle;
+global.db = mongoose.connect('mongodb://localhost:27017/AMP');
 
 const app = new Koa();
 const httpPort = 9090;
@@ -26,12 +33,9 @@ const options = {
     cert: fs.readFileSync('./pem/certificate.pem')
 };
 
-
+// middleware
 app.use(KoaBodyParser());
 app.use(Session());
-
-
-// middleware
 app.use(convert(Logger()));
 
 // static

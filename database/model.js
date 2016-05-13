@@ -26,5 +26,5 @@ export default {
         response_params: { type: Object, required: true }, // 返回的参数说明
         response_example: { type: Object, required: true }, // 返回示例
         remark: { type: String, required: true }, // 备注
-    }    
+    }
 }

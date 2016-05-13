@@ -43,6 +43,7 @@
     "koa2-cookie-session": "0.0.1",
     "ldapjs": "^1.0.0",
     "moment": "^2.13.0",
+    "mongoose": "^4.4.16",
     "mysql": "^2.10.2",
     "mysql-co": "0.0.4",
     "uid-safe": "^2.1.1",
