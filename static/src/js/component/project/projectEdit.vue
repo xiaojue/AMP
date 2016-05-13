@@ -194,12 +194,19 @@ export default {
 				return;
 			}
 
+			const membersSend = [];
+			for(let i = 0; i < this.memberResult.length; i++){
+				const _curr = this.memberResult.length[i];
+				membersSend.push(_curr.id);
+			}
+
 			this.$http({
 				url: '/api/collection' + (this.id === 'new' ? '' : '?id=' + this.id),
 				method: this.id === 'new' ? 'post' : 'put',
 				data: {
 					name: this.projectDetail.name,
-					descr: this.projectDetail.descr
+					descr: this.projectDetail.descr,
+					members: membersSend.join(',')
 				}
 			}).then((res) => {
 				if(this.isLogin){
@@ -241,26 +248,9 @@ export default {
 		addMember(member) {
 			this.memberResult.push(member);
 			this.memberQuery = '';
-			const _this = this;
-			// 添加成员
-			this.$http({
-				url: '/api/members/batch',
-				method: 'post',
-				data: {
-					collection_id: _this.projectDetail.id,
-					users: member.id.toString()
-				}
-			})
 		},
 		deleteMember(index, id) {
 			this.memberResult.splice(index, 1);
-			this.$http({
-				url: '/api/members',
-				method: 'delete',
-				params: {
-					id: id
-				}
-			})
 		}
 	},
 	route: {

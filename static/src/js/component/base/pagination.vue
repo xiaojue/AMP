@@ -91,26 +91,26 @@ export default {
 		    }
 		    _this.pageList = [];
 		    if (_this.paginationConf.numberOfPages <= _this.paginationConf.pagesLength) {
-		        for (var i = 1; i <= _this.paginationConf.numberOfPages; i++) {
+		        for (let i = 1; i <= _this.paginationConf.numberOfPages; i++) {
 		            _this.pageList.push(i);
 		        }
 		    } else {
 		        const offset = (_this.paginationConf.pagesLength + 1) / 2;
 		        if (_this.paginationConf.currentPage <= offset) {
-		            for (var i = 1; i <= _this.paginationConf.pagesLength; i++) {
+		            for (let i = 1; i <= _this.paginationConf.pagesLength; i++) {
 		                _this.pageList.push(i);
 		            }
 		        } else if (_this.paginationConf.currentPage > _this.paginationConf.numberOfPages - offset) {
-		            for (var i = _this.paginationConf.pagesLength - 1; i > 0; i--) {
+		            for (let i = _this.paginationConf.pagesLength - 1; i > 0; i--) {
 		                _this.pageList.push(_this.paginationConf.numberOfPages - i);
 		            }
 		            _this.pageList.push(_this.paginationConf.numberOfPages)
 		        } else {
-		            for (var i = Math.ceil(_this.paginationConf.pagesLength / 2); i > 1; i--) {
+		            for (let i = Math.ceil(_this.paginationConf.pagesLength / 2); i > 1; i--) {
 		                _this.pageList.push(_this.paginationConf.currentPage - i + 1);
 		            }
 		            _this.pageList.push(_this.paginationConf.currentPage);
-		            for (var i = 1; i < Math.ceil(_this.paginationConf.pagesLength / 2); i++) {
+		            for (let i = 1; i < Math.ceil(_this.paginationConf.pagesLength / 2); i++) {
 		                _this.pageList.push(_this.paginationConf.currentPage + i);
 		            }
 		        }
