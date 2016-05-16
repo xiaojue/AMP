@@ -1,3 +1,6 @@
+/*
+ * db models
+ */
 export default {
     users: {
         name: { type: String, required: true },
