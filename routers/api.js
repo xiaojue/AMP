@@ -28,13 +28,17 @@ $.ajax({
  */
 
 
-Api.get('/:model', async (ctx, next) => {
-	const query = ctx.query;
-	const limit = query.limit ? query.limit : 10;
-	const page = query.page ? query.page : 1;
-	const type = query.type ? 'all';
-	const Projects = global.dbHandel.getModel('projects');
-	Projects.find({
+Api.get('/projects', async (ctx, next) => {
+	console.log(1);
+	await next();
+	// const query = ctx.query;
+	// const limit = query.limit ? query.limit : 10;
+	// const page = query.page ? query.page : 1;
+	// const type = query.type ? 'all';
+	// const Projects = global.dbHandel.getModel('projects');
+	// Projects.find({
 		
-	})
+	// })
 })
+
+export default Api;

@@ -8,7 +8,7 @@ export default async (ctx, next) => {
             code: 200,
             data: result,
             iserror: 0,
-            msg: msg ? msg : ''
+            msg: msg || ''
         }
     }
     ctx.fail = (code, msg) => {

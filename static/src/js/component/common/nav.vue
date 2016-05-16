@@ -5,7 +5,7 @@
 				<img :src="userInfo.avatar">
 			</div>
 			<div class="desc">
-				<p>{{userInfo.userName}}</p>
+				<p>{{userInfo.name}}</p>
 				<p>{{userInfo.role}}</p>
 				<p>{{userInfo.email}}</p>
 			</div>
@@ -171,23 +171,12 @@ import store from 'store';
 
 export default {
 	name: 'Left',
-	data() {
-		return {
-
-		}
-	},
 	vuex: {
 		getters: {
 			userInfo: () => {
 				return store.state.userInfo;
 			}
 		}
-	},
-	methods: {
-
-	},
-	created() {
-
 	}
 }
 

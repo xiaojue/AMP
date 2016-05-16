@@ -24,7 +24,7 @@ import response from './middleware/response.js';
 
 
 // db about
-import dbHandle from './database/dbHandle.js';
+import * as dbHandle from './database/dbHandle.js';
 global.dbHandle = dbHandle;
 global.db = mongoose.connect('mongodb://localhost:27017/AMP');
 

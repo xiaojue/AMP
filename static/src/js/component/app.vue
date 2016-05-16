@@ -48,12 +48,12 @@ export default {
 	},
 	created() {
 		this.$http({
-			url: '/api/login',
+			url: '/user/info',
 			method: 'get',
 		}).then((res) => {
 			if(this.isLogin){
 				const resData = res.data;
-				actions.setUserInfo(store, utils.formatUserInfo(resData.data));
+				actions.setUserInfo(store, resData.data);
 				// 设置背景图片，功能未开
 				// store.dispatch('SETBGURL', resData.data.bgUlr);
 			}
