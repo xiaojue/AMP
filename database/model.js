@@ -20,8 +20,7 @@ export default {
         creator: { type: Schema.Types.ObjectId, required: true, ref: 'users'},
         create_time: { type: Number, required: true, default: Date.now},
         main: {
-            members: [{ type: Schema.Types.ObjectId, required: true, ref: 'users'}],
-            apis: [{ type: Schema.Types.ObjectId, required: true, ref: 'urls'}]
+            members: [{ type: Schema.Types.ObjectId, required: true, ref: 'users'}]
         }
     },
     urls: {
