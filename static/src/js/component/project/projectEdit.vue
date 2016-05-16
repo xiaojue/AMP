@@ -249,7 +249,6 @@ export default {
 		},
 		addMember(member) {
 			this.memberResult.push(member);
-			this.$log('memberResult');
 			this.memberQuery = '';
 		},
 		deleteMember(index, id) {

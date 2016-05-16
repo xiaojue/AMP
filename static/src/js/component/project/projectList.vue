@@ -208,9 +208,12 @@ export default {
 				actions.loading(store, false);
 			})
 		},
-		checkAuthority(members) {
-			for(let i = 0; i < members.length; i++ ){
-				const _curr = members[i];
+		checkAuthority(item) {
+			if(this.userInfo._id === item.creator._id){
+				return false;
+			}
+			for(let i = 0; i < item.main.members.length; i++ ){
+				const _curr = item.main.members[i];
 				if (_curr._id === this.userInfo._id){
 					return false;
 				}
@@ -220,7 +223,7 @@ export default {
 		modifyProject(item) {
 			const id = item._id;
 			const currentUserId = this.userInfo._id;
-			if(!this.checkAuthority(item.main.members)){
+			if(this.checkAuthority(item)){
 				actions.alert(store, {
 					show: true,
 					msg: '无权限',
@@ -228,7 +231,7 @@ export default {
 				})
 				return;
 			}
-			// this.$router.route.go('')
+			this.$route.router.go({name: 'projectEdit', params: {id: item._id}});
 		}
 	},
 }
