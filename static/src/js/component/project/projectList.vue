@@ -8,12 +8,12 @@
 			<div class="item_con">
 				<div class="item" v-for="item in projects" @mouseenter="toggleMenu($index)" @mouseleave="toggleMenu($index)">
 					<h2>{{item.name}}</h2>
-					<p>{{item.descr}}</p>
-					<a class="email" :href="'mailto:' + item.creater">{{item.creater}}</a>
-					<span>{{item.ctime | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
-					<div class="check_detail text_shadow" v-show="showMenu[$index]" v-link="{path: '/main/project/detail', params: {id: item.id}}" :class="{in: showMenu[$index], out: !showMenu[$index]}">
-						<a href="javascript:void(0)" v-link="{name: 'projectDetail', params: {id: item.id}}">项目详情</a>
-						<a href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: item.id}}">修改项目</a>
+					<p>{{item.desc}}</p>
+					<a class="email" :href="'mailto:' + item.creator.email" :title="item.creator.email">{{item.creator.name}}</a>
+					<span>{{item.create_time | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
+					<div class="check_detail text_shadow" v-show="showMenu[$index]" :class="{in: showMenu[$index], out: !showMenu[$index]}">
+						<a href="javascript:void(0)" v-link="{name: 'projectDetail', params: {id: item._id}}">项目详情</a>
+						<a href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: item._id}}">修改项目</a>
 						<a href="javascript:void(0)">接口列表</a>
 					</div>
 				</div>
@@ -151,15 +151,13 @@ export default {
 			showMenu: {}
 		}
 	},
-	created() {
-		this.paginationConf.onChange = () => {
-			this.getProjectData();
-		}
-	},
 	vuex: {
 		getters: {
 			isLogin: () => {
 				return store.state.isLogin;
+			},
+			userInfo: () => {
+				return store.state.userInfo;	
 			}
 		},
 		actions: actions
@@ -171,19 +169,33 @@ export default {
 		'm-bottom': con_bottom,
 		'm-pagination': Pagination
 	},
+	route: {
+	    data(transition) {
+	    	this.type = transition.to.params.type;
+	    	this.getProjectData(this.type);
+	    }
+	},
+	ready() {
+		this.paginationConf.onChange = () => {
+			this.getProjectData();
+		}
+	},
 	methods: {
 		toggleMenu(index) {
 			this.showMenu[index] = !this.showMenu[index];
 		},
 		getProjectData(type) {
 			actions.loading(store, true);
+			const queryParams = {};
+			if(type === 'mine'){
+				queryParams.creator = this.userInfo._id;
+			}
+			queryParams.limit = this.paginationConf.itemsPerPage;
+			queryParams.page = this.paginationConf.currentPage;
 			this.$http({
-				url: '/api/collection',
+				url: '/api/projects',
 				method: 'get',
-				data: {
-					pageSize: this.paginationConf.itemsPerPage,
-					pageIndex: this.paginationConf.currentPage - 1
-				}
+				data: queryParams
 			}).then((res) => {
 				if(this.isLogin){
 					const resData = res.data;
@@ -197,12 +209,6 @@ export default {
 			})
 		}
 	},
-	route: {
-	    data(transition) {
-	    	this.type = transition.to.params.type;
-	    	this.getProjectData(this.type);
-	    }
-	}
 }
 
 </script>

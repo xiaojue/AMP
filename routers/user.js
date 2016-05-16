@@ -51,16 +51,18 @@ const ldapClient = (ctx, email, pwd, remember, next) => {
                                     const newUser = {};
                                     const _arr = entry.object.name.split('-');
                                     newUser.name = _arr[0];
-                                    newUser.department = _arr[1];
-                                    newUser.role = _arr[2];
+                                    newUser.department = _arr[1] || '';
+                                    newUser.role = _arr[2] || '';
                                     newUser.email = email;
                                     newUser.bg = '/dist/img/main_bg.png';
                                     newUser.avatar = '/dist/img/user_avatar.png';
-                                    Users.create(newUser);
-                                    resolve(newUser);
-                                    saveLogin(ctx,newUser);
+                                    Users.create(newUser, function(err, doc){
+                                        resolve(doc);
+                                        saveLogin(ctx, doc);
+                                    });
+                                    
                                 }
-                            })                              
+                            })
                         }
                     });
                 } else {
@@ -72,33 +74,48 @@ const ldapClient = (ctx, email, pwd, remember, next) => {
     });
 }
 
-User.get('/info', async (ctx, next) => {
-    if (ctx.session.isLogin) {
-        ctx.success(ctx.session.userinfo);
-    } else {
-        ctx.fail(401, '请登录');
-    }
-})
-
-
-User.post('/login', async (ctx, next) => {
-    let email = ctx.body.email,
-        pwd = ctx.body.password,
-        remember = ctx.body.remember;
-    if (!email || !pwd) {
-        ctx.fail(400, '请填写邮箱和密码');
-        return;
-    }
-    await ldapClient(ctx, email, pwd, remember, next).then((res) => {
-        ctx.success(res, '登录成功');
-    }, (res) => {
-        ctx.fail(400, res);
+User
+    .get('/info', async (ctx, next) => {
+        if (ctx.session.isLogin) {
+            const Users = global.dbHandle.getModel('users');
+            const regx = new RegExp('.*' + ctx.query.query + '.*');
+            await Users.find({
+                $or: [
+                    { email: regx },
+                    { name: regx }
+                ]
+            }).exec((err, docs) => {
+                ctx.success(docs, '查询成功');
+            })
+        } else {
+            ctx.fail(401, '请登录');
+        }
+    })
+    .post('/login', async (ctx, next) => {
+        let email = ctx.body.email,
+            pwd = ctx.body.password,
+            remember = ctx.body.remember;
+        if (!email || !pwd) {
+            ctx.fail(400, '请填写邮箱和密码');
+            return;
+        }
+        await ldapClient(ctx, email, pwd, remember, next).then((res) => {
+            ctx.success(res, '登录成功');
+        }, (res) => {
+            ctx.fail(400, res);
+        });
+    })
+    .post('/logout', async (ctx, next) => {
+        ctx.session = null;
+        ctx.success('注销成功');
+    })
+    .all('*',async (ctx, next)=>{
+        if(!ctx.session.isLogin){
+            ctx.fail(401,'请登录');
+            return;
+        }
+        await next();
     });
-})
-
-User.post('/logout', async (res, next) => {
-
-})
 
 
 export default User;

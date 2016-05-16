@@ -78,13 +78,14 @@ router.redirect({
 
 import store from 'store';
 import actions from 'actions';
+// 拦截所有的ajax请求
 Vue.http.interceptors.push({
     request: function (request) {
         return request;
     },
     response: function (response) {
     	const resData = response.data;
-    	// 全局的统一权限认证
+    	// 统一权限认证
     	if(resData.iserror && resData.code === 401){
     		// 未登录，跳转到登录页面
     		this.$route.router.go('/');

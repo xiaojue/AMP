@@ -1,35 +1,43 @@
 /*
  * db models
  */
+
+import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
+
 export default {
     users: {
-        name: { type: String, required: true },
-        email: { type: String, required: true },
-        department: { type: String, required: true },
-        role: { type: String, required: true },
-        bg: { type: String, required: true },
-        avatar: { type: String, required: true }
+        name: String,
+        email: String,
+        department: String,
+        role: String,
+        bg: String,
+        avatar: String
     },
     projects: {
         name: { type: String, required: true },
-        desc: { type: String, required: true },
-        creator: { type: String, required: true },
-        creat_time: { type: Number, required: true },
-        members: { type: Array, required: true },
-        apis: { type: Array, required: true },
+        desc: String,
+        creator: { type: Schema.Types.ObjectId, required: true, ref: 'users'},
+        create_time: { type: Number, required: true, default: Date.now},
+        main: {
+            members: [{ type: Schema.Types.ObjectId, required: true, ref: 'users'}],
+            apis: [{ type: Schema.Types.ObjectId, required: true, ref: 'urls'}]
+        }
     },
     urls: {
         name: { type: String, required: true },
-        desc: { type: String, required: true },
-        creator: { type: String, required: true },
-        creat_time: { type: Number, required: true },
-        url: { type: String, required: true },
-        method: { type: String, required: true },
-        request_params: { type: Object, required: true }, // 请求参数说明
-        request_example: { type: Object, required: true }, // 请求示例
-        // response_type: { type: String, required: true }, // json/xml/html etc.
-        response_params: { type: Object, required: true }, // 返回的参数说明
-        response_example: { type: Object, required: true }, // 返回示例
-        remark: { type: String, required: true }, // 备注
+        desc: String,
+        creator: { type: Schema.Types.ObjectId, required: true, ref: 'users' },
+        create_time: { type: Number, required: true, default: Date.now},
+        main: {
+            url: String,
+            method: String,
+            request_params: Object, // 请求参数说明
+            request_example: Object, // 请求示例
+            // response_type: { type: String, required: true }, // json/xml/html etc.
+            response_params: Object, // 返回的参数说明
+            response_example: Object, // 返回示例
+            remark: String // 备注
+        }
     }
 }

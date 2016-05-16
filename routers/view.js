@@ -3,12 +3,13 @@
  */
 
 import Router from 'koa-router';
-import Send from 'koa-send';
 
 const View = Router();
 
 View.get('/', async (ctx, next) => {
-    await Send(ctx, './views/index.html');
+    await ctx.render('/index',{
+    	userinfo: ctx.session.userinfo
+    });
 })
 
 export default View;

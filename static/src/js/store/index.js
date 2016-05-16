@@ -23,7 +23,7 @@ const state = {
 		cancle: 'func'
 	},
 	isLogin: false,
-	userInfo: {}
+	userInfo: window.userInfo
 }
 
 import actions from 'actions';

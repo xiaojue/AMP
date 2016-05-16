@@ -15,20 +15,20 @@
 				<div class="item">
 					<p class="title"># 项目描述</p>
 					<div class="main_form">
-						<textarea maxlength="200" placeholder="请输入项目描述" v-model="projectDetail.descr">{{projectDetail.descr}}</textarea>
-						<div class="char_num">{{projectDetail.descr | length}}/200</div>
+						<textarea maxlength="200" placeholder="请输入项目描述" v-model="projectDetail.desc">{{projectDetail.desc}}</textarea>
+						<div class="char_num">{{projectDetail.desc | length}}/200</div>
 					</div>
 				</div>
 				<div class="item" v-show="id !== 'new'">
 					<p class="title"># 创建人</p>
 					<div class="main_form">
-						<input type="text" disabled="disabled" :value="projectDetail.creater"></input>
+						<input type="text" disabled="disabled" :value="creator.name"></input>
 					</div>
 				</div>
 				<div class="item" v-show="id !== 'new'">
 					<p class="title"># 创建时间</p>
 					<div class="main_form">
-						<input type="text" disabled="disabled" :value="projectDetail.ctime | Date 'yyyy-MM-dd hh:mm:ss'"></input>
+						<input type="text" disabled="disabled" :value="projectDetail.create_time | Date 'yyyy-MM-dd hh:mm:ss'"></input>
 					</div>
 				</div>
 				<div class="item">
@@ -111,6 +111,8 @@
 </style>
 
 <script>
+
+import Vue from 'vue';
   
 import store from 'store';
 import actions from 'actions';
@@ -128,16 +130,17 @@ export default {
 			id: null,
 			projectDetail: {
 				// name: '',
-				// descr: '',
-				// creater: '',
-				// ctime: '',
-				// member: []
+				// desc: '',
+				// creator: '',
+				// create_time: '',
+				// main: {}
 			},
+			creator: '',
 			memberQuery: '',
 			members: [],
 			memberResult: [],
 			canQuit: false,
-			showNoOne: false
+			showNoOne: false,
 		}
 	},
 	vuex: {
@@ -193,14 +196,20 @@ export default {
 			if(this.inputCheck()){
 				return;
 			}
-
+			const member = [];
+			for(let i = 0; i < this.memberResult.length; i++){
+				const _curr = this.memberResult[i];
+				member.push(_curr._id);
+			}
+			if(this.id === 'new'){
+				Vue.set(this.projectDetail, 'main', {});
+			}
+			this.projectDetail.main.members = member;
+			
 			this.$http({
-				url: '/api/collection' + (this.id === 'new' ? '' : '?id=' + this.id),
+				url: '/api/projects' + (this.id === 'new' ? '' : '?_id=' + this.id),
 				method: this.id === 'new' ? 'post' : 'put',
-				data: {
-					name: this.projectDetail.name,
-					descr: this.projectDetail.descr
-				}
+				data: this.projectDetail
 			}).then((res) => {
 				if(this.isLogin){
 					const resData = res.data;
@@ -210,7 +219,7 @@ export default {
 						msg: this.id === 'new' ? '新建成功' : '修改成功'
 					})
 					this.canQuit = true;
-					this.id === 'new' ? this.$route.router.go('/main/project/detail/' + resData.data.id) : null;
+					this.id === 'new' ? this.$route.router.go('/main/project/detail/' + resData.data._id) : null;
 				}
 			})
 		},
@@ -218,13 +227,13 @@ export default {
 			if(this.id === 'new'){
 				this.$route.router.go('/main/project/list/mine');
 			}else{
-				this.$route.router.go('/main/project/detail/' + this.projectDetail.id);
+				this.$route.router.go('/main/project/detail/' + this.projectDetail._id);
 			}
 		},
 		queryMember() {
 			const _this = this;
 			this.$http({
-				url: '/api/users/search',
+				url: '/user/info',
 				method: 'get',
 				data: {
 					query: this.memberQuery
@@ -240,27 +249,11 @@ export default {
 		},
 		addMember(member) {
 			this.memberResult.push(member);
+			this.$log('memberResult');
 			this.memberQuery = '';
-			const _this = this;
-			// 添加成员
-			this.$http({
-				url: '/api/members/batch',
-				method: 'post',
-				data: {
-					collection_id: _this.projectDetail.id,
-					users: member.id.toString()
-				}
-			})
 		},
 		deleteMember(index, id) {
 			this.memberResult.splice(index, 1);
-			this.$http({
-				url: '/api/members',
-				method: 'delete',
-				params: {
-					id: id
-				}
-			})
 		}
 	},
 	route: {
@@ -269,16 +262,17 @@ export default {
 			if(this.id !== 'new'){
 				actions.loading(store, true);
 				this.$http({
-					url: '/api/collection',
+					url: '/api/projects',
 					method: 'get',
 					data: {
-						id: this.id
+						_id: this.id
 					}
 				}).then((res) => {
 					if(this.isLogin){
 						const resData = res.data;
-						this.projectDetail = resData.data[0];
-						this.memberResult =  resData.data[0].members;
+						this.projectDetail = resData.data.result[0];
+						this.creator = resData.data.result[0].creator;
+						this.memberResult =  resData.data.result[0].main.members;
 						actions.loading(store, false);
 					}
 				})

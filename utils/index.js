@@ -1,3 +1,6 @@
+
 import ldapConnect from './ldap.js';
 
-export { ldapConnect };
+import { inArray } from './tools.js';
+
+export { ldapConnect,inArray };

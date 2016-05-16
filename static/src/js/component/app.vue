@@ -47,17 +47,7 @@ export default {
 		'm-confirm': Confirm
 	},
 	created() {
-		this.$http({
-			url: '/user/info',
-			method: 'get',
-		}).then((res) => {
-			if(this.isLogin){
-				const resData = res.data;
-				actions.setUserInfo(store, resData.data);
-				// 设置背景图片，功能未开
-				// store.dispatch('SETBGURL', resData.data.bgUlr);
-			}
-		})
+		
 	}
 }
 

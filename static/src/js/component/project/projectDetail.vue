@@ -11,27 +11,27 @@
 				</div>
 				<div class="item">
 					<p class="title">2 项目描述</p>
-					<span class="main_p">{{projectDetail.descr}}</span>
+					<span class="main_p">{{projectDetail.desc}}</span>
 				</div>
 				<div class="item">
 					<p class="title">3 创建人</p>
-					<span class="main_p">{{projectDetail.creater}}</span>
+					<span class="main_p">{{creator.name}}</span>
 				</div>
 				<div class="item">
 					<p class="title">4 创建时间</p>
-					<span class="main_p">{{projectDetail.ctime | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
+					<span class="main_p">{{projectDetail.create_time | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
 				</div>
 				<div class="item">
 					<p class="title">5 项目成员</p>
 					<div class="member_con">
-						<span v-for="item in projectDetail.members">{{item.userName}}</span>
+						<span v-for="item in members">{{item.name}}</span>
 					</div>
 				</div>
 			</div>
 		</m-middle>
 		<m-bottom>
 			<div class="btn_con">
-				<a href="javascript:void(0)" class="btn btn_success" v-link="{name: 'projectEdit', params: {id: projectDetail.id}}">修改</a>
+				<a href="javascript:void(0)" class="btn btn_success" v-link="{name: 'projectEdit', params: {id: projectDetail._id}}">修改</a>
 				<a href="javascript:void(0)" class="btn btn_default" @click="deleteProject()">删除</a>
 			</div>
 		</m-bottom>
@@ -46,7 +46,12 @@
 	top: 50%;
 	margin-top: -19px;
 }
-
+.member_con{
+	font-size: 0;
+}
+.member_con span{
+	display: inline-block;vertical-align: middle;margin: 0 5px;padding: 8px 15px;background-color: #fff;color: #333;border: 1px solid #d9d9d9;border-radius: 15px;font-size: 14px;line-height: 12px;text-shadow: none;
+}
 </style>
 
 <script>
@@ -66,9 +71,9 @@ export default {
 	name: 'ProjectDetail',
 	data() {
 		return {
-			projectDetail: {
-				
-			},
+			projectDetail: {},
+			creator: {},
+			members: [],
 			test: {}
 		}
 	},
@@ -86,23 +91,27 @@ export default {
 		'm-middle': con_middle,
 		'm-bottom': con_bottom
 	},
+	route: {
+		data(transtion) {
+			const id = transtion.to.params.id;
+			this.getProjectDetail(id);
+		}
+	},
 	methods: {
 		getProjectDetail(id) {
 			actions.loading(store, true);
 			this.$http({
-				url: '/api/collection',
+				url: '/api/projects',
 				method: 'get',
 				data: {
-					id: id
+					_id: id
 				}
 			}).then((res) => {
 				if(this.isLogin){
 					const resData = res.data;
-					this.projectDetail = res.data.data[0];
-					// for(var i = 0; i < this.projectDetail.members.length; i++){
-					// 	const _curr = this.projectDetail.members[i];
-					// 	this.projectDetail.members[i] = utils.formatUserInfo(_curr);
-					// }
+					this.projectDetail = resData.data.result[0];
+					this.creator = resData.data.result[0].creator;
+					this.members = resData.data.result[0].main.members;
 					actions.loading(store, false);
 				}
 			})
@@ -114,7 +123,7 @@ export default {
 				msg: '是否删除本项目？',
 				apply() {
 					_this.$http({
-						url: '/api/collection?id=' + _this.projectDetail.id,
+						url: '/api/projects?_id=' + _this.projectDetail._id,
 						method: 'delete'
 					}).then((res) => {
 						actions.alert(store, {
@@ -126,12 +135,6 @@ export default {
 					})
 				}
 			});
-		}
-	},
-	route: {
-		data(transtion) {
-			const id = transtion.to.params.id;
-			this.getProjectDetail(id);
 		}
 	}
 }
