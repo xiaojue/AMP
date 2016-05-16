@@ -13,7 +13,7 @@
 					<span>{{item.create_time | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
 					<div class="check_detail text_shadow" v-show="showMenu[$index]" :class="{in: showMenu[$index], out: !showMenu[$index]}">
 						<a href="javascript:void(0)" v-link="{name: 'projectDetail', params: {id: item._id}}">项目详情</a>
-						<a href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: item._id}}">修改项目</a>
+						<a href="javascript:void(0)" @click="modifyProject(item)">修改项目</a>
 						<a href="javascript:void(0)">接口列表</a>
 					</div>
 				</div>
@@ -207,6 +207,28 @@ export default {
 				}
 				actions.loading(store, false);
 			})
+		},
+		checkAuthority(members) {
+			for(let i = 0; i < members.length; i++ ){
+				const _curr = members[i];
+				if (_curr._id === this.userInfo._id){
+					return false;
+				}
+			}
+			return true;
+		},
+		modifyProject(item) {
+			const id = item._id;
+			const currentUserId = this.userInfo._id;
+			if(!this.checkAuthority(item.main.members)){
+				actions.alert(store, {
+					show: true,
+					msg: '无权限',
+					type: 'danger'
+				})
+				return;
+			}
+			// this.$router.route.go('')
 		}
 	},
 }

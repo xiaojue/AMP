@@ -65,7 +65,7 @@ Api
     	ctx.success(newModel, '新建成功');
     })
     .put('/:model', async (ctx, next) => {
-
+    	
     })
     .delete('/:model', async (ctx, next) => {
     	const model = ctx.params.model;
