@@ -14,7 +14,7 @@
 					<div class="check_detail text_shadow">
 						<a href="javascript:void(0)" v-link="{name: 'projectDetail', params: {id: item._id}}">项目详情</a>
 						<a href="javascript:void(0)" @click="modifyProject(item)">修改项目</a>
-						<a href="javascript:void(0)">接口列表</a>
+						<a href="javascript:void(0)" v-link="{name: 'apiList', params: {type: item._id}}">接口列表</a>
 					</div>
 				</div>
 			</div>
@@ -34,24 +34,7 @@
 	margin-top: -19px;
 }
 
-.item_con .item{
-	background-color: rgba(67,58,60, 0.6);
-	background-image: url('/dist/img/noisy.png');
-	color: #fff;
-	position: relative;
-	padding: 20px 20px;
-	box-sizing: border-box;
-	transition: all ease 0.2s;
-}
-.item_con .item:hover{
-	background-color: rgba(42,36,38,0.6);
-}
-.item_con .item:nth-child(2n+1){
-	background-color: rgba(62,49,69,0.6);
-}
-.item_con .item:nth-child(2n+1):hover{
-	background-color: rgba(42,36,38,0.6);
-}
+
 
 .item_con .item>h2{
 	font-size: 18px;
@@ -167,7 +150,7 @@ export default {
 	route: {
 	    data(transition) {
 	    	this.type = transition.to.params.type;
-	    	this.getProjectData(this.type);
+	    	this.getProjectData();
 	    }
 	},
 	ready() {
@@ -176,10 +159,10 @@ export default {
 		}
 	},
 	methods: {
-		getProjectData(type) {
+		getProjectData() {
 			actions.loading(store, true);
 			const queryParams = {};
-			if(type === 'mine'){
+			if(this.type === 'mine'){
 				queryParams.creator = this.userInfo._id;
 			}
 			queryParams.limit = this.paginationConf.itemsPerPage;

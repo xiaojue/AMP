@@ -17,4 +17,7 @@ utils.mixin(utils, user);
 import * as cookies from './cookie.js';
 utils.mixin(utils, cookies);
 
+import * as common from './common.js';
+utils.mixin(utils, common);
+
 export default utils;

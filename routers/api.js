@@ -39,8 +39,8 @@ Api
 			}
 		}
         const Model = global.dbHandle.getModel(model);
-        const result = await Model.find(realQuery).populate('creator').populate('main.members').sort({ 'create_time': -1 }).limit(limit).skip((page - 1) * limit);
-        const all = await Model.find({});
+        const result = await Model.find(realQuery).populate('creator').populate('main.members').populate('project_id').sort({ 'create_time': -1 }).limit(limit).skip((page - 1) * limit);
+        const all = await Model.find(realQuery);
 		ctx.success({
 			total: all.length,
 			result: result
@@ -55,13 +55,25 @@ Api
     	const Model = global.dbHandle.getModel(model);
     	const Person = global.dbHandle.getModel('users');
     	var currentUser = new Person({ _id: ctx.session.userinfo._id});
-    	const newModel = await Model.create({
-    		name: ctx.body.name,
-    		desc: ctx.body.desc,
-    		creator: currentUser._id,
-    		create_time: Date.now(),
-    		main: ctx.body.main || {}
-    	})
+
+        const modelMap = model === 'projects' ? {
+            name: ctx.body.name,
+            desc: ctx.body.desc,
+            creator: currentUser._id,
+            create_time: Date.now(),
+            main: ctx.body.main || {}
+        } : {
+            name: ctx.body.name,
+            desc: ctx.body.desc,
+            creator: currentUser._id,
+            create_time: Date.now(),
+            url: ctx.body.url,
+            project_id: ctx.body.project_id,
+            status: ctx.body.status,
+            main: ctx.body.main || {}
+        }
+
+    	const newModel = await Model.create(modelMap)
     	ctx.success(newModel, '新建成功');
     })
     .put('/:model', async (ctx, next) => {
@@ -71,14 +83,24 @@ Api
         }
         const Model = global.dbHandle.getModel(model);
         const obj = ctx.body;
+
+        const modelMap = model === 'projects' ? {
+            name: obj.name,
+            desc: obj.desc,
+            main: obj.main || {}
+        } : {
+            name: obj.name,
+            desc: obj.desc,
+            url: obj.url,
+            project_id: obj.project_id,
+            status: obj.status,
+            main: obj.main || {}
+        }
+
         const updateModel = await Model.update({
             '_id': obj._id
         }, {
-            '$set': {
-                name: obj.name,
-                desc: obj.desc,
-                main: obj.main
-            }
+            '$set': modelMap
         })
 
         ctx.success(updateModel, '修改成功');
