@@ -207,7 +207,6 @@ export default {
 				Vue.set(this.projectDetail, 'main', {});
 			}
 			this.projectDetail.main.members = member;
-			
 			this.$http({
 				url: '/api/projects' + (this.id === 'new' ? '' : '?_id=' + this.id),
 				method: this.id === 'new' ? 'post' : 'put',

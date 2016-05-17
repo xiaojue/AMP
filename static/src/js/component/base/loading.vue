@@ -124,7 +124,7 @@ export default {
 	}
 }
 
-var loadingBeginTime = Date.now();
+let loadingBeginTime = Date.now();
 Vue.transition('loading_fade', {
 	css: false,
     beforeEnter: function (el) {

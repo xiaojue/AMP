@@ -4,10 +4,14 @@
 			<p class="title">api列表</p>
 		</m-top>
 		<m-middle>
-			
+			<div class="item_con">
+				<div class="item">
+					
+				</div>
+			</div>
 		</m-middle>
 		<m-bottom>
-			
+			<m-pagination :pagination-conf="paginationConf"></m-pagination>
 		</m-bottom>
 	</m-main-con>
 </template>
@@ -17,6 +21,11 @@
 </style>
 
 <script>
+
+import Pagination from '../base/pagination.vue';
+
+import store from 'store';
+import actions from 'actions';
 
 // container component
 import con_main from '../container/main.vue';
@@ -28,7 +37,15 @@ export default {
 	name: 'ApiList',
 	data() {
 		return {
-
+			paginationConf: {
+				currentPage: 1,     // 当前页
+				totalItems: 0,     // 总条数
+				itemsPerPage: 15,    // 每页条数
+				pagesLength: 5,     // 显示几页( 1,2,3 / 1,2,3,4,5)
+				onChange: function() {
+					// 回调
+				}
+			}
 		}
 	},
 	components: {
@@ -39,6 +56,11 @@ export default {
 	},
 	route: {
 		data(transition) {
+
+		}
+	},
+	methods: {
+		getApiListData(type) {
 
 		}
 	}

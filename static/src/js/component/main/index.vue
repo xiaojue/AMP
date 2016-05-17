@@ -48,7 +48,6 @@
     top: 0;
     left: 0;
 }
-
 .desc {
     position: fixed;
     top: 50%;
@@ -69,7 +68,6 @@
     text-align: center;
     line-height: 88px;
 }
-
 .desc p {
     font-size: 16px;
     line-height: 66px;
@@ -101,7 +99,6 @@
     font-weight: normal;
     line-height: 38px;
 }
-
 .login form {
     width: 100%;
     display: block;
@@ -175,7 +172,6 @@
     -webkit-user-select: none;
     margin-top: 15px;
 }
-
 .remember>label {
     cursor: pointer;
 }
@@ -285,6 +281,5 @@ export default {
         }
     }
 }
-
 
 </script>

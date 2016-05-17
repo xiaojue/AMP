@@ -11,7 +11,7 @@ import VueAjax from 'vue-resource';
 Vue.use(VueAjax);
 
 const router = new Router({
-	saveScrollPosition: true
+    saveScrollPosition: true
 });
 
 import store from 'store';
@@ -42,38 +42,38 @@ router.map({
         component: Index
     },
     '/main': {
-    	component: Main,
-	    subRoutes: {
-	        '/project/list/:type': {
-	        	name: 'projectList',
-	            component: ProjectList
-	        },
-	        '/project/detail/:id': {
-	        	name: 'projectDetail',
-	            component: ProjectDetail
-	        },
-	        '/project/edit/:id': {
-	        	name: 'projectEdit',
-	            component: ProjectEdit
-	        },
-	        '/api/list/:type': {
-	        	name: 'apiList',
-	            component: ApiList
-	        },
-	        '/api/detail/:id': {
-	        	name: 'apiDetail',
-	            component: ApiDetail
-	        },
-	        '/api/edit/:id': {
-	        	name: 'apiEdit',
-	            component: ApiEdit
-	        },
-	        '/postman': {
-	        	name: 'postMan',
-	        	component: PostMan
-	        }
-	    }
-	}
+        component: Main,
+        subRoutes: {
+            '/project/list/:type': {
+                name: 'projectList',
+                component: ProjectList
+            },
+            '/project/detail/:id': {
+                name: 'projectDetail',
+                component: ProjectDetail
+            },
+            '/project/edit/:id': {
+                name: 'projectEdit',
+                component: ProjectEdit
+            },
+            '/api/list/:type': {
+                name: 'apiList',
+                component: ApiList
+            },
+            '/api/detail/:id': {
+                name: 'apiDetail',
+                component: ApiDetail
+            },
+            '/api/edit/:id': {
+                name: 'apiEdit',
+                component: ApiEdit
+            },
+            '/postman': {
+                name: 'postMan',
+                component: PostMan
+            }
+        }
+    }
 });
 
 router.redirect({
@@ -82,7 +82,7 @@ router.redirect({
 
 // 拦截所有的ajax请求
 Vue.http.interceptors.push({
-    request: function (request) {
+    request: function(request) {
         return request;
     },
     response: function (response) {
