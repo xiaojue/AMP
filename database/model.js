@@ -33,11 +33,11 @@ export default {
         status: {type: Number, dafault: 0}, // 0未完成 1完成
         main: {
             method: String,
-            request_params: Object, // 请求参数说明
-            request_example: Object, // 请求示例
+            request_params: Array, // 请求参数说明
+            request_example: Array, // 请求示例
             // response_type: { type: String, required: true }, // json/xml/html etc.
-            response_params: Object, // 返回的参数说明
-            response_example: Object, // 返回示例
+            response_params: Array, // 返回的参数说明
+            response_example: Array, // 返回示例
             remark: String // 备注
         }
     }

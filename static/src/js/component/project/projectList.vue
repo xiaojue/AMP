@@ -34,8 +34,6 @@
 	margin-top: -19px;
 }
 
-
-
 .item_con .item>h2{
 	font-size: 18px;
 	line-height: 20px;

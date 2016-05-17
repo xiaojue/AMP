@@ -25,10 +25,10 @@
 						<li>{{item.url}}</li>
 						<li>{{item.status === 0 ? '未完成' : '已完成'}}</li>
 						<li>
-							<a href="javascript:void(0)" class="btn btn_sm btn_info" v-link="{name: 'apiDetail', params: {id: item._id}}">详情</a>
+							<a href="javascript:void(0)" class="btn btn_sm btn_info" v-link="{name: 'apiDetail', params: {id: item._id}}">文档</a>
 							<a href="javascript:void(0)" class="btn btn_sm btn_success" @click="modifyApi(item)">修改</a>
 							<a href="javascript:void(0)" class="btn btn_sm btn_default" @click="delApi(item)">删除</a>
-							<a href="javascript:void(0)" class="btn btn_sm btn_danger" @click="exportApi(item)">导出</a>
+							<!-- <a href="javascript:void(0)" class="btn btn_sm btn_danger" @click="exportApi(item)">导出</a> -->
 						</li>
 					</ul>
 				</div>
