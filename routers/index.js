@@ -8,4 +8,4 @@ import Api from './api.js';
 
 import Common from './common.js';
 
-export default [View, User, Api, Common];
+export default [View, Common, User, Api];
