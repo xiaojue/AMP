@@ -6,6 +6,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex);
 
+import utils from 'utils';
+
 const state = {
 	bgImgUrl: '/dist/img/main_bg.png',
 	loading: false,
@@ -22,8 +24,8 @@ const state = {
 		apply: 'func',
 		cancle: 'func'
 	},
-	isLogin: false,
-	userInfo: window.userInfo
+	isLogin: utils.getCookie('userInfo') ? true : false,
+	userInfo: utils.getCookie('userInfo') ? JSON.parse(new Buffer(utils.getCookie('userInfo'), "base64").toString()) : ''
 }
 
 import actions from 'actions';

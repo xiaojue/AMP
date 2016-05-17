@@ -69,6 +69,8 @@ header>div{
 
 import store from 'store';
 import actions from 'actions';
+
+import utils from 'utils';
 	
 export default{
 	name: 'Header',
@@ -83,11 +85,14 @@ export default{
 	methods: {
 		logout() {
 			this.$http({
-				url: '/api/logout',
+				url: '/user/logout',
 				method : 'post',
 			}).then((res) => {
 				if(!res.data.iserror){
+					actions.checkLogin(store, false);
+					utils.delCookie('userInfo');
 					this.$route.router.go('/');
+					actions.setUserInfo(store, {});
 				}
 			})
 		}

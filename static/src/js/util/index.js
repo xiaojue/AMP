@@ -14,5 +14,7 @@ utils.mixin = (source, target) => {
 import * as user from './user.js';
 utils.mixin(utils, user);
 
+import * as cookies from './cookie.js';
+utils.mixin(utils, cookies);
 
 export default utils;

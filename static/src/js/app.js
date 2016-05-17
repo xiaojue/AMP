@@ -14,6 +14,9 @@ const router = new Router({
 	saveScrollPosition: true
 });
 
+import store from 'store';
+import actions from 'actions';
+
 // filter
 import './filter/index.js';
 
@@ -32,6 +35,7 @@ import ApiDetail from './component/api/apiDetail.vue';
 import ApiEdit from './component/api/apiEdit.vue';
 
 import PostMan from './component/postman/main.vue';
+
 
 router.map({
     '/': {
@@ -73,11 +77,9 @@ router.map({
 });
 
 router.redirect({
-	'*': '/main/project/list/mine'
+	'*': '/'
 })
 
-import store from 'store';
-import actions from 'actions';
 // 拦截所有的ajax请求
 Vue.http.interceptors.push({
     request: function (request) {
