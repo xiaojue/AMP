@@ -117,16 +117,18 @@
 
 import Vue from 'vue';
 
-import Pagination from '../base/pagination.vue';
-
 import store from 'store';
 import actions from 'actions';
+
+import utils from 'utils';
 
 // container component
 import con_main from '../container/main.vue';
 import con_top from '../container/top.vue';
 import con_middle from '../container/middle.vue';
 import con_bottom from '../container/bottom.vue';
+
+import Pagination from '../base/pagination.vue';
 
 export default {
 	name: 'ProjectList',
@@ -208,22 +210,10 @@ export default {
 				actions.loading(store, false);
 			})
 		},
-		checkAuthority(item) {
-			if(this.userInfo._id === item.creator._id){
-				return false;
-			}
-			for(let i = 0; i < item.main.members.length; i++ ){
-				const _curr = item.main.members[i];
-				if (_curr._id === this.userInfo._id){
-					return false;
-				}
-			}
-			return true;
-		},
 		modifyProject(item) {
 			const id = item._id;
 			const currentUserId = this.userInfo._id;
-			if(this.checkAuthority(item)){
+			if(utils.checkAuthority(item)){
 				actions.alert(store, {
 					show: true,
 					msg: '无权限',

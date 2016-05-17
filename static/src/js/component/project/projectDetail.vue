@@ -31,7 +31,7 @@
 		</m-middle>
 		<m-bottom>
 			<div class="btn_con">
-				<a href="javascript:void(0)" class="btn btn_success" v-link="{name: 'projectEdit', params: {id: projectDetail._id}}">修改</a>
+				<a href="javascript:void(0)" class="btn btn_success" @click="modifyProject()">修改</a>
 				<a href="javascript:void(0)" class="btn btn_default" @click="deleteProject()">删除</a>
 			</div>
 		</m-bottom>
@@ -116,7 +116,26 @@ export default {
 				}
 			})
 		},
+		modifyProject() {
+			if(utils.checkAuthority(this.projectDetail)){
+				actions.alert(store, {
+					show: true,
+					msg: '无权限',
+					type: 'danger'
+				})
+				return;
+			}
+			this.$route.router.go({name: 'projectEdit', params: {id: this.projectDetail._id}})
+		},
 		deleteProject() {
+			if(utils.checkAuthority(this.projectDetail)){
+				actions.alert(store, {
+					show: true,
+					msg: '无权限',
+					type: 'danger'
+				})
+				return;
+			}
 			const _this = this;
 			actions.confirm(store, {
 				show: true,

@@ -117,6 +117,8 @@ import Vue from 'vue';
 import store from 'store';
 import actions from 'actions';
 
+import utils from 'utils';
+
 // container component
 import con_main from '../container/main.vue';
 import con_top from '../container/top.vue';
@@ -273,6 +275,15 @@ export default {
 						this.creator = resData.data.result[0].creator;
 						this.memberResult =  resData.data.result[0].main.members;
 						actions.loading(store, false);
+						if(utils.checkAuthority(this.projectDetail)){
+							actions.alert(store, {
+								show: true,
+								msg: '无权限',
+								type: 'danger'
+							})
+							this.canQuit = true;
+							this.$route.router.go('/main/project/list/mine');
+						}
 					}
 				})
 			}
