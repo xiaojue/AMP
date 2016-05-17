@@ -42,7 +42,16 @@ export default {
 		'm-loading': Loading,
 		'm-alert': Alert,
 		'm-confirm': Confirm
-	}
+	},
+	route: {
+	    data(transition) {
+	        if(this.isLogin){
+	            this.$route.router.go('/main/project/list/mine');
+	        }else{
+	        	this.$route.router.go('/');
+	        }
+	    }
+	},
 }
 
 </script>

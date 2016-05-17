@@ -60,7 +60,6 @@ const ldapClient = (ctx, email, pwd, remember, next) => {
                                         resolve(doc);
                                         saveLogin(ctx, doc);
                                     });
-                                    
                                 }
                             })
                         }
@@ -109,13 +108,5 @@ User
         ctx.session = null;
         ctx.success('注销成功');
     })
-    .all('*',async (ctx, next)=>{
-        if(!ctx.session.isLogin){
-            ctx.fail(401,'请登录');
-            return;
-        }
-        await next();
-    });
-
 
 export default User;

@@ -244,18 +244,9 @@ export default {
     },
     vuex: {
         getters: {
-            isLogin() {
-                return store.state.isLogin
-            }
+
         },
         actions: actions
-    },
-    route: {
-        data(transition) {
-            if(this.isLogin){
-                this.$route.router.go('/main/project/list/mine');
-            }
-        }
     },
     methods: {
         login() {
