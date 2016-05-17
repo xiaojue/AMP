@@ -6,12 +6,12 @@
 		</m-top>
 		<m-middle>
 			<div class="item_con">
-				<div class="item" v-for="item in projects" @mouseenter="toggleMenu($index)" @mouseleave="toggleMenu($index)">
+				<div class="item" v-for="item in projects">
 					<h2>{{item.name}}</h2>
 					<p>{{item.desc}}</p>
 					<a class="email" :href="'mailto:' + item.creator.email" :title="item.creator.email">{{item.creator.name}}</a>
 					<span>{{item.create_time | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
-					<div class="check_detail text_shadow" v-show="showMenu[$index]" :class="{in: showMenu[$index], out: !showMenu[$index]}">
+					<div class="check_detail text_shadow">
 						<a href="javascript:void(0)" v-link="{name: 'projectDetail', params: {id: item._id}}">项目详情</a>
 						<a href="javascript:void(0)" @click="modifyProject(item)">修改项目</a>
 						<a href="javascript:void(0)">接口列表</a>
@@ -41,6 +41,7 @@
 	position: relative;
 	padding: 20px 20px;
 	box-sizing: border-box;
+	transition: all ease 0.2s;
 }
 .item_con .item:hover{
 	background-color: rgba(42,36,38,0.6);
@@ -76,10 +77,10 @@
 }
 .item_con .item .check_detail{
 	right: 0;
-	width: 300px;
 	height: 100%;
 	top: 0;
-	background-color: rgba(225,90,0,0.5);
+	right: 20px;
+	/*background-color: rgba(225,90,0,0.5);*/
 	display: flex;
 	justify-content: center;
 	align-content: space-between;
@@ -95,22 +96,15 @@
 	vertical-align: text-bottom;
 	align-self: center;
 	font-size: 16px;
-	right: -100%;
+	background-color: rgba(255,255,255,0.2);
+	border-radius: 4px;
+	margin: 0 5px;
+	transition: all ease 0.2s;
 }
-.in{
-	animation: in 0.3s ease both;
+.item_con .item .check_detail a:hover{
+	background-color: rgba(255,255,255,0.4)
 }
-.out{
-	animation: out 0.3s ease both;
-}
-@keyframes in {
-	0%{right: -100%;}	
-	100%{right: 0;}
-}
-@keyframes out {
-	0%{right: 0%;}
-	100%{right: -100%;}
-}
+
 </style>
 
 <script>
@@ -149,8 +143,7 @@ export default {
 					// 回调
 				}
 			},
-			projects: [],
-			showMenu: {}
+			projects: []
 		}
 	},
 	vuex: {
@@ -183,9 +176,6 @@ export default {
 		}
 	},
 	methods: {
-		toggleMenu(index) {
-			this.showMenu[index] = !this.showMenu[index];
-		},
 		getProjectData(type) {
 			actions.loading(store, true);
 			const queryParams = {};
@@ -203,9 +193,6 @@ export default {
 					const resData = res.data;
 					this.projects = resData.data.result;
 					this.paginationConf.totalItems = resData.data.total;
-					this.projects.forEach((item, index) => {
-						Vue.set(this.showMenu, index, false);
-					});
 				}
 				actions.loading(store, false);
 			})
