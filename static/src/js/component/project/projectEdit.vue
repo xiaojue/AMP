@@ -99,7 +99,7 @@
 }
 .memer_list .member_item{
 	display: inline-block;vertical-align: middle;padding: 8px 15px;background-color: #fff;color: #333;border: 1px solid #d9d9d9;border-radius: 15px;font-size: 14px;line-height: 12px;text-shadow: none;
-	position: relative;margin-top: 15px;
+	position: relative;margin: 15px 5px 0;
 }
 .memer_list .member_item .iconfont.close{
 	font-size: 14px;color: #111;text-decoration: none;font-weight: 600;transition: all ease 0.2s;text-shadow: 0 0 10px rgba(255,255,255,0.5);
@@ -250,6 +250,18 @@ export default {
 			})
 		},
 		addMember(member) {
+			for(let i = 0; i < this.memberResult.length; i++) {
+				const _curr = this.memberResult[i];
+				if(_curr._id === member._id){
+					actions.alert(store, {
+						show: true,
+						msg: '成员已存在',
+						type: 'warning'
+					})
+					this.memberQuery = '';
+					return;
+				}
+			}
 			this.memberResult.push(member);
 			this.memberQuery = '';
 		},
