@@ -65,7 +65,23 @@ Api
     	ctx.success(newModel, '新建成功');
     })
     .put('/:model', async (ctx, next) => {
-    	
+    	const model = ctx.params.model;
+        if(checkModel(ctx, model)){
+            return;
+        }
+        const Model = global.dbHandle.getModel(model);
+        const obj = ctx.body;
+        const updateModel = await Model.update({
+            '_id': obj._id
+        }, {
+            '$set': {
+                name: obj.name,
+                desc: obj.desc,
+                main: obj.main
+            }
+        })
+
+        ctx.success(updateModel, '修改成功');
     })
     .delete('/:model', async (ctx, next) => {
     	const model = ctx.params.model;

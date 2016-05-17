@@ -38,16 +38,10 @@ export default {
 		},
 		actions: actions
 	},
-	methods: {
-
-	},
 	components: {
 		'm-loading': Loading,
 		'm-alert': Alert,
 		'm-confirm': Confirm
-	},
-	created() {
-		
 	}
 }
 
