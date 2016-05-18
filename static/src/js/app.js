@@ -66,7 +66,7 @@ router.map({
             },
             '/api/edit/:id': {
                 name: 'apiEdit',
-                component: ApiEdit
+                component: ApiEdit,
             },
             '/postman': {
                 name: 'postMan',

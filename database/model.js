@@ -50,7 +50,7 @@ export default {
     key: 'limit',
     type: 'String',
     remark: '每页条数',
-    required: false
+    required: 1  // 0非必须 1必须
  }]
  */
 

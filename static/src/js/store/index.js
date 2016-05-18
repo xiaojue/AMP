@@ -9,7 +9,7 @@ Vue.use(Vuex);
 import utils from 'utils';
 
 const state = {
-	bgImgUrl: '/dist/img/main_bg.png',
+	bgImgUrl: utils.getCookie('userInfo') ? JSON.parse(new Buffer(utils.getCookie('userInfo'), "base64").toString()).bg : '/dist/img/main_bg.png',
 	loading: false,
 	alertConfig: {
 		show: false,
