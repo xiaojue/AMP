@@ -40,14 +40,14 @@
 					</div>
 				</div>
 				<div class="item">
-					<p class="title">7 是否完成</p>
+					<p class="title">8 是否完成</p>
 					<div class="member_con">
 						<span class="main_p" v-if="apiDetail.status == 0">未完成</span>
 						<span class="main_p" v-else>已完成</span>
 					</div>
 				</div>
 				<div class="item">
-					<p class="title">8 请求参数</p>
+					<p class="title">9 请求参数</p>
 					<div class="member_con" v-for="item in apiMain.request_params">
 						<span class="main_p" >
 							<b>{{item.key}}</b>
@@ -59,7 +59,7 @@
 					</div>
 				</div>
 				<div class="item">
-					<p class="title">8 请求示例</p>
+					<p class="title">10 请求示例</p>
 					<div class="member_con">
 						<!--<span v-for="item in apiMain.request_example">{{item | json}}</span>-->
 						<textarea placeholder="请输入请求示例" v-for="item in apiMain.request_example" v-model="item">{{item | json}}</textarea>
@@ -67,7 +67,7 @@
 				</div>
 
 				<div class="item">
-					<p class="title">8 返回参数</p>
+					<p class="title">11 返回参数</p>
 					<div class="member_con" v-for="item in apiMain.response_params">
 						<span class="main_p" >
 							<b>{{item.key}}</b>
@@ -80,22 +80,26 @@
 				</div>
 
 				<div class="item">
-					<p class="title">8 返回示例</p>
+					<p class="title">12 返回示例</p>
 					<div class="member_con">
 						<!--<span v-for="item in apiMain.response_example">{{item | json}}</span>-->
 						<textarea placeholder="请输入返回示例" v-for="item in apiMain.response_example" v-model="item">{{item | json}}</textarea>
 					</div>
 				</div>
 				<div class="item">
-					<p class="title">8 备注</p>
+					<p class="title">13 备注</p>
 					<div class="member_con">
 						<span class="main_p">{{{apiMain.remark}}}</span>
 					</div>
 				</div>
+				<div id="code"></div>
 			</div>
 		</m-middle>
 		<m-bottom>
-			
+			<div class="btn_con">
+				<a href="javascript:void(0)" class="btn btn_success" @click="edit()">编辑</a>
+				<a href="javascript:history.go(-1)" class="btn btn_default">返回</a>
+			</div>
 		</m-bottom>
 	</m-main-con>
 </template>
@@ -132,9 +136,12 @@ import con_bottom from '../container/bottom.vue';
 import store from 'store';
 import actions from 'actions';
 
-import jsbeautifier from 'js-beautify';
 import utils from 'utils';
 
+//import CodeMirror from 'codemirror/lib/codemirror.js';
+//import 'codemirror/mode/javascript/javascript.js';
+//
+//import jsbeautifier from 'js-beautify';
 export default {
 	name: 'ApiDetail',
 	data() {
@@ -144,8 +151,7 @@ export default {
 			canQuit: false,
 			creator: {},
 			apiMain: {},
-			project_id: {},
-			editor: {}
+			project_id: {}
 		}
 	},
 	components: {
@@ -184,7 +190,6 @@ export default {
 						this.creator = resData.data.result[0].creator;
 						this.apiMain = resData.data.result[0].main;
 						this.project_id = resData.data.result[0].project_id;
-//						this.editor.setValue(jsbeautifier(JSON.stringify(res.data)));
 						actions.loading(store, false);
 						if(utils.checkAuthorityInApi(this.apiDetail)){
 							actions.alert(store, {
@@ -200,5 +205,10 @@ export default {
 			}
 		}
 	},
+	methods:{
+		edit() {
+			this.$route.router.go('/main/api/edit/' + this.id);
+		},
+	}
 }
 </script>
