@@ -186,7 +186,7 @@ export default {
 			actions.loading(store, true);
 			const queryParams = {};
 			if(!utils.isInObj(this.type, this.titleMap)){
-				queryParams.project_id = this.type;
+				queryParams.parent_project = this.type;
 			}
 			if(this.type === 'mine'){
 				queryParams.creator = this.userInfo._id;

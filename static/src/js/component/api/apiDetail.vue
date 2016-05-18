@@ -24,7 +24,7 @@
 				<div class="item">
 					<p class="title">5 所属项目</p>
 					<div class="member_con">
-						<span class="main_p">{{project_id.name}}</span>
+						<span class="main_p">{{parent_project.name}}</span>
 					</div>
 				</div>
 				<div class="item">
@@ -150,7 +150,7 @@ export default {
 			canQuit: false,
 			creator: {},
 			apiMain: {},
-			project_id: {}
+			parent_project: {}
 		}
 	},
 	components: {
@@ -187,7 +187,7 @@ export default {
 						this.apiDetail = resData.data.result[0];
 						this.creator = resData.data.result[0].creator;
 						this.apiMain = resData.data.result[0].main;
-						this.project_id = resData.data.result[0].project_id;
+						this.parent_project = resData.data.result[0].parent_project;
 						actions.loading(store, false);
 						if(utils.checkAuthorityInApi(this.apiDetail)){
 							actions.alert(store, {
@@ -196,7 +196,7 @@ export default {
 								type: 'danger'
 							})
 							this.canQuit = true;
-							this.$route.router.go('/main/api/list/' + this.apiDetail.project_id._id);
+							this.$route.router.go('/main/api/list/' + this.apiDetail.parent_project._id);
 						}
 					}
 				})

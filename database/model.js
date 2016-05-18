@@ -30,7 +30,7 @@ export default {
         creator: { type: Schema.Types.ObjectId, required: true, ref: 'users' },
         create_time: { type: Number, required: true, default: Date.now},
         url: String,
-        project_id: { type: Schema.Types.ObjectId, required: true, ref: 'projects'},
+        parent_project: { type: Schema.Types.ObjectId, required: true, ref: 'projects'},
         status: {type: Number, dafault: 0}, // 0未完成 1完成
         main: {
             method: String,

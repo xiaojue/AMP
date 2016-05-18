@@ -35,7 +35,7 @@
 				<div class="item" v-show="id !== 'new'">
 					<p class="title"># 所属项目</p>
 					<div class="main_form">
-						<input type="text" disabled="disabled" :value="project_id.name"></input>
+						<input type="text" disabled="disabled" :value="parent_project.name"></input>
 					</div>
 				</div>
 				<div class="item">
@@ -251,7 +251,7 @@ export default {
 				response_example: [],
 				remark: ''
 			},
-			project_id: {},
+			parent_project: {},
 			canQuit: false,
 			remarkEditor: null // 富文本编辑器示例
 		}
@@ -311,7 +311,7 @@ export default {
 						const resData = res.data;
 						this.apiDetail = resData.data.result[0];
 						this.creator = resData.data.result[0].creator;
-						this.project_id = resData.data.result[0].project_id;
+						this.parent_project = resData.data.result[0].parent_project;
 						this.apiMain = resData.data.result[0].main;
 						actions.loading(store, false);
 
@@ -324,7 +324,7 @@ export default {
 								type: 'danger'
 							})
 							this.canQuit = true;
-							this.$route.router.go('/main/api/list/' + this.apiDetail.project_id._id);
+							this.$route.router.go('/main/api/list/' + this.apiDetail.parent_project._id);
 						}
 					}
 				})
@@ -342,13 +342,13 @@ export default {
 				}).then((res) => {
 					if(this.isLogin){
 						const resData = res.data;
-						this.project_id = resData.data.result[0];
+						this.parent_project = resData.data.result[0];
 						this.creator = resData.data.result[0].creator;
 
 						this.createEditor();
 
 						// 权限检查
-						if(utils.checkAuthority(this.project_id)){
+						if(utils.checkAuthority(this.parent_project)){
 							actions.alert(store, {
 								show: true,
 								msg: '无权限',
@@ -404,7 +404,7 @@ export default {
 				}
 			}
 
-			this.apiDetail.project_id = this.project_id;
+			this.apiDetail.parent_project = this.parent_project;
 			this.$http({
 				url: '/api/urls' + (this.id === 'new' ? '' : '?_id=' + this.id),
 				method: this.id === 'new' ? 'post' : 'put',
@@ -418,12 +418,12 @@ export default {
 						msg: this.id === 'new' ? '新建成功' : '修改成功'
 					})
 					this.canQuit = true;
-					this.id === 'new' ? this.$route.router.go('/main/api/list/' + this.apiDetail.project_id._id) : null;
+					this.id === 'new' ? this.$route.router.go('/main/api/list/' + this.apiDetail.parent_project._id) : null;
 				}
 			})
 		},
 		cancel() {
-			this.$route.router.go('/main/api/list/' + this.apiDetail.project_id._id);
+			this.$route.router.go('/main/api/list/' + this.apiDetail.parent_project._id);
 		},
 		createEditor() {
 			const _this = this;
