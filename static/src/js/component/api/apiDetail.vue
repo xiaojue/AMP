@@ -22,21 +22,27 @@
 					<span class="main_p">{{apiDetail.create_time | Date 'yyyy-MM-dd hh:mm:ss'}}</span>
 				</div>
 				<div class="item">
-					<p class="title">5 URL</p>
+					<p class="title">5 所属项目</p>
+					<div class="member_con">
+						<span class="main_p">{{project_id.name}}</span>
+					</div>
+				</div>
+				<div class="item">
+					<p class="title">6 URL</p>
 					<div class="member_con">
 						<span class="main_p">{{apiDetail.url}}</span>
 					</div>
 				</div>
 				<div class="item">
-					<p class="title">6 HTTP请求方式</p>
+					<p class="title">7 HTTP请求方式</p>
 					<div class="member_con">
-						<span v-for="item in members">{{apiMain.method}}</span>
+						<span class="main_p">{{apiMain.method}}</span>
 					</div>
 				</div>
 				<div class="item">
-					<p class="title">7 请求参数</p>
+					<p class="title">8 请求参数</p>
 					<div class="member_con">
-						<span v-for="item in members">{{item.name}}</span>
+						<span class="main_p" v-for="item in apiMain.request_example">{{item.name}}</span>
 					</div>
 				</div>
 				<div class="item">
@@ -67,6 +73,7 @@ import con_bottom from '../container/bottom.vue';
 
 import store from 'store';
 import actions from 'actions';
+import jsbeautifier from 'js-beautify';
 
 export default {
 	name: 'ApiDetail',
@@ -76,7 +83,9 @@ export default {
 			apiDetail: {},
 			canQuit: false,
 			creator: {},
-			apiMain: {}
+			apiMain: {},
+			project_id: {},
+			editor: {}
 		}
 	},
 	components: {
@@ -114,6 +123,8 @@ export default {
 						this.apiDetail = resData.data.result[0];
 						this.creator = resData.data.result[0].creator;
 						this.apiMain = resData.data.result[0].main;
+						this.project_id = resData.data.result[0].project_id;
+						this.editor.setValue(jsbeautifier(JSON.stringify(res.data)));
 						actions.loading(store, false);
 						if(utils.checkAuthorityInApi(this.apiDetail)){
 							actions.alert(store, {
