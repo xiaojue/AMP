@@ -121,8 +121,8 @@
 				</div>
 				<div class="item">
 					<p class="title"># 备注</p>
-					<div class="main_form">
-						<textarea placeholder="请输入接口备注" v-model="apiMain.remark">{{apiMain.remark}}</textarea>
+					<div class="main_form default_char">
+						<textarea id="remark" placeholder="请输入接口备注" style="height: 300px;" v-model="apiMain.remark">{{apiMain.remark}}</textarea>
 					</div>
 				</div>
 			</div>
@@ -181,6 +181,9 @@
 
 <script type="text/ecmascript-6">
 
+import wangEditor from 'wangeditor';
+wangEditor.config.printLog = false;
+
 import utils from 'utils';
 
 // container component
@@ -191,6 +194,38 @@ import con_bottom from '../container/bottom.vue';
 
 import store from 'store';
 import actions from 'actions';
+
+// 富文本编辑器菜单
+const menus = [
+    'source',
+    '|',     // '|' 是菜单组的分割线
+    'bold',
+    'underline',
+    'italic',
+    'strikethrough',
+    'eraser',
+    'forecolor',
+    '|',
+    'quote',
+	'fontfamily',
+	'fontsize',
+	'head',
+	'unorderlist',
+	'orderlist',
+	'alignleft',
+	'aligncenter',
+	'alignright',
+	'|',
+	'link',
+    'unlink',
+    'table',
+    '|',
+    'insertcode',
+    '|',
+    'undo',
+    'redo',
+    'fullscreen'
+ ];
 
 export default {
 	name: 'ApiEdit',
@@ -215,7 +250,8 @@ export default {
 				remark: ''
 			},
 			project_id: {},
-			canQuit: false
+			canQuit: false,
+			remarkEditor: null // 富文本编辑器示例
 		}
 	},
 	components: {
@@ -254,6 +290,9 @@ export default {
 			}
 		})
 	},
+	ready() {
+
+	},
 	route: {
 		data(transtion) {
 			this.id = transtion.to.params.id;
@@ -273,6 +312,9 @@ export default {
 						this.project_id = resData.data.result[0].project_id;
 						this.apiMain = resData.data.result[0].main;
 						actions.loading(store, false);
+
+						this.createEditor();
+
 						if(utils.checkAuthorityInApi(this.apiDetail)){
 							actions.alert(store, {
 								show: true,
@@ -300,6 +342,9 @@ export default {
 						const resData = res.data;
 						this.project_id = resData.data.result[0];
 						this.creator = resData.data.result[0].creator;
+
+						this.createEditor();
+
 						// 权限检查
 						if(utils.checkAuthority(this.project_id)){
 							actions.alert(store, {
@@ -343,6 +388,19 @@ export default {
 		cancel() {
 			this.$route.router.go('/main/api/list/' + this.apiDetail.project_id._id);
 		},
+		createEditor() {
+			const _this = this;
+			try{
+				this.remarkEditor.destroy();	
+			}catch(e){};
+			
+			this.remarkEditor = new wangEditor('remark');
+			this.remarkEditor.config.menus = menus;
+			this.remarkEditor.onchange = function () {
+				_this.apiMain.remark = this.$txt.html();
+			};
+			this.remarkEditor.create();
+		}
 	}
 }	
 

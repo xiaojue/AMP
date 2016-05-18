@@ -38,7 +38,9 @@ var webpackConfig = {
             'jquery',
             'codemirror/lib/codemirror.js',
             'codemirror/mode/javascript/javascript.js',
-            'js-beautify'
+            'js-beautify',
+            './src/js/lib/wangeditor.js'
+            
         ]
     },
     output: {
@@ -69,6 +71,7 @@ var webpackConfig = {
             utils: path.join(pwd, './src/js/util/index.js'),
             store: path.join(pwd, './src/js/store/index.js'),
             actions: path.join(pwd, './src/js/store/actions/index.js'),
+            wangeditor: path.join(pwd, './src/js/lib/wangeditor.js'),
         }
     }
 };
