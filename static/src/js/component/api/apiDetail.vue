@@ -113,6 +113,7 @@
 	.member_con textarea{
 		width: 96%;
 		max-width: 96%;
+		margin: 20px 0 0 0 ;
 		padding: 10px 2%;
 		min-height: 100px;
 		border-radius: 4px;
