@@ -181,7 +181,7 @@
 }
 </style>
 
-<script type="text/ecmascript-6">
+<script>
 
 import wangEditor from 'wangeditor';
 wangEditor.config.printLog = false;
@@ -437,6 +437,7 @@ export default {
 				_this.apiMain.remark = this.$txt.html();
 			};
 			this.remarkEditor.create();
+			this.remarkEditor.$txt.html(this.apiMain.remark);
 		}
 	}
 }	
