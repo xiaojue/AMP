@@ -84,14 +84,15 @@
 							<option value="0">非必须</option>
 							<option value="1">必须</option>
 						</select>
-						<span class="iconfont del">&#xe607;</span>
+						<span class="iconfont del" @click="delParams($index, 'request_params')">&#xe607;</span>
 					</div>
 				</div>
 				<div class="item">
 					<p class="title"># 请求示例</p>
 					<a href="javascript:void(0)" class="add_new btn btn_sm btn_success" @click="addNew('request_example')">新增一条</a>
-					<div class="main_form" v-for="item in apiMain.request_example">
-						<textarea placeholder="输入请求示例（请严格遵守JSON格式）" v-model="item">{{item | json}}</textarea>
+					<div class="main_form full_width" v-for="item in apiMain.request_example">
+						<textarea placeholder="请输入请求示例" v-model="item">{{item | json}}</textarea>
+						<span class="iconfont del" @click="delParams($index, 'request_example')">&#xe607;</span>
 					</div>
 				</div>
 				<div class="item">
@@ -109,14 +110,15 @@
 							<option value="Null">Null</option>
 						</select>
 						<input type="text" placeholder="备注" v-model="item.remark">
-						<span class="iconfont del">&#xe607;</span>
+						<span class="iconfont del" @click="delParams($index, 'response_params')">&#xe607;</span>
 					</div>
 				</div>
 				<div class="item">
 					<p class="title"># 返回示例</p>
 					<a href="javascript:void(0)" class="add_new btn btn_sm btn_success" @click="addNew('response_example')">新增一条</a>
-					<div class="main_form" v-for="item in apiMain.response_example">
-						<textarea placeholder="输入返回示例（请严格遵守JSON格式）" v-model="apiDetail.desc">{{item}}</textarea>
+					<div class="main_form full_width" v-for="item in apiMain.response_example">
+						<textarea placeholder="请输入请求示例" v-model="item">{{item | json}}</textarea>
+						<span class="iconfont del" @click="delParams($index, 'response_example')">&#xe607;</span>
 					</div>
 				</div>
 				<div class="item">
@@ -363,10 +365,45 @@ export default {
 	},
 	methods: {
 		addNew(type) {
-			this.apiMain[type].push({});
+			const typeMap = {
+				response_example: '',
+				response_params: {},
+				request_example: '',
+				request_params: {}
+			}
+			this.apiMain[type].push(typeMap[type]);
+		},
+		delParams(index, type) {
+			this.apiMain[type].splice(index, 1);
 		},
 		save() {
 			this.apiDetail.main = this.apiMain;
+
+			for(let i = 0; i < this.apiMain['response_example'].length; i++){
+				const _curr = this.apiMain['response_example'][i];
+				if(_curr === ''){
+					this.apiMain['response_example'].splice(i, 1);
+				}
+			}
+			for(let i = 0; i < this.apiMain['response_params'].length; i++){
+				const _curr = this.apiMain['response_params'][i];
+				if(Object.keys(_curr).length === 0){
+					this.apiMain['response_params'].splice(i, 1);
+				}
+			}
+			for(let i = 0; i < this.apiMain['request_example'].length; i++){
+				const _curr = this.apiMain['request_example'][i];
+				if(_curr === ''){
+					this.apiMain['request_example'].splice(i, 1);
+				}
+			}
+			for(let i = 0; i < this.apiMain['request_params'].length; i++){
+				const _curr = this.apiMain['request_params'][i];
+				if(Object.keys(_curr).length === 0){
+					this.apiMain['request_params'].splice(i, 1);
+				}
+			}
+
 			this.apiDetail.project_id = this.project_id;
 			this.$http({
 				url: '/api/urls' + (this.id === 'new' ? '' : '?_id=' + this.id),
