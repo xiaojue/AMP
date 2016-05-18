@@ -2,7 +2,7 @@
 	<m-main-con>
 		<m-top>
 			<p class="title">{{titleMap[type] ? titleMap[type] : 'API列表'}}</p>
-			<a class="btn btn_success" v-show="titleMap[type] === undefined" href="javascript:void(0)" v-link="{name: 'apiEdit', params: {id: 'new'}}">新建接口</a>
+			<a class="btn btn_success" v-show="titleMap[type] === undefined" href="javascript:void(0)" v-link="{name: 'apiEdit', params: {id: 'new'}, query: {projectId: type}}">新建接口</a>
 		</m-top>
 		<m-middle>
 			<ul class="status">
