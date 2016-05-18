@@ -21,11 +21,16 @@ Date.prototype.Format = function(fmt) {
     return fmt;
 }
 
-
 Vue.filter('length', function(value){
     if(value){
         const _c = value;
         return _c.length;
     }
     return 0;
+})
+
+Vue.filter('uppercase', function(value){
+    if(value){
+        return value.toLocaleUpperCase();
+    }
 })

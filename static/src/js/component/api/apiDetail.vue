@@ -36,7 +36,7 @@
 				<div class="item">
 					<p class="title">7 HTTP请求方式</p>
 					<div class="member_con">
-						<span class="main_p">{{apiMain.method}}</span>
+						<span class="main_p">{{apiMain.method | uppercase}}</span>
 					</div>
 				</div>
 				<div class="item">
@@ -48,51 +48,59 @@
 				</div>
 				<div class="item">
 					<p class="title">9 请求参数</p>
-					<div class="member_con" v-for="item in apiMain.request_params">
-						<span class="main_p" >
-							<b>{{item.key}}</b>
-							<b>{{item.remark}}</b>
-							<b>{{item.type}}</b>
-							<span v-if="item.required == 1">必须</span>
-							<span v-else>非必须</span>
-						</span>
-					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>参数名</th>
+								<th>备注信息</th>
+								<th>类型</th>
+								<th>是否必须</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="item in apiMain.request_params">
+								<td>{{item.key}}</td>
+								<td>{{item.remark}}</td>
+								<td>{{item.key}}</td>
+								<td>{{item.required ? '必须' : '非必须'}}</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 				<div class="item">
 					<p class="title">10 请求示例</p>
-					<div class="member_con">
-						<!--<span v-for="item in apiMain.request_example">{{item | json}}</span>-->
-						<textarea placeholder="请输入请求示例" v-for="item in apiMain.request_example" v-model="item">{{item | json}}</textarea>
-					</div>
+					<pre v-for="item in apiMain.request_example"><code>{{jsbeautifier(item)}}</code></pre>
 				</div>
-
 				<div class="item">
 					<p class="title">11 返回参数</p>
-					<div class="member_con" v-for="item in apiMain.response_params">
-						<span class="main_p" >
-							<b>{{item.key}}</b>
-							<b>{{item.remark}}</b>
-							<b>{{item.type}}</b>
-							<!--<span v-if="item.required == 1">必须</span>-->
-							<!--<span v-else>非必须</span>-->
-						</span>
-					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>参数名</th>
+								<th>备注信息</th>
+								<th>类型</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="item in apiMain.response_params">
+								<td>{{item.key}}</td>
+								<td>{{item.remark}}</td>
+								<td>{{item.key}}</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-
 				<div class="item">
 					<p class="title">12 返回示例</p>
-					<div class="member_con">
-						<!--<span v-for="item in apiMain.response_example">{{item | json}}</span>-->
-						<textarea placeholder="请输入返回示例" v-for="item in apiMain.response_example" v-model="item">{{item | json}}</textarea>
-					</div>
+					<pre v-for="item in apiMain.response_example"><code>{{jsbeautifier(item)}}</code></pre>
 				</div>
 				<div class="item">
 					<p class="title">13 备注</p>
-					<div class="member_con">
-						<span class="main_p">{{{apiMain.remark}}}</span>
+					<div class="wangEditor-container default_char" style="border-radius: 4px;background-color: rgba(255,255,255,0.9);">
+						<div class="wangEditor-txt" v-if="remark">{{{remark}}}</div>
+						<div class="wangEditor-txt" v-else="remark"><p>无</p></div>
 					</div>
 				</div>
-				<div id="code"></div>
 			</div>
 		</m-middle>
 		<m-bottom>
@@ -105,24 +113,15 @@
 </template>
 
 <style scoped>
-	.main_p b{
-		display: inline-block;
-		width: 150px;
-	}
-	.item .title{
-		background: rgba(205,205,205,0.3);
-		line-height: 60px;
-		text-indent: 0.5rem;
-	}
-	.member_con textarea{
-		width: 96%;
-		max-width: 96%;
-		margin: 20px 0 0 0 ;
-		padding: 10px 2%;
-		min-height: 100px;
-		border-radius: 4px;
-		border: none;
-	}
+pre{
+	margin-top: 10px;
+}
+
+table{
+	width: 100%;
+	text-align: center;
+}
+
 </style>
 
 <script>
@@ -138,10 +137,10 @@ import actions from 'actions';
 
 import utils from 'utils';
 
-//import CodeMirror from 'codemirror/lib/codemirror.js';
-//import 'codemirror/mode/javascript/javascript.js';
-//
-//import jsbeautifier from 'js-beautify';
+import jsbeautifier from 'js-beautify';
+
+import $ from 'jquery';
+
 export default {
 	name: 'ApiDetail',
 	data() {
@@ -185,7 +184,6 @@ export default {
 				}).then((res) => {
 					if(this.isLogin){
 						const resData = res.data;
-						console.log(resData);
 						this.apiDetail = resData.data.result[0];
 						this.creator = resData.data.result[0].creator;
 						this.apiMain = resData.data.result[0].main;
@@ -209,6 +207,7 @@ export default {
 		edit() {
 			this.$route.router.go('/main/api/edit/' + this.id);
 		},
+		jsbeautifier: jsbeautifier
 	}
 }
 </script>

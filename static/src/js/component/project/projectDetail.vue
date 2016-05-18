@@ -30,7 +30,7 @@
 				<div class="item">
 					<p class="title">6 项目备注</p>
 					<div class="wangEditor-container default_char" style="border-radius: 4px;background-color: rgba(255,255,255,0.9);">
-						<span class="wangEditor-txt">{{{remark || '无'}}}</span>						
+						<div class="wangEditor-txt">{{{remark || '无'}}}</div>						
 					</div>
 				</div>
 			</div>
