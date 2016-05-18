@@ -76,7 +76,7 @@ var webpackConfig = {
 };
 
 // 公共头部
-var banner = ['/**',
+var banner = ['/*',
     ' * <%= config.name %> - <%= config.desc %>',
     ' */',
     ''
