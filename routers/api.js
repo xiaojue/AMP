@@ -102,7 +102,6 @@ Api
         }, {
             '$set': modelMap
         })
-
         ctx.success(updateModel, '修改成功');
     })
     .delete('/:model', async (ctx, next) => {

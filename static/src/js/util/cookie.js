@@ -19,3 +19,4 @@ export const getCookie = (name) => {
 export const delCookie = (name) => {
     setCookie(name, "", -1);
 };
+

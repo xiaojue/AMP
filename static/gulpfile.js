@@ -70,7 +70,7 @@ var webpackConfig = {
             store: path.join(pwd, './src/js/store/index.js'),
             actions: path.join(pwd, './src/js/store/actions/index.js'),
         }
-    },
+    }
 };
 
 // 公共头部

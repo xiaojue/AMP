@@ -20,7 +20,8 @@ export default {
         creator: { type: Schema.Types.ObjectId, required: true, ref: 'users'},
         create_time: { type: Number, required: true, default: Date.now},
         main: {
-            members: [{ type: Schema.Types.ObjectId, required: true, ref: 'users'}]
+            members: [{ type: Schema.Types.ObjectId, required: true, ref: 'users'}],
+            remark: String // 备注
         }
     },
     urls: {
@@ -42,3 +43,14 @@ export default {
         }
     }
 }
+
+
+/*
+ request_params: [{
+    key: 'limit',
+    type: 'String',
+    remark: '每页条数',
+    required: false
+ }]
+ */
+

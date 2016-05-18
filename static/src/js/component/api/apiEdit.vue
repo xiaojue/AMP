@@ -54,9 +54,9 @@
 				<div class="item">
 					<p class="title"># 请求参数</p>
 					<a href="javascript:void(0)" class="add_new btn btn_sm btn_success">新增一条</a>
-					<div class="main_form input_sm">
-						<input type="text" placeholder="Key">
-						<select>
+					<div class="main_form full_width" v-for="item in apiMain.request_params">
+						<input type="text" placeholder="Key" v-model="item.key">
+						<select v-model="item.type">
 							<option>请选择类型</option>
 							<option value="String">String</option>
 							<option value="Number">Number</option>
@@ -65,8 +65,8 @@
 							<option value="Array">Array</option>
 							<option value="Null">Null</option>
 						</select>
-						<input type="text" placeholder="备注">
-						<select>
+						<input type="text" placeholder="备注" v-model="item.remark">
+						<select v-model="item.required">
 							<option value="0">非必须</option>
 							<option value="1">必须</option>
 						</select>
@@ -77,13 +77,13 @@
 					<p class="title"># 请求示例</p>
 					<a href="javascript:void(0)" class="add_new btn btn_sm btn_success">新增一条</a>
 					<div class="main_form">
-						<textarea placeholder="请输入请求示例" v-model="apiDetail.desc">{{apiDetail.desc}}</textarea>
+						<textarea placeholder="输入请求示例（请严格遵守JSON格式）" v-model="apiDetail.desc">{{apiDetail.desc}}</textarea>
 					</div>
 				</div>
 				<div class="item">
 					<p class="title"># 返回参数</p>
 					<a href="javascript:void(0)" class="add_new btn btn_sm btn_success">新增一条</a>
-					<div class="main_form input_sm">
+					<div class="main_form full_width">
 						<input type="text" placeholder="Key">
 						<input type="text" placeholder="Type">
 						<input type="text" placeholder="备注">
@@ -94,7 +94,7 @@
 					<p class="title"># 返回示例</p>
 					<a href="javascript:void(0)" class="add_new btn btn_sm btn_success">新增一条</a>
 					<div class="main_form">
-						<textarea placeholder="请输入返回示例" v-model="apiDetail.desc">{{apiDetail.desc}}</textarea>
+						<textarea placeholder="输入返回示例（请严格遵守JSON格式）" v-model="apiDetail.desc">{{apiDetail.desc}}</textarea>
 					</div>
 				</div>
 				<div class="item">
@@ -127,21 +127,29 @@
 .iconfont.del:hover{
 	color: #fff;
 }
-	
-select{
-	width: 350px;
-	max-width: 350px;
+.detail .item .main_form textarea.full_width{
+	width: 100%;
+	max-width: 100%;
 }
+	
 .add_new{
 	display: inline-block;
 	margin-bottom: 10px;
 	margin-left: 20px;
 }
-.detail .item .main_form.input_sm input{
-	width: 180px;
+.detail .item .main_form.full_width{
+	display: flex;
 }
-.detail .item .main_form.input_sm select{
-	width: 180px;
+.detail .item .main_form.full_width input{
+	flex: 1;
+	margin: 0 5px;
+}
+.detail .item .main_form.full_width input:first-child{
+	margin-left: 0;
+}
+.detail .item .main_form.full_width select{
+	flex: 1;
+	margin: 0 5px;
 }
 </style>
 
