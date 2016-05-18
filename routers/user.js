@@ -39,6 +39,7 @@ const ldapClient = (ctx, email, pwd, remember, next) => {
                         if (err) {
                             // ctx.status = 400;
                             reject('密码和账户不正确');
+                            client.unbind();
                         } else {
                             const Users = global.dbHandle.getModel('users');
                             Users.find({
@@ -47,6 +48,7 @@ const ldapClient = (ctx, email, pwd, remember, next) => {
                                 if(docs.length){
                                     saveLogin(ctx, docs[0]);
                                     resolve(docs[0]);
+                                    client.unbind();
                                 }else{
                                     const newUser = {};
                                     const _arr = entry.object.name.split('-');
@@ -59,6 +61,7 @@ const ldapClient = (ctx, email, pwd, remember, next) => {
                                     Users.create(newUser, function(err, doc){
                                         resolve(doc);
                                         saveLogin(ctx, doc);
+                                        client.unbind();
                                     });
                                 }
                             })
@@ -67,6 +70,7 @@ const ldapClient = (ctx, email, pwd, remember, next) => {
                 } else {
                     // ctx.status = 401;
                     reject("用户名填写错误");
+                    client.unbind();
                 }
             });
         });
