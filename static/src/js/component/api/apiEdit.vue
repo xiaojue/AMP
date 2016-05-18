@@ -4,7 +4,7 @@
 			<p class="title">{{id === 'new' ? '新建API' : '修改API'}}</p>
 		</m-top>
 		<m-middle>
-			<div class="detail" style="padding-bottom: 30px;">
+			<div class="detail">
 				<div class="item">
 					<p class="title"># 接口名称</p>
 					<div class="main_form">

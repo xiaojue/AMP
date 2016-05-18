@@ -47,6 +47,12 @@
 						</div>
 					</div>
 				</div>
+				<div class="item">
+					<p class="title"># 备注</p>
+					<div class="main_form default_char">
+						<textarea id="remark" placeholder="请输入接口备注" style="height: 300px;" v-model="remark">{{remark}}</textarea>
+					</div>
+				</div>
 			</div>
 		</m-middle>
 		<m-bottom>
@@ -125,6 +131,40 @@ import con_top from '../container/top.vue';
 import con_middle from '../container/middle.vue';
 import con_bottom from '../container/bottom.vue';
 
+// 富文本编辑器菜单
+const menus = [
+    'source',
+    '|',     // '|' 是菜单组的分割线
+    'bold',
+    'underline',
+    'italic',
+    'strikethrough',
+    'eraser',
+    'forecolor',
+    '|',
+    'quote',
+	'fontfamily',
+	'fontsize',
+	'head',
+	'unorderlist',
+	'orderlist',
+	'alignleft',
+	'aligncenter',
+	'alignright',
+	'|',
+	'link',
+    'unlink',
+    'table',
+    '|',
+    'insertcode',
+    '|',
+    'undo',
+    'redo',
+    'fullscreen'
+ ];
+
+
+
 export default {
 	name: 'ProjectEdit',
 	data() {
@@ -140,9 +180,11 @@ export default {
 			creator: '',
 			memberQuery: '',
 			members: [],
+			remark: '',
 			memberResult: [],
 			canQuit: false,
 			showNoOne: false,
+			remarkEditor: ''
 		}
 	},
 	vuex: {
@@ -207,6 +249,7 @@ export default {
 				Vue.set(this.projectDetail, 'main', {});
 			}
 			this.projectDetail.main.members = member;
+			this.projectDetail.main.remark = this.remark;
 			this.$http({
 				url: '/api/projects' + (this.id === 'new' ? '' : '?_id=' + this.id),
 				method: this.id === 'new' ? 'post' : 'put',
@@ -266,6 +309,20 @@ export default {
 		},
 		deleteMember(index, id) {
 			this.memberResult.splice(index, 1);
+		},
+		createEditor() {
+			const _this = this;
+			try{
+				this.remarkEditor.destroy();	
+			}catch(e){};
+			
+			this.remarkEditor = new wangEditor('remark');
+			this.remarkEditor.config.menus = menus;
+			this.remarkEditor.onchange = function () {
+				_this.remark = this.$txt.html();
+			};
+			this.remarkEditor.create();
+			this.remarkEditor.$txt.html(this.remark);
 		}
 	},
 	route: {
@@ -285,6 +342,10 @@ export default {
 						this.projectDetail = resData.data.result[0];
 						this.creator = resData.data.result[0].creator;
 						this.memberResult =  resData.data.result[0].main.members;
+						this.remark = resData.data.result[0].main.remark;
+
+						this.createEditor();
+
 						actions.loading(store, false);
 						if(utils.checkAuthority(this.projectDetail)){
 							actions.alert(store, {
@@ -297,6 +358,8 @@ export default {
 						}
 					}
 				})
+			}else if(this.id === 'new'){
+				this.createEditor();
 			}
 		}
 	},

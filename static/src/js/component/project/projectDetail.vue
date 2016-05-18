@@ -27,6 +27,12 @@
 						<span v-for="item in members">{{item.name}}</span>
 					</div>
 				</div>
+				<div class="item">
+					<p class="title">6 项目备注</p>
+					<div class="wangEditor-container default_char" style="border-radius: 4px;background-color: rgba(255,255,255,0.9);">
+						<span class="wangEditor-txt">{{{remark || '无'}}}</span>						
+					</div>
+				</div>
 			</div>
 		</m-middle>
 		<m-bottom>
@@ -74,7 +80,7 @@ export default {
 			projectDetail: {},
 			creator: {},
 			members: [],
-			test: {}
+			remark: ''
 		}
 	},
 	vuex: {
@@ -112,6 +118,7 @@ export default {
 					this.projectDetail = resData.data.result[0];
 					this.creator = resData.data.result[0].creator;
 					this.members = resData.data.result[0].main.members;
+					this.remark = resData.data.result[0].main.remark;
 					actions.loading(store, false);
 				}
 			})
