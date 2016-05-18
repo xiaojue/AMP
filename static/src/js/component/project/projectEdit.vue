@@ -51,7 +51,7 @@
 					<p class="title"># 备注</p>
 					<div class="wangEditor-container default_char" style="border-radius: 4px;background-color: rgba(255,255,255,0.9);">
 						<div class="wangEditor-txt" v-if="remark">{{{remark}}}</div>
-						<div class="wangEditor-txt" v-else="remark"><p>无</p></div>
+						<div class="wangEditor-txt" v-else><p>无</p></div>
 					</div>
 				</div>
 			</div>

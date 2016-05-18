@@ -42,7 +42,7 @@
 				<div class="item">
 					<p class="title">8 是否完成</p>
 					<div class="member_con">
-						<span class="main_p" v-if="apiDetail.status == 0">未完成</span>
+						<span class="main_p" v-if="apiDetail.status === 0">未完成</span>
 						<span class="main_p" v-else>已完成</span>
 					</div>
 				</div>
@@ -98,7 +98,7 @@
 					<p class="title">13 备注</p>
 					<div class="wangEditor-container default_char" style="border-radius: 4px;background-color: rgba(255,255,255,0.9);">
 						<div class="wangEditor-txt" v-if="remark">{{{remark}}}</div>
-						<div class="wangEditor-txt" v-else="remark"><p>无</p></div>
+						<div class="wangEditor-txt" v-else><p>无</p></div>
 					</div>
 				</div>
 			</div>
