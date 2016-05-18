@@ -40,6 +40,7 @@ var webpackConfig = {
             'codemirror/mode/javascript/javascript.js',
             'js-beautify',
             './src/js/lib/wangeditor.js'
+            
         ]
     },
     output: {
