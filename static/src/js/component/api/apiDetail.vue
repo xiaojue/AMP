@@ -40,15 +40,56 @@
 					</div>
 				</div>
 				<div class="item">
-					<p class="title">8 请求参数</p>
+					<p class="title">7 是否完成</p>
 					<div class="member_con">
-						<span class="main_p" v-for="item in apiMain.request_example">{{item.name}}</span>
+						<span class="main_p" v-if="apiDetail.status == 0">未完成</span>
+						<span class="main_p" v-else>已完成</span>
 					</div>
 				</div>
 				<div class="item">
-					<p class="title">8 H请求参数</p>
+					<p class="title">8 请求参数</p>
+					<div class="member_con" v-for="item in apiMain.request_params">
+						<span class="main_p" >
+							<b>{{item.key}}</b>
+							<b>{{item.remark}}</b>
+							<b>{{item.type}}</b>
+							<span v-if="item.required == 1">必须</span>
+							<span v-else>非必须</span>
+						</span>
+					</div>
+				</div>
+				<div class="item">
+					<p class="title">8 请求示例</p>
 					<div class="member_con">
-						<span v-for="item in members">{{item.name}}</span>
+						<!--<span v-for="item in apiMain.request_example">{{item | json}}</span>-->
+						<textarea placeholder="请输入请求示例" v-for="item in apiMain.request_example" v-model="item">{{item | json}}</textarea>
+					</div>
+				</div>
+
+				<div class="item">
+					<p class="title">8 返回参数</p>
+					<div class="member_con" v-for="item in apiMain.response_params">
+						<span class="main_p" >
+							<b>{{item.key}}</b>
+							<b>{{item.remark}}</b>
+							<b>{{item.type}}</b>
+							<!--<span v-if="item.required == 1">必须</span>-->
+							<!--<span v-else>非必须</span>-->
+						</span>
+					</div>
+				</div>
+
+				<div class="item">
+					<p class="title">8 返回示例</p>
+					<div class="member_con">
+						<!--<span v-for="item in apiMain.response_example">{{item | json}}</span>-->
+						<textarea placeholder="请输入返回示例" v-for="item in apiMain.response_example" v-model="item">{{item | json}}</textarea>
+					</div>
+				</div>
+				<div class="item">
+					<p class="title">8 备注</p>
+					<div class="member_con">
+						<span class="main_p">{{{apiMain.remark}}}</span>
 					</div>
 				</div>
 			</div>
@@ -59,8 +100,24 @@
 	</m-main-con>
 </template>
 
-<style>
-	
+<style scoped>
+	.main_p b{
+		display: inline-block;
+		width: 150px;
+	}
+	.item .title{
+		background: rgba(205,205,205,0.3);
+		line-height: 60px;
+		text-indent: 0.5rem;
+	}
+	.member_con textarea{
+		width: 96%;
+		max-width: 96%;
+		padding: 10px 2%;
+		min-height: 100px;
+		border-radius: 4px;
+		border: none;
+	}
 </style>
 
 <script  type="text/ecmascript-6">
@@ -73,7 +130,9 @@ import con_bottom from '../container/bottom.vue';
 
 import store from 'store';
 import actions from 'actions';
+
 import jsbeautifier from 'js-beautify';
+import utils from 'utils';
 
 export default {
 	name: 'ApiDetail',
@@ -124,7 +183,7 @@ export default {
 						this.creator = resData.data.result[0].creator;
 						this.apiMain = resData.data.result[0].main;
 						this.project_id = resData.data.result[0].project_id;
-						this.editor.setValue(jsbeautifier(JSON.stringify(res.data)));
+//						this.editor.setValue(jsbeautifier(JSON.stringify(res.data)));
 						actions.loading(store, false);
 						if(utils.checkAuthorityInApi(this.apiDetail)){
 							actions.alert(store, {
