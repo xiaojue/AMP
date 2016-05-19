@@ -463,7 +463,7 @@ export default {
 		jsbeautifier: jsbeautifier,
 		formatResExample(index) {
 			try{
-				JSON.parse(this.apiDetail.response_example.exapmle_array[index]);
+				JSON.parse(this.apiDetail.response_example.exapmle_array[index].replace(/\n|\s/g, ''));
 			}catch(e){
 				actions.alert(store, {
 					show: true,
