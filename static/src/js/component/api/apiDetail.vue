@@ -224,15 +224,6 @@ export default {
 						this.apiMain = resData.data.result[0].main;
 						this.parent_project = resData.data.result[0].parent_project;
 						actions.loading(store, false);
-						if(utils.checkAuthorityInApi(this.apiDetail)){
-							actions.alert(store, {
-								show: true,
-								msg: '无权限',
-								type: 'danger'
-							})
-							this.canQuit = true;
-							this.$route.router.go('/main/api/list/' + this.apiDetail.parent_project._id);
-						}
 					}
 				})
 			}
