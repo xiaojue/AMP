@@ -88,7 +88,7 @@
 
 </style>
 
-<script>
+<script type="text/ecmascript-6">
 
 import Vue from 'vue';
 
