@@ -164,12 +164,17 @@ export default {
 			}
 			this.status = 'Fetching Data...';
 			this.$http({
-				url: this.url,
-				method: this.type,
-				data: resultParams
+				url: '/postman',
+				method: 'post',
+				data: {
+					url: this.url,
+					type: this.type,
+					params: resultParams
+				}
 			}).then((res) => {
 				this.status = 'Send';
-				this.editor.setValue(jsbeautifier(JSON.stringify(res.data)));
+				console.log(res.data);
+			// 	this.editor.setValue(jsbeautifier(JSON.stringify(res.data)));
 			})
 		}
 	}

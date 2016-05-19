@@ -8,4 +8,8 @@ import Api from './api.js';
 
 import Common from './common.js';
 
-export default [View, Common, User, Api];
+import Postman from './postman.js';
+
+import Mock from './mock.js';
+
+export default [View, Common, User, Api, Postman, Mock];
