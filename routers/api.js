@@ -39,7 +39,7 @@ Api
 			}
 		}
         const Model = global.dbHandle.getModel(model);
-        const result = await Model.find(realQuery).populate('creator').populate('main.members').populate('project_id').sort({ 'create_time': -1 }).limit(limit).skip((page - 1) * limit);
+        const result = await Model.find(realQuery).populate('creator').populate('main.members').populate('parent_project').sort({ 'create_time': -1 }).limit(limit).skip((page - 1) * limit);
         const all = await Model.find(realQuery);
 		ctx.success({
 			total: all.length,
@@ -68,7 +68,7 @@ Api
             creator: currentUser._id,
             create_time: Date.now(),
             url: ctx.body.url,
-            project_id: ctx.body.project_id,
+            parent_project: ctx.body.parent_project,
             status: ctx.body.status,
             main: ctx.body.main || {}
         }
@@ -92,7 +92,7 @@ Api
             name: obj.name,
             desc: obj.desc,
             url: obj.url,
-            project_id: obj.project_id,
+            parent_project: obj.parent_project,
             status: obj.status,
             main: obj.main || {}
         }

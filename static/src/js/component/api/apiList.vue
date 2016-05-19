@@ -191,6 +191,32 @@ export default {
 			if(this.type === 'mine'){
 				queryParams.creator = this.userInfo._id;
 			}
+
+			// 获取不同状态的接口数量
+			this.$http({
+				url: '/api/urls',
+				method: 'get',
+				data: queryParams
+			}).then((res) => {
+				const resData = res.data;
+				this.statusLen = {
+					all: 0,
+					complete: 0,
+					continue: 0
+				}
+				this.statusLen.all = resData.data.result.length;
+				for(let i = 0; i < resData.data.result.length; i++){
+					const _curr = resData.data.result[i];
+					if(_curr.status === 0){
+						this.statusLen.continue += 1;
+					}
+					if(_curr.status === 1){
+						this.statusLen.complete += 1;
+					}
+				}
+			})
+
+
 			if(this.statusQueryStr !== -1){
 				queryParams['status'] = this.statusQueryStr;
 			}
@@ -205,25 +231,6 @@ export default {
 				if(this.isLogin){
 					const resData = res.data;
 					this.apis = resData.data.result;
-
-					if(queryParams.status === undefined){
-						this.statusLen = {
-							all: 0,
-							complete: 0,
-							continue: 0
-						}
-						this.statusLen.all = this.apis.length;
-						for(let i = 0; i < this.apis.length; i++){
-							const _curr = this.apis[i];
-							if(_curr.status === 0){
-								this.statusLen.continue += 1;
-							}
-							if(_curr.status === 1){
-								this.statusLen.complete += 1;
-							}
-						}
-					}
-
 					this.paginationConf.totalItems = resData.data.total;
 				}
 				actions.loading(store, false);

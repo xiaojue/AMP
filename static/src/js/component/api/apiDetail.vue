@@ -48,7 +48,7 @@
 				</div>
 				<div class="item">
 					<p class="title">9 请求参数</p>
-					<table>
+					<table v-if="apiMain.request_params | length">
 						<thead>
 							<tr>
 								<th>参数名</th>
@@ -61,19 +61,27 @@
 							<tr v-for="item in apiMain.request_params">
 								<td>{{item.key}}</td>
 								<td>{{item.remark}}</td>
-								<td>{{item.key}}</td>
+								<td>{{item.type}}</td>
 								<td>{{item.required ? '必须' : '非必须'}}</td>
 							</tr>
 						</tbody>
 					</table>
+					<div class="member_con" v-else>
+						<span class="main_p">无</span>
+					</div>
 				</div>
 				<div class="item">
 					<p class="title">10 请求示例</p>
-					<pre v-for="item in apiMain.request_example"><code>{{jsbeautifier(item)}}</code></pre>
+					<div v-if="apiMain.request_example | length">
+						<pre v-for="item in apiMain.request_example"><code>{{jsbeautifier(item)}}</code></pre>										
+					</div>
+					<div class="member_con" v-else>
+						<span class="main_p">无</span>
+					</div>
 				</div>
 				<div class="item">
 					<p class="title">11 返回参数</p>
-					<table>
+					<table v-if="apiMain.response_params | length">
 						<thead>
 							<tr>
 								<th>参数名</th>
@@ -85,19 +93,27 @@
 							<tr v-for="item in apiMain.response_params">
 								<td>{{item.key}}</td>
 								<td>{{item.remark}}</td>
-								<td>{{item.key}}</td>
+								<td>{{item.type}}</td>
 							</tr>
 						</tbody>
 					</table>
+					<div class="member_con" v-else>
+						<span class="main_p">无</span>
+					</div>
 				</div>
 				<div class="item">
 					<p class="title">12 返回示例</p>
-					<pre v-for="item in apiMain.response_example"><code>{{jsbeautifier(item)}}</code></pre>
+					<div v-if="apiMain.response_example | length">
+						<pre v-for="item in apiMain.response_example"><code>{{jsbeautifier(item)}}</code></pre>						
+					</div>
+					<div class="member_con" v-else>
+						<span class="main_p">无</span>
+					</div>
 				</div>
 				<div class="item">
 					<p class="title">13 备注</p>
 					<div class="wangEditor-container default_char" style="border-radius: 4px;background-color: rgba(255,255,255,0.9);">
-						<div class="wangEditor-txt" v-if="remark">{{{remark}}}</div>
+						<div class="wangEditor-txt" v-if="apiMain.remark">{{{apiMain.remark}}}</div>
 						<div class="wangEditor-txt" v-else><p>无</p></div>
 					</div>
 				</div>
@@ -105,7 +121,7 @@
 		</m-middle>
 		<m-bottom>
 			<div class="btn_con">
-				<a href="javascript:void(0)" class="btn btn_success" @click="edit()">编辑</a>
+				<a href="javascript:void(0)" class="btn btn_success" @click="edit()">修改</a>
 				<a href="javascript:history.go(-1)" class="btn btn_default">返回</a>
 			</div>
 		</m-bottom>
@@ -119,7 +135,26 @@ pre{
 
 table{
 	width: 100%;
-	text-align: center;
+	border: 1px solid #aaa;
+}
+table thead{
+	background-color: #ddd;
+	text-shadow: none;
+	color: #333;
+	font-size: 15px;
+	line-height: 38px;
+	text-align: center!important;
+}
+table tbody{
+	background-color: #fff;
+	text-shadow: none;
+	color: #000;
+	font-size: 12px;
+	text-align: center!important;	
+	line-height: 32px;
+}
+table tbody td{
+	border-top: 1px solid #aaa;
 }
 
 </style>
@@ -150,7 +185,7 @@ export default {
 			canQuit: false,
 			creator: {},
 			apiMain: {},
-			parent_project: {}
+			parent_project: {},
 		}
 	},
 	components: {
