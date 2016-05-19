@@ -109,7 +109,7 @@
 
 </style>
 
-<script type="text/ecmascript-6">
+<script>
 
 import store from 'store';
 import actions from 'actions';

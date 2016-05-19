@@ -181,7 +181,7 @@
 }
 </style>
 
-<script type="text/ecmascript-6">
+<script>
 
 import wangEditor from 'wangeditor';
 wangEditor.config.printLog = false;
