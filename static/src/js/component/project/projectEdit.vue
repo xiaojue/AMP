@@ -49,9 +49,8 @@
 				</div>
 				<div class="item">
 					<p class="title"># 备注</p>
-					<div class="wangEditor-container default_char" style="border-radius: 4px;background-color: rgba(255,255,255,0.9);">
-						<div class="wangEditor-txt" v-if="remark">{{{remark}}}</div>
-						<div class="wangEditor-txt" v-else><p>无</p></div>
+					<div class="main_form default_char">
+						<textarea id="remark" placeholder="请输入接口备注" style="height: 300px;" v-model="remark">{{remark}}</textarea>
 					</div>
 				</div>
 			</div>
@@ -131,6 +130,9 @@ import con_main from '../container/main.vue';
 import con_top from '../container/top.vue';
 import con_middle from '../container/middle.vue';
 import con_bottom from '../container/bottom.vue';
+
+import wangEditor from 'wangeditor';
+wangEditor.config.printLog = false;
 
 // 富文本编辑器菜单
 const menus = [
@@ -314,10 +316,9 @@ export default {
 		createEditor() {
 			const _this = this;
 			try{
-				this.remarkEditor.destroy();	
+				this.remarkEditor.destroy();
 			}catch(e){};
-			
-			this.remarkEditor = new wangEditor('remark');
+			this.remarkEditor = new wangEditor(document.getElementById('remark'));
 			this.remarkEditor.config.menus = menus;
 			this.remarkEditor.onchange = function () {
 				_this.remark = this.$txt.html();
@@ -360,7 +361,9 @@ export default {
 					}
 				})
 			}else if(this.id === 'new'){
-				this.createEditor();
+				setTimeout(() => {
+					this.createEditor();
+				}, 100);
 			}
 		}
 	},
