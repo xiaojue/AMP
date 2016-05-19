@@ -27,7 +27,7 @@
 .page-list .page-total strong {font-size: 14px;font-weight: bold;}
 </style>
 
-<script type="text/ecmascript-6">
+<script>
 
 /*
 vm.$data.paginationConf = {

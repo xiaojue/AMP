@@ -20,7 +20,7 @@
 .alert .alert_tip.danger {color: #ef5858;}
 </style>
 
-<script type="text/ecmascript-6">
+<script>
 
 import store from 'store';
 
