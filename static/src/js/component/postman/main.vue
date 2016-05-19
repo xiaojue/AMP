@@ -98,7 +98,7 @@
 }
 </style>
 
-<script>
+<script type="text/ecmascript-6">
 
 // container component
 import con_main from '../container/main.vue';

@@ -10,7 +10,7 @@
 	
 </style>
 
-<script>
+<script type="text/ecmascript-6">
 
 import Head from '../common/header.vue';
 import Nav from '../common/nav.vue';
