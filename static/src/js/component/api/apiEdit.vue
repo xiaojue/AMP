@@ -49,7 +49,7 @@
 					<p class="title"># HTTP请求方式</p>
 					<div class="main_form">
 						<span class="iconfont required">&#xe600;</span>
-						<select v-model="apiMain.method">
+						<select v-model="apiDetail.method">
 							<option value="get">GET</option>
 							<option value="post">POST</option>
 							<option value="put">PUT</option>
@@ -69,7 +69,7 @@
 				<div class="item">
 					<p class="title"># 请求参数</p>
 					<a href="javascript:void(0)" class="add_new btn btn_sm btn_success" @click="addNew('request_params')">新增一条</a>
-					<div class="main_form full_width" v-for="item in apiMain.request_params">
+					<div class="main_form full_width" v-for="item in apiDetail.request_params" track-by="$index">
 						<input type="text" placeholder="Key" v-model="item.key">
 						<select v-model="item.type">
 							<option>请选择类型</option>
@@ -90,7 +90,7 @@
 				<div class="item">
 					<p class="title"># 请求示例</p>
 					<a href="javascript:void(0)" class="add_new btn btn_sm btn_success" @click="addNew('request_example')">新增一条</a>
-					<div class="main_form full_width" v-for="item in apiMain.request_example">
+					<div class="main_form full_width" v-for="item in apiDetail.request_example" track-by="$index">
 						<textarea placeholder="请输入请求示例" v-model="item">{{item | json}}</textarea>
 						<span class="iconfont del" @click="delParams($index, 'request_example')">&#xe607;</span>
 					</div>
@@ -98,7 +98,7 @@
 				<div class="item">
 					<p class="title"># 返回参数</p>
 					<a href="javascript:void(0)" class="add_new btn btn_sm btn_success" @click="addNew('response_params')">新增一条</a>
-					<div class="main_form full_width" v-for="item in apiMain.response_params">
+					<div class="main_form full_width" v-for="item in apiDetail.response_params" track-by="$index">
 						<input type="text" placeholder="Key" v-model="item.key">
 						<select v-model="item.type">
 							<option>请选择类型</option>
@@ -114,17 +114,18 @@
 					</div>
 				</div>
 				<div class="item">
-					<p class="title"># 返回示例</p>
+					<p class="title"># 返回示例<span style="font-size: 12px;font-weight: normal;">（选中示例即为模拟接口请求时返回的数据）</span></p>
 					<a href="javascript:void(0)" class="add_new btn btn_sm btn_success" @click="addNew('response_example')">新增一条</a>
-					<div class="main_form full_width" v-for="item in apiMain.response_example">
-						<textarea placeholder="请输入请求示例" v-model="item">{{item | json}}</textarea>
+					<div class="main_form full_width" v-for="item in apiDetail.response_example.exapmle_array" track-by="$index">
+						<input type="checkbox" :checked="apiDetail.response_example.in_use === $index" @click="changeInUse($index)">
+						<textarea placeholder="请输入返回示例" v-model="item">{{item | json}}</textarea>
 						<span class="iconfont del" @click="delParams($index, 'response_example')">&#xe607;</span>
 					</div>
 				</div>
 				<div class="item">
 					<p class="title"># 备注</p>
 					<div class="main_form default_char">
-						<textarea id="remark" placeholder="请输入接口备注" style="height: 300px;" v-model="apiMain.remark">{{apiMain.remark}}</textarea>
+						<textarea id="remark" placeholder="请输入接口备注" style="height: 300px;" v-model="apiDetail.remark">{{apiDetail.remark}}</textarea>
 					</div>
 				</div>
 			</div>
@@ -143,13 +144,16 @@
 	cursor: pointer;
 	font-size: 18px;
 	margin-left: 5px;
-	color: #ddd;
+	color: rgba(255,81,81,0.3);
 	font-weight: bold;
 	text-shadow: none;
 	transition: all ease 0.2s;
+	top: 0;
+	position: absolute;
+	right: 5px;
 }
 .iconfont.del:hover{
-	color: #fff;
+	color: rgba(255,81,81,0.8);
 }
 .detail .item .main_form textarea.full_width{
 	width: 100%;
@@ -171,6 +175,13 @@
 .detail .item .main_form.full_width input{
 	flex: 1;
 	margin: 0 5px;
+}
+.detail .item .main_form.full_width input[type="checkbox"]{
+	display: block;position: absolute;
+	left: -20px;
+	cursor: pointer;
+	top: 50%;
+	transform: translateY(-50%);
 }
 .detail .item .main_form.full_width input:first-child{
 	margin-left: 0;
@@ -236,21 +247,22 @@ export default {
 			id: null,
 			apiDetail: {
 				name: '',
-				desc: '',
-				url: '',
-				status: 0,
-				main: {}
+	            desc: '',
+	            url: '',
+	            parent_project: {},
+	            status: 0,
+	            method: 'get',
+	            request_params: [],
+	            request_example: [],
+	            response_params: [],
+	            response_example: {
+	            	in_use: 0,
+	            	exapmle_array: []
+	            },
+	            remark: '',
 			},
 			canQuit: false,
 			creator: {},
-			apiMain: {
-				method: 'get',
-				request_params: [],
-				request_example: [],
-				response_params: [],
-				response_example: [],
-				remark: ''
-			},
 			parent_project: {},
 			canQuit: false,
 			remarkEditor: null // 富文本编辑器示例
@@ -309,7 +321,6 @@ export default {
 						this.apiDetail = resData.data.result[0];
 						this.creator = resData.data.result[0].creator;
 						this.parent_project = resData.data.result[0].parent_project;
-						this.apiMain = resData.data.result[0].main;
 						actions.loading(store, false);
 
 						this.createEditor();
@@ -362,46 +373,56 @@ export default {
 	},
 	methods: {
 		addNew(type) {
+			if(type === 'response_example'){
+				this.apiDetail[type]['exapmle_array'].push('');
+				return;
+			}
 			const typeMap = {
-				response_example: '',
 				response_params: {},
 				request_example: '',
 				request_params: {}
 			}
-			this.apiMain[type].push(typeMap[type]);
+			this.apiDetail[type].push(typeMap[type]);
 		},
 		delParams(index, type) {
-			this.apiMain[type].splice(index, 1);
+			if(type === 'response_example'){
+				this.apiDetail[type]['exapmle_array'].splice(index, 1);
+				return;
+			}
+			this.apiDetail[type].splice(index, 1);
+		},
+		changeInUse(index) {
+			this.apiDetail.response_example.in_use = index;
 		},
 		save() {
-			this.apiDetail.main = this.apiMain;
-
-			for(let i = 0; i < this.apiMain['response_example'].length; i++){
-				const _curr = this.apiMain['response_example'][i];
-				if(_curr === ''){
-					this.apiMain['response_example'].splice(i, 1);
-				}
-			}
-			for(let i = 0; i < this.apiMain['response_params'].length; i++){
-				const _curr = this.apiMain['response_params'][i];
-				if(Object.keys(_curr).length === 0){
-					this.apiMain['response_params'].splice(i, 1);
-				}
-			}
-			for(let i = 0; i < this.apiMain['request_example'].length; i++){
-				const _curr = this.apiMain['request_example'][i];
-				if(_curr === ''){
-					this.apiMain['request_example'].splice(i, 1);
-				}
-			}
-			for(let i = 0; i < this.apiMain['request_params'].length; i++){
-				const _curr = this.apiMain['request_params'][i];
-				if(Object.keys(_curr).length === 0){
-					this.apiMain['request_params'].splice(i, 1);
-				}
-			}
-
 			this.apiDetail.parent_project = this.parent_project;
+
+			for(let i = 0; i < this.apiDetail['response_example']['exapmle_array'].length; i++){
+				const _curr = this.apiDetail['response_example']['exapmle_array'][i];
+				if(_curr === ''){
+					this.apiDetail['response_example']['in_use'] = 0;
+					this.apiDetail['response_example']['exapmle_array'].splice(i, 1);
+				}
+			}
+			for(let i = 0; i < this.apiDetail['response_params'].length; i++){
+				const _curr = this.apiDetail['response_params'][i];
+				if(Object.keys(_curr).length === 0){
+					this.apiDetail['response_params'].splice(i, 1);
+				}
+			}
+			for(let i = 0; i < this.apiDetail['request_example'].length; i++){
+				const _curr = this.apiDetail['request_example'][i];
+				if(_curr === ''){
+					this.apiDetail['request_example'].splice(i, 1);
+				}
+			}
+			for(let i = 0; i < this.apiDetail['request_params'].length; i++){
+				const _curr = this.apiDetail['request_params'][i];
+				if(Object.keys(_curr).length === 0){
+					this.apiDetail['request_params'].splice(i, 1);
+				}
+			}
+
 			this.$http({
 				url: '/api/urls' + (this.id === 'new' ? '' : '?_id=' + this.id),
 				method: this.id === 'new' ? 'post' : 'put',
@@ -431,10 +452,10 @@ export default {
 			this.remarkEditor = new wangEditor('remark');
 			this.remarkEditor.config.menus = menus;
 			this.remarkEditor.onchange = function () {
-				_this.apiMain.remark = this.$txt.html();
+				_this.apiDetail.remark = this.$txt.html();
 			};
 			this.remarkEditor.create();
-			this.remarkEditor.$txt.html(this.apiMain.remark);
+			this.remarkEditor.$txt.html(this.apiDetail.remark);
 		}
 	}
 }	

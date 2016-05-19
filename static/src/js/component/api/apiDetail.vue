@@ -36,7 +36,7 @@
 				<div class="item">
 					<p class="title">7 HTTP请求方式</p>
 					<div class="member_con">
-						<span class="main_p">{{apiMain.method | uppercase}}</span>
+						<span class="main_p">{{apiDetail.method | uppercase}}</span>
 					</div>
 				</div>
 				<div class="item">
@@ -48,7 +48,7 @@
 				</div>
 				<div class="item">
 					<p class="title">9 请求参数</p>
-					<table v-if="apiMain.request_params | length">
+					<table v-if="apiDetail.request_params | length">
 						<thead>
 							<tr>
 								<th>参数名</th>
@@ -58,7 +58,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for="item in apiMain.request_params">
+							<tr v-for="item in apiDetail.request_params">
 								<td>{{item.key}}</td>
 								<td>{{item.remark}}</td>
 								<td>{{item.type}}</td>
@@ -72,8 +72,8 @@
 				</div>
 				<div class="item">
 					<p class="title">10 请求示例</p>
-					<div v-if="apiMain.request_example | length">
-						<pre v-for="item in apiMain.request_example"><code>{{jsbeautifier(item)}}</code></pre>										
+					<div v-if="apiDetail.request_example | length">
+						<pre v-for="item in apiDetail.request_example"><code>{{jsbeautifier(item)}}</code></pre>										
 					</div>
 					<div class="member_con" v-else>
 						<span class="main_p">无</span>
@@ -81,7 +81,7 @@
 				</div>
 				<div class="item">
 					<p class="title">11 返回参数</p>
-					<table v-if="apiMain.response_params | length">
+					<table v-if="apiDetail.response_params | length">
 						<thead>
 							<tr>
 								<th>参数名</th>
@@ -90,7 +90,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for="item in apiMain.response_params">
+							<tr v-for="item in apiDetail.response_params">
 								<td>{{item.key}}</td>
 								<td>{{item.remark}}</td>
 								<td>{{item.type}}</td>
@@ -103,8 +103,11 @@
 				</div>
 				<div class="item">
 					<p class="title">12 返回示例</p>
-					<div v-if="apiMain.response_example | length">
-						<pre v-for="item in apiMain.response_example"><code>{{jsbeautifier(item)}}</code></pre>						
+					<div v-if="response_example.exapmle_array | length">
+						<pre v-for="item in response_example.exapmle_array">
+							<em v-show="response_example.in_use === $index">当前已选模拟数据</em>
+							<code>{{jsbeautifier(item)}}</code>
+						</pre>
 					</div>
 					<div class="member_con" v-else>
 						<span class="main_p">无</span>
@@ -113,7 +116,7 @@
 				<div class="item">
 					<p class="title">13 备注</p>
 					<div class="wangEditor-container default_char" style="border-radius: 4px;background-color: rgba(255,255,255,0.9);">
-						<div class="wangEditor-txt" v-if="apiMain.remark">{{{apiMain.remark}}}</div>
+						<div class="wangEditor-txt" v-if="apiDetail.remark">{{{apiDetail.remark}}}</div>
 						<div class="wangEditor-txt" v-else><p>无</p></div>
 					</div>
 				</div>
@@ -131,6 +134,21 @@
 <style scoped>
 pre{
 	margin-top: 10px;
+	position: relative;
+}
+pre code{
+	display: block;
+}
+pre em{
+	position: absolute;
+	display: block;
+	line-height: 22px;
+	font-size: 12px;
+	color: rgba(82,215,105,1);
+	top: 0;
+	left: 0;
+	font-style: normal;
+	font-weight: bold;
 }
 
 table{
@@ -184,8 +202,11 @@ export default {
 			apiDetail: {},
 			canQuit: false,
 			creator: {},
-			apiMain: {},
 			parent_project: {},
+			response_example: {
+				exapmle_array: [],
+				in_use: 0
+			}
 		}
 	},
 	components: {
@@ -221,8 +242,8 @@ export default {
 						const resData = res.data;
 						this.apiDetail = resData.data.result[0];
 						this.creator = resData.data.result[0].creator;
-						this.apiMain = resData.data.result[0].main;
 						this.parent_project = resData.data.result[0].parent_project;
+						this.response_example = resData.data.result[0].response_example;
 						actions.loading(store, false);
 					}
 				})

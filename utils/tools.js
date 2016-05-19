@@ -10,3 +10,13 @@ export const inArray = (ele, arr) => {
     }
     return false;
 }
+
+
+export const mixin = (source, target) => {
+    for (var i in target) {
+        if (target.hasOwnProperty(i)) {
+            source[i] = target[i];
+        }
+    }
+    return source;
+}

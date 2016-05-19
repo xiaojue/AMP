@@ -39,7 +39,7 @@ Api
 			}
 		}
         const Model = global.dbHandle.getModel(model);
-        const result = await Model.find(realQuery).populate('creator').populate('main.members').populate('parent_project').sort({ 'create_time': -1 }).limit(limit).skip((page - 1) * limit);
+        const result = await Model.find(realQuery).populate('creator').populate('members').populate('parent_project').sort({ 'create_time': -1 }).limit(limit).skip((page - 1) * limit);
         const all = await Model.find(realQuery);
 		ctx.success({
 			total: all.length,
@@ -56,21 +56,28 @@ Api
     	const Person = global.dbHandle.getModel('users');
     	var currentUser = new Person({ _id: ctx.session.userinfo._id});
 
+        const obj = ctx.body;
         const modelMap = model === 'projects' ? {
-            name: ctx.body.name,
-            desc: ctx.body.desc,
-            creator: currentUser._id,
+            name: obj.name,
+            desc: obj.desc,
+            creator: ctx.session.userinfo._id,
             create_time: Date.now(),
-            main: ctx.body.main || {}
+            members: obj.members,
+            remark: obj.remark
         } : {
-            name: ctx.body.name,
-            desc: ctx.body.desc,
-            creator: currentUser._id,
+            name: obj.name,
+            desc: obj.desc,
+            creator: ctx.session.userinfo._id,
             create_time: Date.now(),
-            url: ctx.body.url,
-            parent_project: ctx.body.parent_project,
-            status: ctx.body.status,
-            main: ctx.body.main || {}
+            url: obj.url,
+            parent_project: obj.parent_project,
+            status: obj.status,
+            method: obj.method,
+            request_params: obj.request_params,
+            request_example: obj.request_example,
+            response_params: obj.response_params,
+            response_example: obj.response_example,
+            remark: obj.remark,
         }
 
     	const newModel = await Model.create(modelMap)
@@ -87,14 +94,20 @@ Api
         const modelMap = model === 'projects' ? {
             name: obj.name,
             desc: obj.desc,
-            main: obj.main || {}
+            members: obj.members,
+            remark: obj.remark
         } : {
             name: obj.name,
             desc: obj.desc,
             url: obj.url,
             parent_project: obj.parent_project,
             status: obj.status,
-            main: obj.main || {}
+            method: obj.method,
+            request_params: obj.request_params,
+            request_example: obj.request_example,
+            response_params: obj.response_params,
+            response_example: obj.response_example,
+            remark: obj.remark,
         }
 
         const updateModel = await Model.update({

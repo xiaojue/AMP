@@ -40,7 +40,7 @@
 							<li v-for="item in members" @click="addMember(item)">{{item.name}}</li>
 						</ul>
 						<div class="memer_list">
-							<div class="member_item" v-for="item in memberResult">
+							<div class="member_item" v-for="item in projectDetail.members">
 								<span>{{item.name}}</span>
 								<a href="javascript:void(0)" class="iconfont close" @click="deleteMember($index, item.id)">&#xe609;</a>
 							</div>
@@ -50,7 +50,7 @@
 				<div class="item">
 					<p class="title"># 备注</p>
 					<div class="main_form default_char">
-						<textarea id="remark" placeholder="请输入接口备注" style="height: 300px;" v-model="remark">{{remark}}</textarea>
+						<textarea id="remark" placeholder="请输入接口备注" style="height: 300px;" v-model="projectDetail.remark">{{projectDetail.remark}}</textarea>
 					</div>
 				</div>
 			</div>
@@ -174,17 +174,16 @@ export default {
 		return {
 			id: null,
 			projectDetail: {
-				// name: '',
-				// desc: '',
-				// creator: '',
-				// create_time: '',
-				// main: {}
+				name: '',
+				desc: '',
+				creator: '',
+				create_time: '',
+				members: [],
+				remark: ''
 			},
 			creator: '',
 			memberQuery: '',
 			members: [],
-			remark: '',
-			memberResult: [],
 			canQuit: false,
 			showNoOne: false,
 			remarkEditor: ''
@@ -243,16 +242,7 @@ export default {
 			if(this.inputCheck()){
 				return;
 			}
-			const member = [];
-			for(let i = 0; i < this.memberResult.length; i++){
-				const _curr = this.memberResult[i];
-				member.push(_curr._id);
-			}
-			if(this.id === 'new'){
-				Vue.set(this.projectDetail, 'main', {});
-			}
-			this.projectDetail.main.members = member;
-			this.projectDetail.main.remark = this.remark;
+	
 			this.$http({
 				url: '/api/projects' + (this.id === 'new' ? '' : '?_id=' + this.id),
 				method: this.id === 'new' ? 'post' : 'put',
@@ -295,8 +285,8 @@ export default {
 			})
 		},
 		addMember(member) {
-			for(let i = 0; i < this.memberResult.length; i++) {
-				const _curr = this.memberResult[i];
+			for(let i = 0; i < this.projectDetail.members.length; i++) {
+				const _curr = this.projectDetail.members[i];
 				if(_curr._id === member._id){
 					actions.alert(store, {
 						show: true,
@@ -307,11 +297,11 @@ export default {
 					return;
 				}
 			}
-			this.memberResult.push(member);
+			this.projectDetail.members.push(member);
 			this.memberQuery = '';
 		},
 		deleteMember(index, id) {
-			this.memberResult.splice(index, 1);
+			this.projectDetail.members.splice(index, 1);
 		},
 		createEditor() {
 			const _this = this;
@@ -321,10 +311,10 @@ export default {
 			this.remarkEditor = new wangEditor(document.getElementById('remark'));
 			this.remarkEditor.config.menus = menus;
 			this.remarkEditor.onchange = function () {
-				_this.remark = this.$txt.html();
+				_this.projectDetail.remark = this.$txt.html();
 			};
 			this.remarkEditor.create();
-			this.remarkEditor.$txt.html(this.remark);
+			this.remarkEditor.$txt.html(this.projectDetail.remark);
 		}
 	},
 	route: {
@@ -343,8 +333,6 @@ export default {
 						const resData = res.data;
 						this.projectDetail = resData.data.result[0];
 						this.creator = resData.data.result[0].creator;
-						this.memberResult =  resData.data.result[0].main.members;
-						this.remark = resData.data.result[0].main.remark;
 
 						this.createEditor();
 

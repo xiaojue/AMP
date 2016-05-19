@@ -4,22 +4,72 @@
 
 import Router from 'koa-router';
 
+import { mixin } from '../utils/tools.js';
+
 const Mock = Router({
 	prefix: '/mock'
 });
 
-// 非登陆接口全局需验证
+const formatRequestUrl = (url) => {
+	let result = {};
+	result.project_id = url.match(/^\/[\s\S]+?\/([\s\S]+?)\//)[1];
+	result.api_url = url.match(/^\/[\s\S]+?\/[\s\S]+?(\/[\s\S]+)\?/)[1];
+	return result;
+}
+
+const errMap = {
+	0: '参数类型有误',
+	1: '缺少必要参数',
+	2: '没有符合要求的返回示例'
+}
+
+const checkReqParams = (ctx, result) => {
+	let allParams = {};
+	mixin(allParams, ctx.query);
+	mixin(allParams, ctx.body);
+
+	if(result === undefined){
+		return {
+			err: true,
+			map: 2
+		}
+	}
+
+	for(let i = 0; i < result.request_params.length; i++){
+		const _curr = result.request_params[i];
+		if(_curr.required && allParams[_curr['key']] === undefined){
+			return {
+				err: true,
+				map: 1
+			}
+		}
+	}
+
+	return {
+		err: false,
+		map: NaN
+	}
+}
+
+
 Mock.all('*', async (ctx, next) => {
-	// console.log(api_url);
-	// console.log(ctx.params.project_id);
-	// console.log(ctx.params.api_url);
 
+	const apiDeatil = formatRequestUrl(ctx.request.url);
+	const Url = global.dbHandle.getModel('urls');
 
+	const result = await Url.find({
+		parent_project: apiDeatil.project_id,
+		url: apiDeatil.api_url,
+		method: ctx.method.toLocaleLowerCase()
+	});
 
-	
+	const checkResult = checkReqParams(ctx, result[0]);
+	if(checkResult.err){
+		ctx.fail(404, errMap[checkResult.map]);
+		return;
+	}
 
-	
-	ctx.success('success');
+	ctx.body = result[0].response_example.exapmle_array[result[0].response_example.in_use];
 });
 
 export default Mock;
