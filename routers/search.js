@@ -11,12 +11,12 @@ const Search = Router({
 });
 
 
-Search.post('/:model', async (ctx, next) => {
+Search.get('/:model', async (ctx, next) => {
     const Model = global.dbHandle.getModel(ctx.params.model);
     const regx = new RegExp('.*' + ctx.query.query + '.*');
     await Model.find({
         $or: [
-        	{_id: regx},
+        	// { _id: regx},
             { email: regx },
             { name: regx },
             {desc: regx}

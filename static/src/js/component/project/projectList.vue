@@ -205,7 +205,7 @@ export default {
 		},
 		search() {
 			this.$http({
-				url: '/search/projects'
+				url: '/search/projects',
 				method: 'get',
 				data: {
 					query: this.searchStr
