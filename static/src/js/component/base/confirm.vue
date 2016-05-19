@@ -39,7 +39,7 @@
 }
 </style>
 
-<script>
+<script type="text/ecmascript-6">
 	
 import store from 'store';
 import actions from 'actions';
