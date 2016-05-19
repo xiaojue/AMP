@@ -91,7 +91,7 @@
 					<p class="title"># 请求示例</p>
 					<a href="javascript:void(0)" class="add_new btn btn_sm btn_success" @click="addNew('request_example')">新增一条</a>
 					<div class="main_form full_width" v-for="item in apiDetail.request_example" track-by="$index">
-						<textarea placeholder="请输入请求示例" v-model="item">{{item | json}}</textarea>
+						<textarea placeholder="请输入请求示例" v-model="item">{{item}}</textarea>
 						<span class="iconfont del" @click="delParams($index, 'request_example')">&#xe607;</span>
 					</div>
 				</div>
@@ -118,7 +118,7 @@
 					<a href="javascript:void(0)" class="add_new btn btn_sm btn_success" @click="addNew('response_example')">新增一条</a>
 					<div class="main_form full_width" v-for="item in apiDetail.response_example.exapmle_array" track-by="$index">
 						<input type="checkbox" :checked="apiDetail.response_example.in_use === $index" @click="changeInUse($index)">
-						<textarea placeholder="请输入返回示例" v-model="item">{{item | json}}</textarea>
+						<textarea placeholder="请输入返回示例" v-model="item" @blur="formatResExample($index)">{{item}}</textarea>
 						<span class="iconfont del" @click="delParams($index, 'response_example')">&#xe607;</span>
 					</div>
 				</div>
@@ -193,6 +193,7 @@
 </style>
 
 <script>
+import Vue from 'vue';
 
 import wangEditor from 'wangeditor';
 wangEditor.config.printLog = false;
@@ -207,6 +208,8 @@ import con_bottom from '../container/bottom.vue';
 
 import store from 'store';
 import actions from 'actions';
+
+import jsbeautifier from 'js-beautify';
 
 // 富文本编辑器菜单
 const menus = [
@@ -456,6 +459,20 @@ export default {
 			};
 			this.remarkEditor.create();
 			this.remarkEditor.$txt.html(this.apiDetail.remark);
+		},
+		jsbeautifier: jsbeautifier,
+		formatResExample(index) {
+			try{
+				JSON.parse(this.apiDetail.response_example.exapmle_array[index]);
+			}catch(e){
+				actions.alert(store, {
+					show: true,
+					msg: '输入必须符合json格式',
+					type: 'danger'
+				})
+				return;
+			}
+			this.apiDetail.response_example.exapmle_array.$set(index, this.jsbeautifier(this.apiDetail.response_example.exapmle_array[index]));
 		}
 	}
 }	
