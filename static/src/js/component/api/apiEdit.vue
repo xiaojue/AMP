@@ -9,13 +9,13 @@
 					<p class="title"># 接口名称</p>
 					<div class="main_form">
 						<span class="iconfont required">&#xe600;</span>
-						<input type="text" placeholder="请输入项目名称" v-model="apiDetail.name"></input>
+						<input type="text" placeholder="请输入接口名称" v-model="apiDetail.name"></input>
 					</div>
 				</div>
 				<div class="item">
 					<p class="title"># 接口描述</p>
 					<div class="main_form">
-						<textarea maxlength="200" placeholder="请输入项目描述" v-model="apiDetail.desc">{{apiDetail.desc}}</textarea>
+						<textarea maxlength="200" placeholder="请输入接口描述" v-model="apiDetail.desc">{{apiDetail.desc}}</textarea>
 						<div class="char_num">{{apiDetail.desc | length}}/200</div>
 					</div>
 				</div>
@@ -292,9 +292,6 @@ export default {
 			}
 		})
 	},
-	ready() {
-
-	},
 	route: {
 		data(transtion) {
 			this.id = transtion.to.params.id;
@@ -423,7 +420,7 @@ export default {
 			})
 		},
 		cancel() {
-			this.$route.router.go('/main/api/list/' + this.apiDetail.parent_project._id);
+			this.$route.router.go('/main/api/list/' + this.parent_project._id);
 		},
 		createEditor() {
 			const _this = this;
