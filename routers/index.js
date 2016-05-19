@@ -12,4 +12,6 @@ import Postman from './postman.js';
 
 import Mock from './mock.js';
 
-export default [View, Common, User, Api, Postman, Mock];
+import Search from './search.js';
+
+export default [View, Common, User, Api, Postman, Mock, Search];

@@ -2,6 +2,9 @@
 	<m-main-con>
 		<m-top>
 			<p class="title">{{titleMap[type]}}</p>
+			<div class="search">
+				<input type="text" v-model="searchStr" @change="search()" debounce="500" placeholder="请输入接口ID/名称/描述进行搜索"></input>
+			</div>
 			<a class="btn btn_success" href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: 'new'}}">新建项目</a>
 		</m-top>
 		<m-middle>
@@ -33,6 +36,14 @@
 	top: 50%;
 	margin-top: -19px;
 }
+
+.top .search{
+	position: absolute;height: 55px;right: 100px;top: 0;
+}
+.top .search input{
+	display: inline-block;vertical-align: middle;width: 100%;
+}
+
 
 .item_con .item>h2{
 	font-size: 18px;
@@ -124,7 +135,8 @@ export default {
 					// 回调
 				}
 			},
-			projects: []
+			projects: [],
+			searchStr: ''
 		}
 	},
 	vuex: {
@@ -190,6 +202,21 @@ export default {
 				return;
 			}
 			this.$route.router.go({name: 'projectEdit', params: {id: item._id}});
+		},
+		search() {
+			this.$http({
+				url: '/search/projects'
+				method: 'get',
+				data: {
+					query: this.searchStr
+				}
+			}).then((res) => {
+				if(this.isLogin){
+					const resData = res.data;
+					this.projects = resData.data.result;
+					this.paginationConf.totalItems = resData.data.total;
+				}
+			})
 		}
 	},
 }
