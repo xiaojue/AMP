@@ -25,9 +25,13 @@ import routers from './routers';
 import response from './middleware/response.js';
 
 // db about
+import ip from 'ip';
 import dbConfig from './dbconfig/config.json';
 import dbs from './dbconfig/db.json';
 import * as dbHandle from './database/dbHandle.js';
+if(ip.address() === '10.69.205.26'){
+	dbConfig.env = 'dev';
+};
 global.dbHandle = dbHandle;
 global.db = Mongoose.connect('mongodb://' + dbs[dbConfig.env].host + ':' + dbs[dbConfig.env].port +'/AMP');
 

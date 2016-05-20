@@ -21,6 +21,36 @@ const checkModel = (ctx, model) => {
 	}
 }
 
+// 项目权限检测（传入项目详情）
+const checkAuthority = (ctx, item) => {
+    if(ctx.session.userinfo._id === item.creator._id){
+        return false;
+    }
+    for(let i = 0; i < item.members.length; i++ ){
+        const _curr = item.members[i];
+        if (_curr._id === ctx.session.userinfo._id){
+            return false;
+        }
+    }
+    return true;
+}
+
+// 接口权限检测（传入接口详情）
+const checkAuthorityInApi = (ctx, item) => {
+    if(ctx.session.userinfo._id === item.creator._id){
+        return false;
+    }
+    for(let i = 0; i < item.parent_project.members.length; i++ ){
+        const _curr = item.parent_project.members[i];
+        if (_curr === ctx.session.userinfo._id){
+            return false;
+        }
+    }
+    return true;
+}
+
+
+
 Api
     .get('/:model', async (ctx, next) => {
     	const model = ctx.params.model;
@@ -107,7 +137,18 @@ Api
             request_example: obj.request_example,
             response_params: obj.response_params,
             response_example: obj.response_example,
-            remark: obj.remark,
+            remark: obj.remark
+        }
+
+
+        if(model === 'projects' && checkAuthority(ctx, obj)){
+            ctx.fail(401, '无权限');
+            return;
+        }
+
+        if(model === 'urls' && checkAuthorityInApi(ctx, obj)){
+            ctx.fail(401, '无权限');
+            return;
         }
 
         const updateModel = await Model.update({
@@ -122,6 +163,22 @@ Api
     	if(checkModel(ctx, model)){
     		return;
     	}
+
+        const willDelModel = global.dbHandle.getModel(model);
+        const willDelData = await willDelModel.find({
+            _id: ctx.query._id
+        })
+
+        if(model === 'projects' && checkAuthority(ctx, willDelData)){
+            ctx.fail(401, '无权限');
+            return;
+        }
+
+        if(model === 'urls' && checkAuthorityInApi(ctx, willDelData)){
+            ctx.fail(401, '无权限');
+            return;
+        }
+
         if(model === 'projects'){
             const Urls = global.dbHandle.getModel('urls');
             await Urls.remove({
