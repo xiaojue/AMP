@@ -36,6 +36,7 @@ import ApiEdit from './component/api/apiEdit.vue';
 
 import PostMan from './component/postman/main.vue';
 
+import Introduction from './component/introduction/main.vue';
 
 router.map({
     '/': {
@@ -71,6 +72,10 @@ router.map({
             '/postman': {
                 name: 'postMan',
                 component: PostMan
+            },
+            '/introduction': {
+                name: 'introduction',
+                component: Introduction
             }
         }
     }
