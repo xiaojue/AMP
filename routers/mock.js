@@ -13,7 +13,14 @@ const Mock = Router({
 const formatRequestUrl = (url) => {
 	let result = {};
 	result.project_id = url.match(/^\/.*?\/(.*?)\//)[1];
-	result.api_url = url.match(/^\/[\s\S]+?\/[\s\S]+?(\/[\s\S]+)\?/)[1];
+
+	const regxUrl = url.match(/^\/.*?\/.*?\/(.*)/)[1];
+
+	if(regxUrl.indexOf('http') === -1){
+		result.api_url = '/' + regxUrl.replace(/\?.*/,'');
+	}else{
+		result.api_url = regxUrl.replace(/\?.*/,'');
+	}
 	return result;
 }
 
@@ -69,7 +76,7 @@ Mock.all('*', async (ctx, next) => {
 		return;
 	}
 
-	ctx.body = result[0].response_example.exapmle_array[result[0].response_example.in_use];
+	ctx.body = JSON.parse(result[0].response_example.exapmle_array[result[0].response_example.in_use]);
 });
 
 export default Mock;
