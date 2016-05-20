@@ -93,15 +93,18 @@
 	line-height: 28px;
 }
 .item_con .item ul li:nth-child(1){
-	flex-basis: 30%;
+	flex-basis: 20%;
 }
 .item_con .item ul li:nth-child(2){
-	flex-basis: 30%;
+	flex-basis: 20%;
 }
 .item_con .item ul li:nth-child(3){
-	flex-basis: 10%;
+	flex-basis: 20%;
 }
 .item_con .item ul li:nth-child(4){
+	flex-basis: 10%;
+}
+.item_con .item ul li:nth-child(5){
 	flex-basis: 30%;
 }
 .item_con .item ul li a{
