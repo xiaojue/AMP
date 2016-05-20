@@ -15,6 +15,7 @@
 					<ul>
 						<li>名称</li>
 						<li>地址</li>
+						<li>请求方式</li>
 						<li>状态</li>
 						<li>操作</li>
 					</ul>
@@ -23,6 +24,7 @@
 					<ul>
 						<li>{{item.name}}</li>
 						<li>{{item.url}}</li>
+						<li>{{item.method | uppercase}}</li>
 						<li>{{item.status === 0 ? '未完成' : '已完成'}}</li>
 						<li>
 							<a href="javascript:void(0)" class="btn btn_sm btn_info" v-link="{name: 'apiDetail', params: {id: item._id}}">文档</a>

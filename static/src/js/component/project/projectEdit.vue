@@ -149,8 +149,6 @@ const menus = [
 	'fontfamily',
 	'fontsize',
 	'head',
-	'unorderlist',
-	'orderlist',
 	'alignleft',
 	'aligncenter',
 	'alignright',
@@ -163,7 +161,6 @@ const menus = [
     '|',
     'undo',
     'redo',
-    'fullscreen'
  ];
 
 
