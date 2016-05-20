@@ -53,7 +53,7 @@
 					</li>
 				</ul>
 			</div>
-			<!-- <div class="item">
+			<div class="item">
 				<ul>
 					<li v-link="{name: 'postMan'}">
 						<span class="iconfont">&#xe60c;</span>
@@ -61,7 +61,7 @@
 						<i class="iconfont">&#xe604;</i>
 					</li>
 				</ul>
-			</div> -->
+			</div>
 		</div>
 	</nav>
 </template>

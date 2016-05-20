@@ -86,6 +86,9 @@ Vue.http.interceptors.push({
         return request;
     },
     response: function (response) {
+        if(response.request.url.indexOf('/postman') !== -1){
+            return response;
+        }
     	const resData = response.data;
     	// 统一权限认证
     	if(resData.iserror && resData.code === 401){

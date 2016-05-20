@@ -1,7 +1,7 @@
 <template>
 	<m-main-con>
 		<m-top>
-			<p class="title">接口测试</p>
+			<p class="title">接口测试<span style="font-size:12px;">（真实接口测试，返回的数据为真实接口返回的数据）</span></p>
 		</m-top>
 		<m-middle>
 			<div class="post_man">
@@ -173,8 +173,7 @@ export default {
 				}
 			}).then((res) => {
 				this.status = 'Send';
-				console.log(res.data);
-			// 	this.editor.setValue(jsbeautifier(JSON.stringify(res.data)));
+				this.editor.setValue(jsbeautifier(JSON.stringify(res.data)));
 			})
 		}
 	}

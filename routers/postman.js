@@ -17,7 +17,11 @@ Postman.post('/postman', async (ctx, next) => {
             url: obj.url,
             method: obj.type
         },(err, res, body) => {
-            ctx.success(body, '成功');
+        	ctx.body = body;
+        	resolve();
+        })
+        .on('err', () => {
+        	reject();
         })
     })
 });
