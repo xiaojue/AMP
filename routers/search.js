@@ -21,8 +21,11 @@ Search.get('/:model', async (ctx, next) => {
             { name: regx },
             {desc: regx}
         ]
-    }).exec((err, docs) => {
-        ctx.success(docs, '查询成功');
+    }).populate('creator').populate('members').populate('parent_project').sort({ 'create_time': -1 }).exec((err, docs) => {
+        ctx.success({
+            total: docs.length,
+            result: docs
+        }, '查询成功');
     })
 });
 

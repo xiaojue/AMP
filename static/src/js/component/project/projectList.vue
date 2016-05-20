@@ -3,7 +3,7 @@
 		<m-top>
 			<p class="title">{{titleMap[type]}}</p>
 			<div class="search">
-				<input type="text" v-model="searchStr" @change="search()" debounce="500" placeholder="请输入接口ID/名称/描述进行搜索"></input>
+				<input type="text" v-model="searchStr" @change="search()" debounce="300" placeholder="请输入接口ID/名称/描述进行搜索"></input>
 			</div>
 			<a class="btn btn_success" href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: 'new'}}">新建项目</a>
 		</m-top>
@@ -38,10 +38,11 @@
 }
 
 .top .search{
-	position: absolute;height: 55px;right: 100px;top: 0;
+	position: absolute;height: 55px;right: 130px;top: 0;
+	width: 200px;
 }
 .top .search input{
-	display: inline-block;vertical-align: middle;width: 100%;
+	display: inline-block;vertical-align: middle;width: 100%;margin-top: 11.5px;
 }
 
 
