@@ -25,9 +25,11 @@ import routers from './routers';
 import response from './middleware/response.js';
 
 // db about
+import dbConfig from './dbconfig/config.json';
+import dbs from './dbconfig/db.json';
 import * as dbHandle from './database/dbHandle.js';
 global.dbHandle = dbHandle;
-global.db = Mongoose.connect('mongodb://localhost:27017/AMP');
+global.db = Mongoose.connect('mongodb://' + dbs[dbConfig.env].host + ':' + dbs[dbConfig.env].port +'/AMP');
 
 const app = new Koa();
 const httpPort = 9090;
@@ -44,10 +46,10 @@ app.use(convert(Logger()));
 app.use(response);
 
 Render(app, {
-	root: path.join(__dirname, 'views'),
-	layout: 'index',
-	cache: false,
-	debug: true
+    root: path.join(__dirname, 'views'),
+    layout: 'index',
+    cache: false,
+    debug: true
 });
 app.context.render = co.wrap(app.context.render);
 

@@ -30,23 +30,3 @@ Search.get('/:model', async (ctx, next) => {
 });
 
 export default Search;
-
-
-/*
-.get('/info', async (ctx, next) => {
-        if (ctx.session.isLogin) {
-            const Users = global.dbHandle.getModel('users');
-            const regx = new RegExp('.*' + ctx.query.query + '.*');
-            await Users.find({
-                $or: [
-                    { email: regx },
-                    { name: regx }
-                ]
-            }).exec((err, docs) => {
-                ctx.success(docs, '查询成功');
-            })
-        } else {
-            ctx.fail(401, '请登录');
-        }
-    })
- */

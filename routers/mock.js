@@ -12,7 +12,7 @@ const Mock = Router({
 
 const formatRequestUrl = (url) => {
 	let result = {};
-	result.project_id = url.match(/^\/[\s\S]+?\/([\s\S]+?)\//)[1];
+	result.project_id = url.match(/^\/.*?\/(.*?)\//)[1];
 	result.api_url = url.match(/^\/[\s\S]+?\/[\s\S]+?(\/[\s\S]+)\?/)[1];
 	return result;
 }

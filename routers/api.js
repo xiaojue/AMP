@@ -122,6 +122,12 @@ Api
     	if(checkModel(ctx, model)){
     		return;
     	}
+        if(model === 'projects'){
+            const Urls = global.dbHandle.getModel('urls');
+            await Urls.remove({
+                parent_project: ctx.query._id
+            })
+        }
     	const Model = global.dbHandle.getModel(model);
     	const delModel = await Model.remove({
     		_id: ctx.query._id
