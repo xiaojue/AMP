@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cd static; gulp watch",
-    "build": "cd static; gulp --env=pro"
+    "dev": "cd static && NODE_ENV=dev gulp watch",
+    "build": "cd static && NODE_ENV=production gulp"
   },
   "repository": {
     "type": "git",

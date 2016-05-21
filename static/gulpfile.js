@@ -26,12 +26,13 @@ var vendorPlugin = new webpack.optimize.CommonsChunkPlugin({
     filename: 'vendor.min.js',
     minChunks: Infinity,
 });
+
 var webpackConfig = {
     entry: {
         amp: ['./src/js/app.js', './src/js/debug.js'],
         vendor: [
-            'vue', 
-            'vuex', 
+            'vue',
+            'vuex',
             'vue-router',
             'vue-form',
             'vue-resource',
@@ -42,6 +43,7 @@ var webpackConfig = {
             './src/js/lib/wangeditor.js'
         ]
     },
+    watch: true,
     output: {
         filename: '[name].min.js'
     },
@@ -89,14 +91,16 @@ gulp.task('clean', function() {
 });
 
 gulp.task('js', function() {
-    if(argv.env == 'pro'){
+    if (process.env.NODE_ENV === 'production') {
         webpackConfig.entry.amp.pop();
+        webpackConfig.watch = false;
     }
     return gulp
         .src('./src/js/app.js')
         .pipe(gulpWebpack(webpackConfig))
-        .pipe(gulpIf(argv.env == 'pro', uglify()))
-        .pipe(gulpIf(argv.env == 'pro', header(banner, { config: config })))
+        .on('error', function(err) { })
+        .pipe(gulpIf(process.env.NODE_ENV === 'production', uglify()))
+        .pipe(gulpIf(process.env.NODE_ENV === 'production', header(banner, { config: config })))
         .pipe(gulp.dest('./dist/js/'))
 })
 
@@ -106,8 +110,8 @@ gulp.task('css', function() {
         .pipe(less({
             paths: [path.join(pwd, './src/css')]
         }))
-        .pipe(gulpIf(argv.env == 'pro', minifyCss()))
-        .pipe(gulpIf(argv.env == 'pro', header(banner, { config: config })))
+        .pipe(gulpIf(process.env.NODE_ENV === 'production', minifyCss()))
+        .pipe(gulpIf(process.env.NODE_ENV === 'production', header(banner, { config: config })))
         .pipe(rename('amp.min.css'))
         .pipe(gulp.dest('./dist/css/'))
 })
@@ -127,14 +131,13 @@ gulp.task('font', function() {
 gulp.task('rev', function() {
     return gulp
         .src('../views/index.html')
-        .pipe(gulpIf(argv.env == 'pro', rev({
+        .pipe(gulpIf(process.env.NODE_ENV === 'production', rev({
             assetsDir: path.join(pwd)
         })))
         .pipe(gulp.dest('../views/'));
 })
 
 gulp.task('watch', function() {
-    webpackConfig.watch = argv.env != 'pro';
     gulp.start(['js', 'img', 'css', 'font']);
     gulp.watch('./src/css/*', ['css']);
     gulp.watch('./src/img/*', ['img']);
