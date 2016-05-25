@@ -423,6 +423,9 @@ export default {
 				}
 			}
 
+			// 去除空格
+			this.apiDetail.url.replace(/\s/g, '');
+
 			this.$http({
 				url: '/api/urls' + (this.id === 'new' ? '' : '?_id=' + this.id),
 				method: this.id === 'new' ? 'post' : 'put',
