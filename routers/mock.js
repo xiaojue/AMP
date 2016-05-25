@@ -58,9 +58,7 @@ const checkReqParams = (ctx, result) => {
 	}
 }
 
-
 Mock.all('*', async (ctx, next) => {
-
 	const apiDeatil = formatRequestUrl(ctx.request.url);
 	const Url = global.dbHandle.getModel('urls');
 
@@ -75,7 +73,6 @@ Mock.all('*', async (ctx, next) => {
 		ctx.fail(404, errMap[checkResult.map]);
 		return;
 	}
-
 	ctx.body = JSON.parse(result[0].response_example.exapmle_array[result[0].response_example.in_use]);
 });
 

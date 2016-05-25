@@ -15,6 +15,7 @@ import Session from 'koa2-cookie-session';
 import Mongoose from 'mongoose';
 import Render from 'koa-ejs';
 import co from 'co';
+import cors from 'koa-cors';
 
 // koa1中间件转换
 import convert from 'koa-convert';
@@ -48,6 +49,7 @@ app.use(KoaBodyParser());
 app.use(Session());
 app.use(convert(Logger()));
 app.use(response);
+app.use(convert(cors()));
 
 Render(app, {
     root: path.join(__dirname, 'views'),
