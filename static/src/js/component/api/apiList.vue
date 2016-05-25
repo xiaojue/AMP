@@ -10,7 +10,12 @@
 				<li><a href="javascript:void(0)" class="btn btn_success" @click="statusQuery(1)">已完成 <span> {{statusLen.complete}} </span></a></li>
 				<li><a href="javascript:void(0)" class="btn btn_danger" @click="statusQuery(0)">未完成 <span> {{statusLen.continue}} </span></a></li>
 			</ul>
+			<div class="mock_tips">
+				<h2>此项目mock服务根目录为：<span>http://10.69.205.26:9090/mock{{apis[0] ? apis[0].parent_project._id : ''}}/ + your_api_url</span></h2>			
+				<h3>具体使用方法见：<a href="http://127.0.0.1:9090/#!/main/introduction">使用说明</a></h3>
+			</div>
 			<div class="item_con">
+
 				<div class="item" id="thead">
 					<ul>
 						<li>名称</li>
@@ -43,6 +48,27 @@
 </template>
 
 <style scoped>
+
+.mock_tips{
+	text-align: center;
+	margin-top: 10px;
+	text-shadow: none;
+}
+.mock_tips h2{
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 28px;
+}
+.mock_tips h2 span{
+	font-size: 12px;
+}
+.mock_tips h3{
+	font-size: 12px;
+	line-height: 24px;
+}
+.mock_tips h3 a{
+	color: #fff;
+}
 
 .top a{
 	position: absolute;
@@ -197,37 +223,13 @@ export default {
 				queryParams.creator = this.userInfo._id;
 			}
 
-			// 获取不同状态的接口数量
-			this.$http({
-				url: '/api/urls',
-				method: 'get',
-				data: queryParams
-			}).then((res) => {
-				const resData = res.data;
-				this.statusLen = {
-					all: 0,
-					complete: 0,
-					continue: 0
-				}
-				this.statusLen.all = resData.data.result.length;
-				for(let i = 0; i < resData.data.result.length; i++){
-					const _curr = resData.data.result[i];
-					if(_curr.status === 0){
-						this.statusLen.continue += 1;
-					}
-					if(_curr.status === 1){
-						this.statusLen.complete += 1;
-					}
-				}
-			})
-
-
 			if(this.statusQueryStr !== -1){
 				queryParams['status'] = this.statusQueryStr;
 			}
 			queryParams.limit = this.paginationConf.itemsPerPage;
 			queryParams.page = this.paginationConf.currentPage;
 
+			// 获取不同状态的接口数量
 			this.$http({
 				url: '/api/urls',
 				method: 'get',
@@ -235,11 +237,27 @@ export default {
 			}).then((res) => {
 				if(this.isLogin){
 					const resData = res.data;
+					this.statusLen = {
+						all: 0,
+						complete: 0,
+						continue: 0
+					}
+					this.statusLen.all = resData.data.result.length;
+					for(let i = 0; i < resData.data.result.length; i++){
+						const _curr = resData.data.result[i];
+						if(_curr.status === 0){
+							this.statusLen.continue += 1;
+						}
+						if(_curr.status === 1){
+							this.statusLen.complete += 1;
+						}
+					}
 					this.apis = resData.data.result;
 					this.paginationConf.totalItems = resData.data.total;
+					actions.loading(store, false);
 				}
-				actions.loading(store, false);
 			})
+
 		},
 		statusQuery(type) {
 			this.statusQueryStr = type;
