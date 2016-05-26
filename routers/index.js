@@ -16,4 +16,6 @@ import Search from './search.js';
 
 import Feedback from './feedback.js';
 
-export default [View, Common, User, Api, Postman, Mock, Search, Feedback];
+import Count from './count.js';
+
+export default [View, Common, User, Api, Postman, Mock, Search, Feedback, Count];

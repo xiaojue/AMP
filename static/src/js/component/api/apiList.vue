@@ -226,27 +226,12 @@ export default {
 			// 获取不同状态的接口数量
 			if(this.statusLen.all === null){
 				this.$http({
-					url: '/api/urls',
+					url: '/count/api',
 					method: 'get',
 					data: queryParams
 				}).then((res) => {
 					if(this.isLogin){
-						const resData = res.data;
-						this.statusLen = {
-							all: 0,
-							complete: 0,
-							continue: 0
-						}
-						this.statusLen.all = resData.data.result.length;
-						for(let i = 0; i < resData.data.result.length; i++){
-							const _curr = resData.data.result[i];
-							if(_curr.status === 0){
-								this.statusLen.continue += 1;
-							}
-							if(_curr.status === 1){
-								this.statusLen.complete += 1;
-							}
-						}
+						this.statusLen = res.data.data
 					}
 				})
 			}
