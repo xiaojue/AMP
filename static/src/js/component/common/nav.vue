@@ -69,6 +69,11 @@
 						<p>使用说明</p>
 						<i class="iconfont">&#xe604;</i>
 					</li>
+					<li v-link="{name: 'feedback'}">
+						<span class="iconfont">&#xe60e;</span>
+						<p>使用反馈</p>
+						<i class="iconfont">&#xe604;</i>
+					</li>
 				</ul>
 			</div>
 		</div>

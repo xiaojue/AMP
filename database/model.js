@@ -39,16 +39,9 @@ export default {
             exapmle_array: {type: Array}
         },
         remark: String // 备注
+    },
+    feedback: {
+        user: { type: Schema.Types.ObjectId, required: true, ref: 'users' },
+        feedback: String
     }
 }
-
-
-/*
- request_params: [{
-    key: 'limit',
-    type: 'String',
-    remark: '每页条数',
-    required: 1  // 0非必须 1必须
- }]
- */
-
