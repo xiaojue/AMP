@@ -111,7 +111,14 @@ export default {
 					feedback: this.feedback
 				}
 			}).then((res) => {
-
+				if(!res.data.iserror){
+					this.feedback = '';
+					actions.alert(store, {
+						show: true,
+						msg: '发送成功！感谢您的反馈',
+						type: 'success'
+					})
+				}
 			})
 		}
 	}
