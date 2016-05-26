@@ -65,7 +65,7 @@
 			<div class="item">
 				<ul>
 					<li v-link="{name: 'introduction'}">
-						<span class="iconfont">&#xe60c;</span>
+						<span class="iconfont">&#xe610;</span>
 						<p>使用说明</p>
 						<i class="iconfont">&#xe604;</i>
 					</li>

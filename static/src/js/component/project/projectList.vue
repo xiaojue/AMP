@@ -3,7 +3,7 @@
 		<m-top>
 			<p class="title">{{titleMap[type]}}</p>
 			<div class="search">
-				<input type="text" v-model="searchStr" @change="search()" debounce="300" placeholder="请输入接口ID/名称/描述进行搜索"></input>
+				<input type="text" v-model="searchStr" @change="search()" debounce="300" placeholder="请输入名称/描述进行搜索"></input>
 			</div>
 			<a class="btn btn_success" href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: 'new'}}">新建项目</a>
 		</m-top>
