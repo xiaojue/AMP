@@ -11,7 +11,7 @@
 				<li><a href="javascript:void(0)" class="btn btn_danger" @click="statusQuery(0)">未完成 <span> {{statusLen.continue}} </span></a></li>
 			</ul>
 			<div class="mock_tips">
-				<h2>此项目mock服务根目录为：<span>http://10.69.205.26:9090/mock{{apis[0] ? apis[0].parent_project._id : ''}}/ + your_api_url</span></h2>			
+				<h2>此项目mock服务根目录为：<span>http://10.69.205.26:9090/mock/{{apis[0] ? apis[0].parent_project._id : ''}}/ + your_api_url</span></h2>			
 				<h3>具体使用方法见：<a href="javascript:void(0)" v-link="{name: 'introduction'}">使用说明</a></h3>
 			</div>
 			<div class="item_con">
