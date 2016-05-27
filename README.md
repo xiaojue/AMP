@@ -28,7 +28,7 @@ Api manage platform
 
 ```js
 $.ajax({
-	url: 'http://10.69.205.26:9090/mock573e881c0a26da2c7e4023ab/http://10.69.205.26:9090/api/projects'
+	url: 'http://10.69.205.26:9090/mock/573e881c0a26da2c7e4023ab/http://10.69.205.26:9090/api/projects'
 	type: 'get',
 	data: {
 		creator: '573e7b7d796923827d1ab00d',
