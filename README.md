@@ -41,6 +41,15 @@ $.ajax({
 })
 ```
 
+## 截图
+
+![](./doc/static/2.png)
+![](./doc/static/3.png)
+![](./doc/static/4.png)
+![](./doc/static/5.png)
+![](./doc/static/6.png)
+![](./doc/static/7.png)
+
 ## 炫技
 
 * 前后端代码全部 `ES6/ES7`
