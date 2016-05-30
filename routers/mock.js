@@ -6,6 +6,8 @@ import Router from 'koa-router';
 
 import { mixin } from '../utils/tools.js';
 
+import commentRegex from 'comment-regex';
+
 const Mock = Router({
 	prefix: '/mock'
 });
@@ -74,7 +76,7 @@ Mock.all('*', async (ctx, next) => {
 		return;
 	}
 	try{
-		ctx.body = JSON.parse(result[0].response_example.exapmle_array[result[0].response_example.in_use].replace(/(\/\*[\w\'\s\r\n\*]*\*\/)|(\/\/[\w\s\']*)|(\<![\-\-\s\w\>\/]*\>)/, ''));
+		ctx.body = JSON.parse(result[0].response_example.exapmle_array[result[0].response_example.in_use].replace(commentRegex(), ''));
 	}catch(e){
 		ctx.fail(500, '出错啦');
 	}
