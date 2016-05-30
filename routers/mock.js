@@ -73,7 +73,11 @@ Mock.all('*', async (ctx, next) => {
 		ctx.fail(404, errMap[checkResult.map]);
 		return;
 	}
-	ctx.body = JSON.parse(result[0].response_example.exapmle_array[result[0].response_example.in_use]);
+	try{
+		ctx.body = JSON.parse(result[0].response_example.exapmle_array[result[0].response_example.in_use].replace(/(\/\*[\w\'\s\r\n\*]*\*\/)|(\/\/[\w\s\']*)|(\<![\-\-\s\w\>\/]*\>)/, ''));
+	}catch(e){
+		ctx.fail(500, '出错啦');
+	}
 });
 
 export default Mock;
