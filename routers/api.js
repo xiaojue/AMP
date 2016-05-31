@@ -28,7 +28,7 @@ const checkAuthority = (ctx, item) => {
     }
     for(let i = 0; i < item.members.length; i++ ){
         const _curr = item.members[i];
-        if (_curr._id === ctx.session.userinfo._id){
+        if (_curr._id == ctx.session.userinfo._id){
             return false;
         }
     }
@@ -42,7 +42,7 @@ const checkAuthorityInApi = (ctx, item) => {
     }
     for(let i = 0; i < item.parent_project.members.length; i++ ){
         const _curr = item.parent_project.members[i];
-        if (_curr === ctx.session.userinfo._id){
+        if (_curr == ctx.session.userinfo._id){
             return false;
         }
     }
@@ -167,14 +167,15 @@ Api
         const willDelModel = global.dbHandle.getModel(model);
         const willDelData = await willDelModel.find({
             _id: ctx.query._id
-        })
+        }).populate('creator').populate('members').populate('parent_project')
 
-        if(model === 'projects' && checkAuthority(ctx, willDelData)){
+
+        if(model === 'projects' && checkAuthority(ctx, willDelData[0])){
             ctx.fail(401, '无权限');
             return;
         }
 
-        if(model === 'urls' && checkAuthorityInApi(ctx, willDelData)){
+        if(model === 'urls' && checkAuthorityInApi(ctx, willDelData[0])){
             ctx.fail(401, '无权限');
             return;
         }
