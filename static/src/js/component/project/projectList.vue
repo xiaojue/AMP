@@ -30,21 +30,6 @@
 
 <style scoped>
 
-.top a{
-	position: absolute;
-	right: 15px;
-	top: 50%;
-	margin-top: -19px;
-}
-
-.top .search{
-	position: absolute;height: 55px;right: 130px;top: 0;
-	width: 200px;
-}
-.top .search input{
-	display: inline-block;vertical-align: middle;width: 100%;margin-top: 11.5px;
-}
-
 
 .item_con .item>h2{
 	font-size: 18px;
@@ -209,12 +194,15 @@ export default {
 				url: '/search/projects',
 				method: 'get',
 				data: {
-					query: this.searchStr
+					query: this.searchStr,
+					limit: this.paginationConf.itemsPerPage,
+					page: 1
 				}
 			}).then((res) => {
 				if(this.isLogin){
 					const resData = res.data;
 					this.projects = resData.data.result;
+					this.paginationConf.currentPage = 1;
 					this.paginationConf.totalItems = resData.data.total;
 				}
 			})

@@ -2,6 +2,9 @@
 	<m-main-con>
 		<m-top>
 			<p class="title">{{titleMap[type] ? titleMap[type] : 'API列表'}}</p>
+			<div class="search">
+				<input type="text" v-model="searchStr" @change="search()" debounce="300" placeholder="请输入名称/地址/请求方式进行搜索"></input>
+			</div>
 			<a class="btn btn_success" v-show="titleMap[type] === undefined" href="javascript:void(0)" v-link="{name: 'apiEdit', params: {id: 'new'}, query: {projectId: type}}">新建接口</a>
 		</m-top>
 		<m-middle>
@@ -180,7 +183,8 @@ export default {
 				all: null,
 				complete: 0,
 				continue: 0
-			}
+			},
+			searchStr: ''
 		}
 	},
 	vuex: {
@@ -304,6 +308,24 @@ export default {
 					})
 				}
 			});
+		},
+		search() {
+			this.$http({
+				url: '/search/urls',
+				method: 'get',
+				data: {
+					query: this.searchStr,
+					limit: this.paginationConf.itemsPerPage,
+					page: 1
+				}
+			}).then((res) => {
+				if(this.isLogin){
+					const resData = res.data;
+					this.apis = resData.data.result;
+					this.paginationConf.currentPage = 1;
+					this.paginationConf.totalItems = resData.data.total;
+				}
+			})
 		}
 	}
 }	
