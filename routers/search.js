@@ -16,7 +16,8 @@ Search.get('/:model', async (ctx, next) => {
     const regx = new RegExp('.*' + ctx.query.query + '.*', 'i');
     const limit = Number(ctx.query.limit) || 10;
     const page = Number(ctx.query.page) || 1;
-    const realResult = await Model.find({
+
+    const queryParams = {
         $or: [
             { email: regx },
             { name: regx },
@@ -24,16 +25,14 @@ Search.get('/:model', async (ctx, next) => {
             { url: regx },
             { method: regx }
         ]
-    }).populate('creator').populate('members').populate('parent_project').limit(limit).skip((page - 1) * limit).sort({ 'create_time': -1 })
-    const allLen = await Model.find({
-        $or: [
-            { email: regx },
-            { name: regx },
-            { desc: regx },
-            { url: regx },
-            { method: regx }
-        ]
-    })
+    }
+
+    if(Molde === 'urls'){
+        queryParams.parent_project = ctx.query.parent_project;
+    }
+
+    const realResult = await Model.find(queryParams).populate('creator').populate('members').populate('parent_project').limit(limit).skip((page - 1) * limit).sort({ 'create_time': -1 });
+    const allLen = await Model.find(queryParams);
 
     ctx.success({
         total: allLen.length,

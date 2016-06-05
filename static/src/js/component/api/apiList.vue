@@ -316,7 +316,8 @@ export default {
 				data: {
 					query: this.searchStr,
 					limit: this.paginationConf.itemsPerPage,
-					page: 1
+					page: 1,
+					parent_project: this.apis[0].parent_project._id
 				}
 			}).then((res) => {
 				if(this.isLogin){
