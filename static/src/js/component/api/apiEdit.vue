@@ -263,11 +263,11 @@ export default {
 	            },
 	            remark: '',
 			},
-			canQuit: false,
+			canQuit: true,
 			creator: {},
 			parent_project: {},
-			canQuit: false,
-			remarkEditor: null // 富文本编辑器示例
+			remarkEditor: null, // 富文本编辑器示例
+			editNum: 0
 		}
 	},
 	components: {
@@ -475,6 +475,17 @@ export default {
 				return;
 			}
 			this.apiDetail.response_example.exapmle_array.$set(index, this.jsbeautifier(this.apiDetail.response_example.exapmle_array[index]));
+		}
+	},
+	watch: {
+		apiDetail: {
+			handler(val) {
+				this.editNum += 1;
+				if(this.editNum === 2){
+					this.canQuit = false;
+				}
+			},
+			deep: true
 		}
 	}
 }	
