@@ -11,3 +11,6 @@ window.actions = actions;
 
 import {debugApp} from './app.js';
 window.app = debugApp;
+
+import $ from 'jquery';
+window.$ = $;

@@ -192,8 +192,6 @@ import utils from 'utils';
 
 import jsbeautifier from 'js-beautify';
 
-import $ from 'jquery';
-
 export default {
 	name: 'ApiDetail',
 	data() {

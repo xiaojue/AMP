@@ -198,6 +198,8 @@ import Vue from 'vue';
 import wangEditor from 'wangeditor';
 wangEditor.config.printLog = false;
 
+import $ from 'jquery';
+
 import utils from 'utils';
 
 // container component
@@ -326,6 +328,7 @@ export default {
 						actions.loading(store, false);
 
 						this.createEditor();
+						$('div[contentEditable]').blur();
 
 						if(utils.checkAuthorityInApi(this.apiDetail)){
 							actions.alert(store, {

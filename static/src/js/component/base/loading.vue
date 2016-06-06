@@ -102,11 +102,11 @@
 
 <script>
 
-import $ from 'jquery';
-
 import Vue from 'vue';
 
 import store from 'store';
+
+import $ from 'jquery';
 
 export default {
 	name: 'Loading',
