@@ -18,6 +18,6 @@ import Feedback from './feedback.js';
 
 import Count from './count.js';
 
-import Upload from './uploda.js';
+import Upload from './upload.js';
 
 export default [View, Common, User, Api, Postman, Mock, Search, Feedback, Count, Upload];

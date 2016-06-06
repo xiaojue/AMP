@@ -2,7 +2,9 @@
 	<nav class="con text_shadow">
 		<div class="user_info">
 			<div class="avatar">
+				<input type="file" accept="image/gif, image/jpeg, image/png, image/jpg" @change="uploadImg($event)">
 				<img :src="userInfo.avatar">
+				<span>点击上传头像</span>
 			</div>
 			<div class="desc">
 				<p>{{userInfo.name}}</p>
@@ -108,11 +110,42 @@
 	margin: 0 auto;
 	overflow: hidden;
 	border: 3px solid rgba(255,255,255,0.3);
+	position: relative;
+	cursor: pointer;
 }
 .user_info .avatar img{
 	display: block;
 	width: 100%;
 }
+.user_info .avatar span{
+	display: block;
+	position: absolute;
+	bottom: -100%;
+	background-color: rgba(0,0,0,0.4);
+	font-size: 12px;
+	line-height: 28px;
+	color: #fff;
+	width: 100%;
+	text-align: center;
+	padding-bottom: 10px;
+	transition: all ease 0.2s;
+}
+.user_info .avatar:hover span{
+	bottom: 0;
+}
+
+.user_info .avatar input{
+	display: block;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	z-index: 99;
+}
+
 .user_info .desc{
 	color: #fff;
 	text-align: center;
@@ -182,6 +215,7 @@
 <script>
 
 import store from 'store';
+import actions from 'actions';
 
 export default {
 	name: 'Left',
@@ -190,6 +224,29 @@ export default {
 			userInfo: () => {
 				return store.state.userInfo;
 			}
+		},
+		actions: actions
+	},
+	methods: {
+		uploadImg(ev) {
+			actions.loading(store, true);
+			var formData = new FormData();
+			formData.append('files', ev.target.files[0]);
+			this.$http({
+				url: '/upload/avatar',
+				method: 'post',
+				data: formData
+			}).then((res) => {
+				const resData = res.data;
+				actions.setAvatar(store, resData.data.file);
+				actions.alert(store, {
+					show: 'true',
+					msg: '头像修改成功',
+					type: 'success'
+				})
+				actions.loading(store, false);
+			})
+
 		}
 	}
 }

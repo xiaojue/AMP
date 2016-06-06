@@ -28,7 +28,11 @@ export const HIDECONFIRM = (state) => {
 
 // 设置自定义背景url
 export const SETBGURL = (state, url) => {
-	state.bgImgUrl = url;
+	state.userInfo.bg = url;
+}
+
+export const SETAVATAR = (state, url) => {
+	state.userInfo.avatar = url;
 }
 
 // 设置用户信息

@@ -36,6 +36,8 @@ if(ip.address() === '10.69.205.26'){
 global.dbHandle = dbHandle;
 global.db = Mongoose.connect('mongodb://' + dbs[dbConfig.env].host + ':' + dbs[dbConfig.env].port +'/AMP');
 
+global.pwd = __dirname;
+
 const app = new Koa();
 const httpPort = 9090;
 const httpsPort = 8989;
@@ -62,6 +64,7 @@ app.context.render = co.wrap(app.context.render);
 
 // static
 app.use(convert(Static(path.join(__dirname, 'static'))));
+app.use(convert(Static(path.join(__dirname, 'upload'))));
 
 // use all route
 for (var item of routers) {

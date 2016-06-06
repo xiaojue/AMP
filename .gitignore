@@ -14,3 +14,6 @@ npm-debug.log
 # project
 db/
 static/dist/
+
+upload/*
+!upload/.empty
