@@ -1,8 +1,0 @@
-{
-    "apps": [{
-        "name": "AMP",
-        "script": "app.babel.js",
-        "watch": true,
-        "ignore_watch": ["node_modules", ".git", "docs", "static", "views"]
-    }]
-}
