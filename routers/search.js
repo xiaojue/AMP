@@ -27,7 +27,7 @@ Search.get('/:model', async (ctx, next) => {
         ]
     }
 
-    if(Molde === 'urls'){
+    if(ctx.params.model === 'urls'){
         queryParams.parent_project = ctx.query.parent_project;
     }
 
