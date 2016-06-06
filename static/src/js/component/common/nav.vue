@@ -42,7 +42,7 @@
 			<div class="item">
 				<ul>
 					<li v-link="{name: 'projectList', params: {type: 'all'}}">
-						<span class="iconfont">&#xe606;</span>
+						<span class="iconfont">&#xe611;</span>
 						<p>全部项目</p>
 						<i class="iconfont">&#xe604;</i>
 					</li>
