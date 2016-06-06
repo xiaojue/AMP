@@ -208,6 +208,7 @@ export default {
 	route: {
 	    data(transition) {
 	    	this.type = transition.to.params.type;
+	    	this.statusLen.all = null;
 	    	this.getApiListData();
 	    }
 	},

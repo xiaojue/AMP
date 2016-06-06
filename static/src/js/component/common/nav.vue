@@ -46,11 +46,11 @@
 						<p>全部项目</p>
 						<i class="iconfont">&#xe604;</i>
 					</li>
-					<li v-link="{name: 'apiList', params: {type: 'all'}}">
+					<!-- <li v-link="{name: 'apiList', params: {type: 'all'}}">
 						<span class="iconfont">&#xe605;</span>
 						<p>全部API</p>
 						<i class="iconfont">&#xe604;</i>
-					</li>
+					</li> -->
 				</ul>
 			</div>
 			<div class="item">

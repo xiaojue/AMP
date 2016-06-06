@@ -332,6 +332,7 @@ export default {
 						this.creator = resData.data.result[0].creator;
 
 						this.createEditor();
+						$('div[contentEditable]').blur();
 
 						actions.loading(store, false);
 						if(utils.checkAuthority(this.projectDetail)){
