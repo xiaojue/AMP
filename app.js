@@ -49,7 +49,7 @@ const options = {
 // middleware
 app.use(KoaBodyParser());
 app.use(Session());
-app.use(convert(Logger()));
+// app.use(convert(Logger()));
 app.use(response);
 app.use(convert(cors()));
 
