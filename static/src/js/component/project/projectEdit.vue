@@ -134,6 +134,8 @@ import con_bottom from '../container/bottom.vue';
 import wangEditor from 'wangeditor';
 wangEditor.config.printLog = false;
 
+import $ from 'jquery';
+
 // 富文本编辑器菜单
 const menus = [
     'source',
