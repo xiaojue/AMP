@@ -62,7 +62,7 @@
 								<td>{{item.key}}</td>
 								<td>{{item.remark}}</td>
 								<td>{{item.type}}</td>
-								<td>{{item.required ? '必须' : '非必须'}}</td>
+								<td>{{item.required === '1' ? '必须' : '非必须'}}</td>
 							</tr>
 						</tbody>
 					</table>

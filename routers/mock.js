@@ -46,7 +46,7 @@ const checkReqParams = (ctx, result) => {
 
 	for(let i = 0; i < result.request_params.length; i++){
 		const _curr = result.request_params[i];
-		if(_curr.required && allParams[_curr['key']] === undefined){
+		if(_curr.required === '1' && allParams[_curr['key']] === undefined){
 			return {
 				err: true,
 				map: 1
