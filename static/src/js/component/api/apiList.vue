@@ -21,6 +21,7 @@
 
 				<div class="item" id="thead">
 					<ul>
+						<li>序号</li>
 						<li>名称</li>
 						<li>地址</li>
 						<li>请求方式</li>
@@ -30,6 +31,7 @@
 				</div>
 				<div class="item" v-for="item in apis">
 					<ul>
+						<li>{{($index + 1) + ((paginationConf.currentPage - 1) * paginationConf.itemsPerPage)}}</li>
 						<li>{{item.name}}</li>
 						<li>{{item.url}}</li>
 						<li>{{item.method | uppercase}}</li>
@@ -122,19 +124,22 @@
 	line-height: 28px;
 }
 .item_con .item ul li:nth-child(1){
-	flex-basis: 20%;
+	flex-basis: 5%;
 }
 .item_con .item ul li:nth-child(2){
-	flex-basis: 20%;
+	flex-basis: 25%;
 }
 .item_con .item ul li:nth-child(3){
-	flex-basis: 20%;
+	flex-basis: 25%;
 }
 .item_con .item ul li:nth-child(4){
 	flex-basis: 10%;
 }
 .item_con .item ul li:nth-child(5){
-	flex-basis: 30%;
+	flex-basis: 10%;
+}
+.item_con .item ul li:nth-child(6){
+	flex-basis: 25%;
 }
 .item_con .item ul li a{
 	display: inline-block;
