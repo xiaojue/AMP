@@ -82,7 +82,7 @@
 				<ul>
 					<li>
 						<input type="file" accept="image/gif, image/jpeg, image/png, image/jpg" @change="changeBg($event)">
-						<span class="iconfont">&#xe610;</span>
+						<span class="iconfont">&#xe612;</span>
 						<p>更换背景</p>
 						<i class="iconfont">&#xe604;</i>
 					</li>

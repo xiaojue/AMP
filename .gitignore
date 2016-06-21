@@ -13,7 +13,7 @@ npm-debug.log
 
 # project
 db/
-static/dist/
+static/dist/**/*
 
 upload/*
 !upload/.empty
