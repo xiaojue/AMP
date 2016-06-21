@@ -2,7 +2,7 @@
 	<nav class="con text_shadow">
 		<div class="user_info">
 			<div class="avatar">
-				<input type="file" accept="image/gif, image/jpeg, image/png, image/jpg" @change="uploadImg($event)">
+				<input type="file" accept="image/gif, image/jpeg, image/png, image/jpg" @change="changeAvatar($event)">
 				<img :src="userInfo.avatar">
 				<span>点击上传头像</span>
 			</div>
@@ -74,6 +74,16 @@
 					<li v-link="{name: 'feedback'}">
 						<span class="iconfont">&#xe60e;</span>
 						<p>使用反馈</p>
+						<i class="iconfont">&#xe604;</i>
+					</li>
+				</ul>
+			</div>
+			<div class="item">
+				<ul>
+					<li>
+						<input type="file" accept="image/gif, image/jpeg, image/png, image/jpg" @change="changeBg($event)">
+						<span class="iconfont">&#xe610;</span>
+						<p>更换背景</p>
 						<i class="iconfont">&#xe604;</i>
 					</li>
 				</ul>
@@ -210,6 +220,18 @@
 	border-bottom: none;
 }
 
+.item_con .item ul li input{
+	display: block;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	z-index: 99;
+}
+
 </style>
 
 <script>
@@ -228,9 +250,9 @@ export default {
 		actions: actions
 	},
 	methods: {
-		uploadImg(ev) {
+		changeAvatar(ev) {
 			actions.loading(store, true);
-			var formData = new FormData();
+			let formData = new FormData();
 			formData.append('files', ev.target.files[0]);
 			this.$http({
 				url: '/upload/avatar',
@@ -246,7 +268,25 @@ export default {
 				})
 				actions.loading(store, false);
 			})
-
+		},
+		changeBg(ev){
+			actions.loading(store, true);
+			let formData = new FormData();
+			formData.append('files', ev.target.files[0]);
+			this.$http({
+				url: '/upload/bg',
+				method: 'post',
+				data: formData
+			}).then((res) => {
+				const resData = res.data;
+				actions.setBgUrl(store, resData.data.file);
+				actions.alert(store, {
+					show: 'true',
+					msg: '背景修改成功',
+					type: 'success'
+				})
+				actions.loading(store, false);
+			})
 		}
 	}
 }
