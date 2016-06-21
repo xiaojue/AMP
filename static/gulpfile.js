@@ -53,7 +53,8 @@ var webpackConfig = {
             loader: 'babel-loader',
             query: {
                 presets: ['es2015', 'stage-0'],
-            }
+            },
+            include: [path.join(pwd, './src')]
         }, {
             test: /.vue$/,
             loader: 'vue-loader'
