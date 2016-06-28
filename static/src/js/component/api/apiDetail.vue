@@ -73,7 +73,7 @@
 				<div class="item">
 					<p class="title">10 请求示例</p>
 					<div v-if="apiDetail.request_example | length">
-						<pre v-for="item in apiDetail.request_example"><code>{{jsbeautifier(item)}}</code></pre>										
+						<pre v-for="item in apiDetail.request_example"><code>{{jsbeautifier(item)}}</code></pre>
 					</div>
 					<div class="member_con" v-else>
 						<span class="main_p">无</span>
@@ -117,7 +117,9 @@
 					<p class="title">13 备注</p>
 					<div class="wangEditor-container default_char" style="border-radius: 4px;background-color: rgba(255,255,255,0.9);">
 						<div class="wangEditor-txt" v-if="apiDetail.remark">{{{apiDetail.remark}}}</div>
-						<div class="wangEditor-txt" v-else><p>无</p></div>
+						<div class="wangEditor-txt" v-else>
+							<p>无</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -130,32 +132,34 @@
 		</m-bottom>
 	</m-main-con>
 </template>
-
 <style scoped>
-pre{
+pre {
 	margin-top: 10px;
 	position: relative;
 }
-pre code{
+
+pre code {
 	display: block;
 }
-pre em{
+
+pre em {
 	position: absolute;
 	display: block;
 	line-height: 22px;
 	font-size: 12px;
-	color: rgba(82,215,105,1);
+	color: rgba(82, 215, 105, 1);
 	top: 0;
 	left: 0;
 	font-style: normal;
 	font-weight: bold;
 }
 
-table{
+table {
 	width: 100%;
 	border: 1px solid #aaa;
 }
-table thead{
+
+table thead {
 	background-color: #ddd;
 	text-shadow: none;
 	color: #333;
@@ -163,32 +167,29 @@ table thead{
 	line-height: 38px;
 	text-align: center!important;
 }
-table tbody{
+
+table tbody {
 	background-color: #fff;
 	text-shadow: none;
 	color: #000;
 	font-size: 12px;
-	text-align: center!important;	
+	text-align: center!important;
 	line-height: 32px;
 }
-table tbody td{
+
+table tbody td {
 	border-top: 1px solid #aaa;
 }
-
 </style>
-
 <script>
-
 // container component
-import con_main from '../container/main.vue';
-import con_top from '../container/top.vue';
-import con_middle from '../container/middle.vue';
-import con_bottom from '../container/bottom.vue';
+import conMain from '../container/main.vue';
+import conTop from '../container/top.vue';
+import conMiddle from '../container/middle.vue';
+import conBottom from '../container/bottom.vue';
 
 import store from 'store';
 import actions from 'actions';
-
-import utils from 'utils';
 
 import jsbeautifier from 'js-beautify';
 
@@ -205,13 +206,13 @@ export default {
 				exapmle_array: [],
 				in_use: 0
 			}
-		}
+		};
 	},
 	components: {
-		'm-main-con': con_main,
-		'm-top': con_top,
-		'm-middle': con_middle,
-		'm-bottom': con_bottom
+		'm-main-con': conMain,
+		'm-top': conTop,
+		'm-middle': conMiddle,
+		'm-bottom': conBottom
 	},
 	vuex: {
 		getters: {
@@ -227,7 +228,7 @@ export default {
 	route: {
 		data(transtion) {
 			this.id = transtion.to.params.id;
-			if(this.id !== 'new'){
+			if (this.id !== 'new') {
 				actions.loading(store, true);
 				this.$http({
 					url: '/api/urls',
@@ -236,7 +237,7 @@ export default {
 						_id: this.id
 					}
 				}).then((res) => {
-					if(this.isLogin){
+					if (this.isLogin) {
 						const resData = res.data;
 						this.apiDetail = resData.data.result[0];
 						this.creator = resData.data.result[0].creator;
@@ -244,15 +245,15 @@ export default {
 						this.response_example = resData.data.result[0].response_example;
 						actions.loading(store, false);
 					}
-				})
+				});
 			}
 		}
 	},
-	methods:{
+	methods: {
 		edit() {
 			this.$route.router.go('/main/api/edit/' + this.id);
 		},
 		jsbeautifier: jsbeautifier
 	}
-}
+};
 </script>

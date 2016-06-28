@@ -5,13 +5,9 @@
 		<router-view></router-view>
 	</div>
 </template>
-
 <style scoped>
-	
 </style>
-
 <script>
-
 import Head from '../common/header.vue';
 import Nav from '../common/nav.vue';
 
@@ -20,12 +16,11 @@ export default {
 	data() {
 		return {
 
-		}
+		};
 	},
 	components: {
 		'm-head': Head,
 		'm-left': Nav
 	}
-}
-
+};
 </script>

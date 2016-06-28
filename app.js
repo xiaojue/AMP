@@ -9,7 +9,7 @@ import https from 'https';
 
 import Koa from 'koa';
 import Static from 'koa-static';
-import Logger from 'koa-logger';
+// import Logger from 'koa-logger';
 import KoaBodyParser from 'koa-better-body';
 import Session from 'koa2-cookie-session';
 import Mongoose from 'mongoose';
@@ -30,11 +30,11 @@ import ip from 'ip';
 import dbConfig from './dbconfig/config.json';
 import dbs from './dbconfig/db.json';
 import * as dbHandle from './database/dbHandle.js';
-if(ip.address() === '10.69.205.26'){
+if (ip.address() === '10.69.205.26') {
 	dbConfig.env = 'dev';
 };
 global.dbHandle = dbHandle;
-global.db = Mongoose.connect('mongodb://' + dbs[dbConfig.env].host + ':' + dbs[dbConfig.env].port +'/AMP');
+global.db = Mongoose.connect('mongodb://' + dbs[dbConfig.env].host + ':' + dbs[dbConfig.env].port + '/AMP');
 
 global.pwd = __dirname;
 
@@ -42,8 +42,8 @@ const app = new Koa();
 const httpPort = 9090;
 const httpsPort = 8989;
 const options = {
-    key: fs.readFileSync('./pem/privatekey.pem'),
-    cert: fs.readFileSync('./pem/certificate.pem')
+	key: fs.readFileSync('./pem/privatekey.pem'),
+	cert: fs.readFileSync('./pem/certificate.pem')
 };
 
 // middleware
@@ -54,13 +54,12 @@ app.use(response);
 app.use(convert(cors()));
 
 Render(app, {
-    root: path.join(__dirname, 'views'),
-    layout: 'index',
-    cache: false,
-    debug: true
+	root: path.join(__dirname, 'views'),
+	layout: 'index',
+	cache: false,
+	debug: true
 });
 app.context.render = co.wrap(app.context.render);
-
 
 // static
 app.use(convert(Static(path.join(__dirname, 'static'))));
@@ -68,12 +67,12 @@ app.use(convert(Static(path.join(__dirname, 'upload'))));
 
 // use all route
 for (var item of routers) {
-    app.use(item.routes(), item.allowedMethods());
+	app.use(item.routes(), item.allowedMethods());
 }
 
 // err handler
 app.on('error', (err, ctx) => {
-    console.error('server error', err, ctx);
+	console.error('server error', err, ctx);
 });
 
 app.listen(httpPort);

@@ -21,7 +21,6 @@
 </style>
 
 <script>
-
 import store from 'store';
 
 export default {
@@ -33,6 +32,5 @@ export default {
 			}
 		}
 	}
-}
-
+};
 </script>

@@ -91,9 +91,8 @@
 		</div>
 	</nav>
 </template>
-
 <style scoped>
-.con{
+.con {
 	width: 250px;
 	position: fixed;
 	height: 100%;
@@ -103,35 +102,39 @@
 	padding-bottom: 80px;
 	box-sizing: border-box;
 }
-.user_info{
+
+.user_info {
 	width: 100%;
 	height: 230px;
-	background-color: rgba(255,255,255,0.2);
+	background-color: rgba(255, 255, 255, 0.2);
 	background-image: url('/dist/img/noisy.png');
 	border-radius: 4px;
 	padding-top: 15px;
 	box-sizing: border-box;
-	box-shadow: 0px 2px 3px rgba(0,0,0,0.2);
+	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
 }
-.user_info .avatar{
+
+.user_info .avatar {
 	width: 96px;
 	height: 96px;
 	border-radius: 50%;
 	margin: 0 auto;
 	overflow: hidden;
-	border: 3px solid rgba(255,255,255,0.3);
+	border: 3px solid rgba(255, 255, 255, 0.3);
 	position: relative;
 	cursor: pointer;
 }
-.user_info .avatar img{
+
+.user_info .avatar img {
 	display: block;
 	width: 100%;
 }
-.user_info .avatar span{
+
+.user_info .avatar span {
 	display: block;
 	position: absolute;
 	bottom: -100%;
-	background-color: rgba(0,0,0,0.4);
+	background-color: rgba(0, 0, 0, 0.4);
 	font-size: 12px;
 	line-height: 28px;
 	color: #fff;
@@ -140,11 +143,12 @@
 	padding-bottom: 10px;
 	transition: all ease 0.2s;
 }
-.user_info .avatar:hover span{
+
+.user_info .avatar:hover span {
 	bottom: 0;
 }
 
-.user_info .avatar input{
+.user_info .avatar input {
 	display: block;
 	width: 100%;
 	height: 100%;
@@ -156,71 +160,80 @@
 	z-index: 99;
 }
 
-.user_info .desc{
+.user_info .desc {
 	color: #fff;
 	text-align: center;
 	margin-top: 10px;
 }
-.user_info .desc p:nth-child(1){
+
+.user_info .desc p:nth-child(1) {
 	font-size: 22px;
 	line-height: 34px;
 }
-.user_info .desc p:nth-child(2){
+
+.user_info .desc p:nth-child(2) {
 	font-size: 16px;
 	line-height: 28px;
 }
-.user_info .desc p:nth-child(3){
+
+.user_info .desc p:nth-child(3) {
 	font-size: 14px;
 	line-height: 26px;
 }
-.item_con{
+
+.item_con {
 	width: 100%;
 }
-.item_con .item{
+
+.item_con .item {
 	width: 100%;
-	background-color: rgba(0,0,0,0.2);
+	background-color: rgba(0, 0, 0, 0.2);
 	border-radius: 4px;
 	margin-top: 20px;
 	color: #fff;
-	box-shadow: 0px 2px 3px rgba(0,0,0,0.3);
+	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
 	background-image: url('/dist/img/noisy.png');
 }
-.item_con .item ul{
 
-}
-.item_con .item ul li{
+.item_con .item ul {}
+
+.item_con .item ul li {
 	padding: 10px 10px 10px 35px;
 	font-size: 12px;
 	box-sizing: border-box;
 	line-height: 24px;
 	cursor: pointer;
-	border-bottom: 1px solid rgba(0,0,0,0.3);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 	transition: all ease 0.1s;
 	-webkit-transition: all ease 0.1s;
 	-moz-transition: all ease 0.1s;
 	-ms-transition: all ease 0.1s;
 	position: relative;
 }
-.item_con .item ul li i{
+
+.item_con .item ul li i {
 	position: absolute;
 	font-size: 12px;
 	right: 25px;
 	top: 50%;
 	margin-top: -12px;
 }
-.item_con .item ul li span{
+
+.item_con .item ul li span {
 	position: absolute;
 	font-size: 16px;
 	left: 12px;
 }
-.item_con .item ul li:hover{
-	background-color: rgba(255,255,255,0.1);
+
+.item_con .item ul li:hover {
+	background-color: rgba(255, 255, 255, 0.1);
 }
-.item_con .item ul li:last-child{
+
+.item_con .item ul li:last-child {
 	border-bottom: none;
 }
 
-.item_con .item ul li input{
+.item_con .item ul li input {
 	display: block;
 	width: 100%;
 	height: 100%;
@@ -231,11 +244,8 @@
 	cursor: pointer;
 	z-index: 99;
 }
-
 </style>
-
 <script>
-
 import store from 'store';
 import actions from 'actions';
 
@@ -265,11 +275,11 @@ export default {
 					show: 'true',
 					msg: '头像修改成功',
 					type: 'success'
-				})
+				});
 				actions.loading(store, false);
-			})
+			});
 		},
-		changeBg(ev){
+		changeBg(ev) {
 			actions.loading(store, true);
 			let formData = new FormData();
 			formData.append('files', ev.target.files[0]);
@@ -284,11 +294,10 @@ export default {
 					show: 'true',
 					msg: '背景修改成功',
 					type: 'success'
-				})
+				});
 				actions.loading(store, false);
-			})
+			});
 		}
 	}
-}
-
+};
 </script>

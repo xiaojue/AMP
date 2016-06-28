@@ -31,7 +31,6 @@
 						<input type="text" disabled="disabled" :value="apiDetail.create_time | Date 'yyyy-MM-dd hh:mm:ss'"></input>
 					</div>
 				</div>
-
 				<div class="item" v-show="id !== 'new'">
 					<p class="title"># 所属项目</p>
 					<div class="main_form">
@@ -138,13 +137,12 @@
 		</m-bottom>
 	</m-main-con>
 </template>
-
 <style scoped>
-.iconfont.del{
+.iconfont.del {
 	cursor: pointer;
 	font-size: 18px;
 	margin-left: 5px;
-	color: rgba(255,81,81,0.3);
+	color: rgba(255, 81, 81, 0.3);
 	font-weight: bold;
 	text-shadow: none;
 	transition: all ease 0.2s;
@@ -152,61 +150,66 @@
 	position: absolute;
 	right: 5px;
 }
-.iconfont.del:hover{
-	color: rgba(255,81,81,0.8);
+
+.iconfont.del:hover {
+	color: rgba(255, 81, 81, 0.8);
 }
-.detail .item .main_form textarea.full_width{
+
+.detail .item .main_form textarea.full_width {
 	width: 100%;
 	max-width: 100%;
 }
-	
-.add_new{
+
+.add_new {
 	display: inline-block;
 	margin-bottom: 10px;
 	margin-left: 20px;
 }
 
-.detail .item .main_form select{
+.detail .item .main_form select {
 	width: 300px;
 }
-.detail .item .main_form.full_width{
+
+.detail .item .main_form.full_width {
 	display: flex;
 }
-.detail .item .main_form.full_width input{
+
+.detail .item .main_form.full_width input {
 	flex: 1;
 	margin: 0 5px;
 }
-.detail .item .main_form.full_width input[type="checkbox"]{
-	display: block;position: absolute;
+
+.detail .item .main_form.full_width input[type="checkbox"] {
+	display: block;
+	position: absolute;
 	left: -20px;
 	cursor: pointer;
 	top: 50%;
 	transform: translateY(-50%);
 }
-.detail .item .main_form.full_width input:first-child{
+
+.detail .item .main_form.full_width input:first-child {
 	margin-left: 0;
 }
-.detail .item .main_form.full_width select{
+
+.detail .item .main_form.full_width select {
 	flex: 1;
 	margin: 0 5px;
 }
 </style>
-
 <script>
-import Vue from 'vue';
-
-import wangEditor from 'wangeditor';
-wangEditor.config.printLog = false;
+import WangEditor from 'wangeditor';
+WangEditor.config.printLog = false;
 
 import $ from 'jquery';
 
 import utils from 'utils';
 
 // container component
-import con_main from '../container/main.vue';
-import con_top from '../container/top.vue';
-import con_middle from '../container/middle.vue';
-import con_bottom from '../container/bottom.vue';
+import conMain from '../container/main.vue';
+import conTop from '../container/top.vue';
+import conMiddle from '../container/middle.vue';
+import conBottom from '../container/bottom.vue';
 
 import store from 'store';
 import actions from 'actions';
@@ -217,16 +220,16 @@ import commentRegex from 'comment-regex';
 
 // 富文本编辑器菜单
 const menus = [
-    'source',
-    '|',     // '|' 是菜单组的分割线
-    'bold',
-    'underline',
-    'italic',
-    'strikethrough',
-    'eraser',
-    'forecolor',
-    '|',
-    'quote',
+	'source',
+	'|', // '|' 是菜单组的分割线
+	'bold',
+	'underline',
+	'italic',
+	'strikethrough',
+	'eraser',
+	'forecolor',
+	'|',
+	'quote',
 	'fontfamily',
 	'fontsize',
 	'head',
@@ -235,14 +238,14 @@ const menus = [
 	'alignright',
 	'|',
 	'link',
-    'unlink',
-    'table',
-    '|',
-    'insertcode',
-    '|',
-    'undo',
-    'redo',
- ];
+	'unlink',
+	'table',
+	'|',
+	'insertcode',
+	'|',
+	'undo',
+	'redo'
+];
 
 export default {
 	name: 'ApiEdit',
@@ -251,32 +254,32 @@ export default {
 			id: null,
 			apiDetail: {
 				name: '',
-	            desc: '',
-	            url: '',
-	            parent_project: {},
-	            status: 0,
-	            method: 'get',
-	            request_params: [],
-	            request_example: [],
-	            response_params: [],
-	            response_example: {
-	            	in_use: 0,
-	            	exapmle_array: []
-	            },
-	            remark: '',
+				desc: '',
+				url: '',
+				parent_project: {},
+				status: 0,
+				method: 'get',
+				request_params: [],
+				request_example: [],
+				response_params: [],
+				response_example: {
+					in_use: 0,
+					exapmle_array: []
+				},
+				remark: ''
 			},
 			canQuit: true,
 			creator: {},
 			parent_project: {},
 			remarkEditor: null, // 富文本编辑器示例
 			editNum: 0
-		}
+		};
 	},
 	components: {
-		'm-main-con': con_main,
-		'm-top': con_top,
-		'm-middle': con_middle,
-		'm-bottom': con_bottom
+		'm-main-con': conMain,
+		'm-top': conTop,
+		'm-middle': conMiddle,
+		'm-bottom': conBottom
 	},
 	vuex: {
 		getters: {
@@ -292,7 +295,7 @@ export default {
 	created() {
 		const _this = this;
 		this.$route.router.beforeEach((transition) => {
-			if(!this.canQuit){
+			if (!this.canQuit) {
 				transition.abort();
 				actions.confirm(store, {
 					show: true,
@@ -303,15 +306,15 @@ export default {
 					}
 				});
 				return;
-			}else{
+			} else {
 				transition.next();
 			}
-		})
+		});
 	},
 	route: {
 		data(transtion) {
 			this.id = transtion.to.params.id;
-			if(this.id !== 'new'){
+			if (this.id !== 'new') {
 				actions.loading(store, true);
 				this.$http({
 					url: '/api/urls',
@@ -320,7 +323,7 @@ export default {
 						_id: this.id
 					}
 				}).then((res) => {
-					if(this.isLogin){
+					if (this.isLogin) {
 						const resData = res.data;
 						this.apiDetail = resData.data.result[0];
 						this.creator = resData.data.result[0].creator;
@@ -330,21 +333,21 @@ export default {
 						this.createEditor();
 						$('div[contentEditable]').blur();
 
-						if(utils.checkAuthorityInApi(this.apiDetail)){
+						if (utils.checkAuthorityInApi(this.apiDetail)) {
 							actions.alert(store, {
 								show: true,
 								msg: '无权限',
 								type: 'danger'
-							})
+							});
 							this.canQuit = true;
 							this.$route.router.go('/main/api/list/' + this.apiDetail.parent_project._id);
 						}
 					}
-				})
+				});
 			}
 
 			// 新建接口需要获取所属项目的信息
-			if(this.id === 'new'){
+			if (this.id === 'new') {
 				actions.loading(store, true);
 				this.$http({
 					url: '/api/projects',
@@ -353,7 +356,7 @@ export default {
 						_id: transtion.to.query.projectId
 					}
 				}).then((res) => {
-					if(this.isLogin){
+					if (this.isLogin) {
 						const resData = res.data;
 						this.parent_project = resData.data.result[0];
 						this.creator = resData.data.result[0].creator;
@@ -361,24 +364,24 @@ export default {
 						this.createEditor();
 
 						// 权限检查
-						if(utils.checkAuthority(this.parent_project)){
+						if (utils.checkAuthority(this.parent_project)) {
 							actions.alert(store, {
 								show: true,
 								msg: '无权限',
 								type: 'danger'
-							})
+							});
 							this.canQuit = true;
 							this.$route.router.go('/main/api/list/' + transtion.to.query.projectId);
 						}
 					}
 					actions.loading(store, false);
-				})
+				});
 			}
 		}
 	},
 	methods: {
 		addNew(type) {
-			if(type === 'response_example'){
+			if (type === 'response_example') {
 				this.apiDetail[type]['exapmle_array'].push('');
 				return;
 			}
@@ -386,11 +389,11 @@ export default {
 				response_params: {},
 				request_example: '',
 				request_params: {}
-			}
+			};
 			this.apiDetail[type].push(typeMap[type]);
 		},
 		delParams(index, type) {
-			if(type === 'response_example'){
+			if (type === 'response_example') {
 				this.apiDetail[type]['exapmle_array'].splice(index, 1);
 				return;
 			}
@@ -402,28 +405,28 @@ export default {
 		save() {
 			this.apiDetail.parent_project = this.parent_project;
 
-			for(let i = 0; i < this.apiDetail['response_example']['exapmle_array'].length; i++){
+			for (let i = 0; i < this.apiDetail['response_example']['exapmle_array'].length; i++) {
 				const _curr = this.apiDetail['response_example']['exapmle_array'][i];
-				if(_curr === ''){
+				if (_curr === '') {
 					this.apiDetail['response_example']['in_use'] = 0;
 					this.apiDetail['response_example']['exapmle_array'].splice(i, 1);
 				}
 			}
-			for(let i = 0; i < this.apiDetail['response_params'].length; i++){
+			for (let i = 0; i < this.apiDetail['response_params'].length; i++) {
 				const _curr = this.apiDetail['response_params'][i];
-				if(Object.keys(_curr).length === 0){
+				if (Object.keys(_curr).length === 0) {
 					this.apiDetail['response_params'].splice(i, 1);
 				}
 			}
-			for(let i = 0; i < this.apiDetail['request_example'].length; i++){
+			for (let i = 0; i < this.apiDetail['request_example'].length; i++) {
 				const _curr = this.apiDetail['request_example'][i];
-				if(_curr === ''){
+				if (_curr === '') {
 					this.apiDetail['request_example'].splice(i, 1);
 				}
 			}
-			for(let i = 0; i < this.apiDetail['request_params'].length; i++){
+			for (let i = 0; i < this.apiDetail['request_params'].length; i++) {
 				const _curr = this.apiDetail['request_params'][i];
-				if(Object.keys(_curr).length === 0){
+				if (Object.keys(_curr).length === 0) {
 					this.apiDetail['request_params'].splice(i, 1);
 				}
 			}
@@ -436,30 +439,29 @@ export default {
 				method: this.id === 'new' ? 'post' : 'put',
 				data: this.apiDetail
 			}).then((res) => {
-				if(this.isLogin){
-					const resData = res.data;
+				if (this.isLogin) {
 					actions.alert(store, {
 						show: true,
 						type: 'success',
 						msg: this.id === 'new' ? '新建成功' : '修改成功'
-					})
+					});
 					this.canQuit = true;
 					this.id === 'new' ? this.$route.router.go('/main/api/list/' + this.apiDetail.parent_project._id) : null;
 				}
-			})
+			});
 		},
 		cancel() {
 			this.$route.router.go('/main/api/list/' + this.parent_project._id);
 		},
 		createEditor() {
 			const _this = this;
-			try{
-				this.remarkEditor.destroy();	
-			}catch(e){};
-			
-			this.remarkEditor = new wangEditor('remark');
+			try {
+				this.remarkEditor.destroy();
+			} catch (e) {};
+
+			this.remarkEditor = new WangEditor('remark');
 			this.remarkEditor.config.menus = menus;
-			this.remarkEditor.onchange = function () {
+			this.remarkEditor.onchange = function() {
 				_this.apiDetail.remark = this.$txt.html();
 			};
 			this.remarkEditor.create();
@@ -467,14 +469,14 @@ export default {
 		},
 		jsbeautifier: jsbeautifier,
 		formatResExample(index) {
-			try{
+			try {
 				JSON.parse(this.apiDetail.response_example.exapmle_array[index].replace(commentRegex(), ''));
-			}catch(e){
+			} catch (e) {
 				actions.alert(store, {
 					show: true,
 					msg: '输入必须符合json格式',
 					type: 'danger'
-				})
+				});
 				return;
 			}
 			this.apiDetail.response_example.exapmle_array.$set(index, this.jsbeautifier(this.apiDetail.response_example.exapmle_array[index]));
@@ -484,13 +486,12 @@ export default {
 		apiDetail: {
 			handler(val) {
 				this.editNum += 1;
-				if(this.editNum === 2){
+				if (this.editNum === 2) {
 					this.canQuit = false;
 				}
 			},
 			deep: true
 		}
 	}
-}	
-
+};
 </script>

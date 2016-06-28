@@ -14,11 +14,10 @@
 				<li><a href="javascript:void(0)" class="btn btn_danger" @click="statusQuery(0)">未完成 <span> {{statusLen.continue}} </span></a></li>
 			</ul>
 			<div class="mock_tips">
-				<h2>此项目mock服务根目录为：<span>http://10.69.205.26:9090/mock/{{apis[0] ? apis[0].parent_project._id : ''}}/ + your_api_url</span></h2>			
+				<h2>此项目mock服务根目录为：<span>http://10.69.205.26:9090/mock/{{apis[0] ? apis[0].parent_project._id : ''}}/ + your_api_url</span></h2>
 				<h3>具体使用方法见：<a href="javascript:void(0)" v-link="{name: 'introduction'}">使用说明</a></h3>
 			</div>
 			<div class="item_con">
-
 				<div class="item" id="thead">
 					<ul>
 						<li>序号</li>
@@ -51,43 +50,46 @@
 		</m-bottom>
 	</m-main-con>
 </template>
-
 <style scoped>
-
-.mock_tips{
+.mock_tips {
 	text-align: center;
 	margin-top: 10px;
 	text-shadow: none;
 }
-.mock_tips h2{
+
+.mock_tips h2 {
 	font-weight: normal;
 	font-size: 14px;
 	line-height: 28px;
 }
-.mock_tips h2 span{
+
+.mock_tips h2 span {
 	font-size: 12px;
 }
-.mock_tips h3{
+
+.mock_tips h3 {
 	font-size: 12px;
 	line-height: 24px;
 }
-.mock_tips h3 a{
+
+.mock_tips h3 a {
 	color: #fff;
 }
 
-.top a{
+.top a {
 	position: absolute;
 	right: 15px;
 	top: 50%;
 	margin-top: -19px;
 }
 
-.status{
+.status {
 	font-size: 0;
 	text-align: center;
 	margin-top: 15px;
 }
-.status li{
+
+.status li {
 	display: inline-block;
 	vertical-align: middle;
 	margin: 0 5px;
@@ -96,66 +98,73 @@
 	cursor: pointer;
 	padding: 8px 10px;
 }
-.status li span{
+
+.status li span {
 	text-decoration: underline;
 }
-#thead{
+
+#thead {
 	background-color: #ddd;
 	text-shadow: none;
 }
-#thead li{
+
+#thead li {
 	color: #333;
 	font-size: 14px;
 	font-weight: bold;
 }
-.item_con{
+
+.item_con {
 	margin-top: 15px;
 }
-.item_con .item ul{
+
+.item_con .item ul {
 	display: flex;
 	justify-content: space-between;
 }
-.item_con .item ul:nth-child(1){
+
+.item_con .item ul:nth-child(1) {
 	text-align: center;
 }
-.item_con .item ul li{
+
+.item_con .item ul li {
 	font-size: 12px;
 	align-items: center;
 	line-height: 28px;
 	flex: 1;
-	overflow : hidden;
+	overflow: hidden;
 	text-overflow: ellipsis;
 	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
 	white-space: nowrap;
 }
-.item_con .item ul li:nth-child(1){
+
+.item_con .item ul li:nth-child(1) {
 	max-width: 40px;
 }
-.item_con .item ul li:nth-child(2){
-	
-}
-.item_con .item ul li:nth-child(3){
 
-}
-.item_con .item ul li:nth-child(4){
+.item_con .item ul li:nth-child(2) {}
+
+.item_con .item ul li:nth-child(3) {}
+
+.item_con .item ul li:nth-child(4) {
 	max-width: 90px;
 }
-.item_con .item ul li:nth-child(5){
+
+.item_con .item ul li:nth-child(5) {
 	max-width: 90px;
 }
-.item_con .item ul li:nth-child(6){
+
+.item_con .item ul li:nth-child(6) {
 	max-width: 220px;
 }
-.item_con .item ul li a{
+
+.item_con .item ul li a {
 	display: inline-block;
 	vertical-align: middle;
 }
-
 </style>
-
 <script>
-
 import store from 'store';
 import actions from 'actions';
 
@@ -164,10 +173,10 @@ import Pagination from '../base/pagination.vue';
 import utils from 'utils';
 
 // container component
-import con_main from '../container/main.vue';
-import con_top from '../container/top.vue';
-import con_middle from '../container/middle.vue';
-import con_bottom from '../container/bottom.vue';
+import conMain from '../container/main.vue';
+import conTop from '../container/top.vue';
+import conMiddle from '../container/middle.vue';
+import conBottom from '../container/bottom.vue';
 
 export default {
 	name: 'ApiList',
@@ -180,10 +189,10 @@ export default {
 				mine: '我的API'
 			},
 			paginationConf: {
-				currentPage: 1,     // 当前页
-				totalItems: 0,     // 总条数
-				itemsPerPage: 15,    // 每页条数
-				pagesLength: 5,     // 显示几页( 1,2,3 / 1,2,3,4,5)
+				currentPage: 1, // 当前页
+				totalItems: 0, // 总条数
+				itemsPerPage: 15, // 每页条数
+				pagesLength: 5, // 显示几页( 1,2,3 / 1,2,3,4,5)
 				onChange: function() {
 					// 回调
 				}
@@ -196,7 +205,7 @@ export default {
 				continue: 0
 			},
 			searchStr: ''
-		}
+		};
 	},
 	vuex: {
 		getters: {
@@ -204,55 +213,55 @@ export default {
 				return store.state.isLogin;
 			},
 			userInfo: () => {
-				return store.state.userInfo;	
+				return store.state.userInfo;
 			}
 		},
 		actions: actions
 	},
 	components: {
-		'm-main-con': con_main,
-		'm-top': con_top,
-		'm-middle': con_middle,
-		'm-bottom': con_bottom,
+		'm-main-con': conMain,
+		'm-top': conTop,
+		'm-middle': conMiddle,
+		'm-bottom': conBottom,
 		'm-pagination': Pagination
 	},
 	route: {
-	    data(transition) {
-	    	this.type = transition.to.params.type;
-	    	this.statusLen.all = null;
-	    	this.getApiListData();
-	    }
+		data(transition) {
+			this.type = transition.to.params.type;
+			this.statusLen.all = null;
+			this.getApiListData();
+		}
 	},
 	ready() {
 		this.paginationConf.onChange = () => {
 			this.getApiListData();
-		}
+		};
 	},
 	methods: {
 		getApiListData() {
 			actions.loading(store, true);
 			const queryParams = {};
-			if(!utils.isInObj(this.type, this.titleMap)){
+			if (!utils.isInObj(this.type, this.titleMap)) {
 				queryParams.parent_project = this.type;
 			}
-			if(this.type === 'mine'){
+			if (this.type === 'mine') {
 				queryParams.creator = this.userInfo._id;
 			}
 
 			// 获取不同状态的接口数量
-			if(this.statusLen.all === null){
+			if (this.statusLen.all === null) {
 				this.$http({
 					url: '/count/api',
 					method: 'get',
 					data: queryParams
 				}).then((res) => {
-					if(this.isLogin){
-						this.statusLen = res.data.data
+					if (this.isLogin) {
+						this.statusLen = res.data.data;
 					}
-				})
+				});
 			}
-			
-			if(this.statusQueryStr !== -1){
+
+			if (this.statusQueryStr !== -1) {
 				queryParams['status'] = this.statusQueryStr;
 			}
 			queryParams.limit = this.paginationConf.itemsPerPage;
@@ -264,26 +273,25 @@ export default {
 				method: 'get',
 				data: queryParams
 			}).then((res) => {
-				if(this.isLogin){
+				if (this.isLogin) {
 					const resData = res.data;
 					this.apis = resData.data.result;
 					this.paginationConf.totalItems = resData.data.total;
 					actions.loading(store, false);
 				}
-			})
-
+			});
 		},
 		statusQuery(type) {
 			this.statusQueryStr = type;
 			this.getApiListData();
 		},
 		modifyApi(item) {
-			if(utils.checkAuthorityInApi(item)){
+			if (utils.checkAuthorityInApi(item)) {
 				actions.alert(store, {
 					show: true,
 					msg: '无权限',
 					type: 'danger'
-				})
+				});
 				return;
 			}
 			this.$route.router.go({
@@ -291,15 +299,15 @@ export default {
 				params: {
 					id: item._id
 				}
-			})
+			});
 		},
 		delApi(item) {
-			if(utils.checkAuthorityInApi(item)){
+			if (utils.checkAuthorityInApi(item)) {
 				actions.alert(store, {
 					show: true,
 					msg: '无权限',
 					type: 'danger'
-				})
+				});
 				return;
 			}
 			const _this = this;
@@ -315,9 +323,9 @@ export default {
 							show: true,
 							msg: '删除成功',
 							type: 'success'
-						})
+						});
 						_this.getApiListData();
-					})
+					});
 				}
 			});
 		},
@@ -332,15 +340,14 @@ export default {
 					parent_project: this.apis[0].parent_project._id
 				}
 			}).then((res) => {
-				if(this.isLogin){
+				if (this.isLogin) {
 					const resData = res.data;
 					this.apis = resData.data.result;
 					this.paginationConf.currentPage = 1;
 					this.paginationConf.totalItems = resData.data.total;
 				}
-			})
+			});
 		}
 	}
-}	
-
+};
 </script>

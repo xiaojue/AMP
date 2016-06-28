@@ -6,14 +6,9 @@
 		<m-confirm></m-confirm>
 	</div>
 </template>
-
 <script>
-
-
 import store from 'store';
 import actions from 'actions';
-
-import utils from 'utils';
 
 import Loading from './base/loading.vue';
 import Alert from './base/alert.vue';
@@ -25,7 +20,7 @@ export default {
 	data() {
 		return {
 
-		}
+		};
 	},
 	vuex: {
 		getters: {
@@ -40,6 +35,5 @@ export default {
 		'm-alert': Alert,
 		'm-confirm': Confirm
 	}
-}
-
+};
 </script>

@@ -27,16 +27,14 @@
 		</m-bottom>
 	</m-main-con>
 </template>
-
 <style scoped>
-
-
-.item_con .item>h2{
+.item_con .item>h2 {
 	font-size: 18px;
 	line-height: 20px;
 	color: #fff;
 }
-.item_con .item>p{
+
+.item_con .item>p {
 	font-size: 14px;
 	line-height: 16px;
 	display: block;
@@ -44,16 +42,19 @@
 	color: #eee;
 	margin-top: 3px;
 }
-.item_con .item .email{
+
+.item_con .item .email {
 	font-size: 13px;
 	color: #eee;
 }
-.item_con .item>span{
+
+.item_con .item>span {
 	display: block;
 	font-size: 11px;
 	color: #eee;
 }
-.item_con .item .check_detail{
+
+.item_con .item .check_detail {
 	right: 0;
 	height: 100%;
 	top: 0;
@@ -65,7 +66,7 @@
 	position: absolute;
 }
 
-.item_con .item .check_detail a{
+.item_con .item .check_detail a {
 	color: #fff;
 	text-decoration: none;
 	line-height: 28px;
@@ -74,28 +75,24 @@
 	vertical-align: text-bottom;
 	align-self: center;
 	font-size: 16px;
-	background-color: rgba(255,255,255,0.2);
+	background-color: rgba(255, 255, 255, 0.2);
 	border-radius: 4px;
 	margin: 0 5px;
 	transition: all ease 0.2s;
 }
-.item_con .item .check_detail a:hover{
-	background-color: rgba(255,255,255,0.4)
+
+.item_con .item .check_detail a:hover {
+	background-color: rgba(255, 255, 255, 0.4)
 }
-
 </style>
-
 <script>
-
-import Vue from 'vue';
-
 import store from 'store';
 import actions from 'actions';
 
 import utils from 'utils';
 
 // container component
-import con_main from '../container/main.vue';
+import conMain from '../container/main.vue';
 import con_top from '../container/top.vue';
 import con_middle from '../container/middle.vue';
 import con_bottom from '../container/bottom.vue';
@@ -113,17 +110,17 @@ export default {
 				mine: '我的项目'
 			},
 			paginationConf: {
-				currentPage: 1,     // 当前页
-				totalItems: 0,     // 总条数
-				itemsPerPage: 15,    // 每页条数
-				pagesLength: 5,     // 显示几页( 1,2,3 / 1,2,3,4,5)
+				currentPage: 1, // 当前页
+				totalItems: 0, // 总条数
+				itemsPerPage: 15, // 每页条数
+				pagesLength: 5, // 显示几页( 1,2,3 / 1,2,3,4,5)
 				onChange: function() {
 					// 回调
 				}
 			},
 			projects: [],
 			searchStr: ''
-		}
+		};
 	},
 	vuex: {
 		getters: {
@@ -131,34 +128,34 @@ export default {
 				return store.state.isLogin;
 			},
 			userInfo: () => {
-				return store.state.userInfo;	
+				return store.state.userInfo;
 			}
 		},
 		actions: actions
 	},
 	components: {
-		'm-main-con': con_main,
+		'm-main-con': conMain,
 		'm-top': con_top,
 		'm-middle': con_middle,
 		'm-bottom': con_bottom,
 		'm-pagination': Pagination
 	},
 	route: {
-	    data(transition) {
-	    	this.type = transition.to.params.type;
-	    	this.getProjectData();
-	    }
+		data(transition) {
+			this.type = transition.to.params.type;
+			this.getProjectData();
+		}
 	},
 	ready() {
 		this.paginationConf.onChange = () => {
 			this.getProjectData();
-		}
+		};
 	},
 	methods: {
 		getProjectData() {
 			actions.loading(store, true);
 			const queryParams = {};
-			if(this.type === 'mine'){
+			if (this.type === 'mine') {
 				queryParams.creator = this.userInfo._id;
 			}
 			queryParams.limit = this.paginationConf.itemsPerPage;
@@ -168,26 +165,29 @@ export default {
 				method: 'get',
 				data: queryParams
 			}).then((res) => {
-				if(this.isLogin){
+				if (this.isLogin) {
 					const resData = res.data;
 					this.projects = resData.data.result;
 					this.paginationConf.totalItems = resData.data.total;
 				}
 				actions.loading(store, false);
-			})
+			});
 		},
 		modifyProject(item) {
-			const id = item._id;
-			const currentUserId = this.userInfo._id;
-			if(utils.checkAuthority(item)){
+			if (utils.checkAuthority(item)) {
 				actions.alert(store, {
 					show: true,
 					msg: '无权限',
 					type: 'danger'
-				})
+				});
 				return;
 			}
-			this.$route.router.go({name: 'projectEdit', params: {id: item._id}});
+			this.$route.router.go({
+				name: 'projectEdit',
+				params: {
+					id: item._id
+				}
+			});
 		},
 		search() {
 			this.$http({
@@ -199,15 +199,14 @@ export default {
 					page: 1
 				}
 			}).then((res) => {
-				if(this.isLogin){
+				if (this.isLogin) {
 					const resData = res.data;
 					this.projects = resData.data.result;
 					this.paginationConf.currentPage = 1;
 					this.paginationConf.totalItems = resData.data.total;
 				}
-			})
+			});
 		}
-	},
-}
-
+	}
+};
 </script>

@@ -99,7 +99,7 @@ gulp.task('js', function() {
     return gulp
         .src('./src/js/app.js')
         .pipe(gulpWebpack(webpackConfig))
-        .on('error', function(err) { })
+        .on('error', function(err) {})
         .pipe(gulpIf(process.env.NODE_ENV === 'production', uglify()))
         .pipe(gulpIf(process.env.NODE_ENV === 'production', header(banner, { config: config })))
         .pipe(gulp.dest('./dist/js/'))

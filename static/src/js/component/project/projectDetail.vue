@@ -30,7 +30,7 @@
 				<div class="item">
 					<p class="title">6 项目备注</p>
 					<div class="wangEditor-container default_char" style="border-radius: 4px;background-color: rgba(255,255,255,0.9);">
-						<div class="wangEditor-txt">{{{projectDetail.remark || '无'}}}</div>						
+						<div class="wangEditor-txt">{{{projectDetail.remark || '无'}}}</div>
 					</div>
 				</div>
 			</div>
@@ -43,33 +43,41 @@
 		</m-bottom>
 	</m-main-con>
 </template>
-
 <style scoped>
-
-.top a{
+.top a {
 	position: absolute;
 	right: 15px;
 	top: 50%;
 	margin-top: -19px;
 }
-.member_con{
+
+.member_con {
 	font-size: 0;
 }
-.member_con span{
-	display: inline-block;vertical-align: middle;margin: 0 5px;padding: 8px 15px;background-color: #fff;color: #333;border: 1px solid #d9d9d9;border-radius: 15px;font-size: 14px;line-height: 12px;text-shadow: none;
+
+.member_con span {
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0 5px;
+	padding: 8px 15px;
+	background-color: #fff;
+	color: #333;
+	border: 1px solid #d9d9d9;
+	border-radius: 15px;
+	font-size: 14px;
+	line-height: 12px;
+	text-shadow: none;
 }
 </style>
-
 <script>
-
 import store from 'store';
 import actions from 'actions';
 
 // container component
-import con_main from '../container/main.vue';
-import con_top from '../container/top.vue';
-import con_middle from '../container/middle.vue';
-import con_bottom from '../container/bottom.vue';
+import conMain from '../container/main.vue';
+import conTop from '../container/top.vue';
+import conMiddle from '../container/middle.vue';
+import conBottom from '../container/bottom.vue';
 
 import utils from 'utils';
 
@@ -79,7 +87,7 @@ export default {
 		return {
 			projectDetail: {},
 			creator: {}
-		}
+		};
 	},
 	vuex: {
 		getters: {
@@ -90,10 +98,10 @@ export default {
 		actions: actions
 	},
 	components: {
-		'm-main-con': con_main,
-		'm-top': con_top,
-		'm-middle': con_middle,
-		'm-bottom': con_bottom
+		'm-main-con': conMain,
+		'm-top': conTop,
+		'm-middle': conMiddle,
+		'm-bottom': conBottom
 	},
 	route: {
 		data(transtion) {
@@ -111,32 +119,37 @@ export default {
 					_id: id
 				}
 			}).then((res) => {
-				if(this.isLogin){
+				if (this.isLogin) {
 					const resData = res.data;
 					this.projectDetail = resData.data.result[0];
 					this.creator = resData.data.result[0].creator;
 					actions.loading(store, false);
 				}
-			})
+			});
 		},
 		modifyProject() {
-			if(utils.checkAuthority(this.projectDetail)){
+			if (utils.checkAuthority(this.projectDetail)) {
 				actions.alert(store, {
 					show: true,
 					msg: '无权限',
 					type: 'danger'
-				})
+				});
 				return;
 			}
-			this.$route.router.go({name: 'projectEdit', params: {id: this.projectDetail._id}})
+			this.$route.router.go({
+				name: 'projectEdit',
+				params: {
+					id: this.projectDetail._id
+				}
+			});
 		},
 		deleteProject() {
-			if(utils.checkAuthority(this.projectDetail)){
+			if (utils.checkAuthority(this.projectDetail)) {
 				actions.alert(store, {
 					show: true,
 					msg: '无权限',
 					type: 'danger'
-				})
+				});
 				return;
 			}
 			const _this = this;
@@ -152,13 +165,12 @@ export default {
 							show: true,
 							msg: '删除成功',
 							type: 'success'
-						})
+						});
 						_this.$route.router.go('/main/project/list/mine');
-					})
+					});
 				}
 			});
 		}
 	}
-}
-
+};
 </script>

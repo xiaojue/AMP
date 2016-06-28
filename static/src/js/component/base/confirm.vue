@@ -40,7 +40,6 @@
 </style>
 
 <script>
-	
 import store from 'store';
 import actions from 'actions';
 
@@ -58,14 +57,13 @@ export default {
 			this.confirmConfig.apply && this.confirmConfig.apply();
 		},
 		cancel() {
-			this.confirmConfig.cancle && this.confirmConfig.cancle();	
+			this.confirmConfig.cancle && this.confirmConfig.cancle();
 		},
 		hide() {
 			actions.confirm(store, {
 				show: false
-			})
+			});
 		}
 	}
-}
-
+};
 </script>
