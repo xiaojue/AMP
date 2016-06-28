@@ -123,6 +123,11 @@
 	align-items: center;
 	line-height: 28px;
 	flex: 1;
+	overflow : hidden;
+	text-overflow: ellipsis;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	white-space: nowrap;
 }
 .item_con .item ul li:nth-child(1){
 	max-width: 40px;
