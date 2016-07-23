@@ -14,7 +14,7 @@ View.get('/', async (ctx, next) => {
 			expires: null
 		});
 	}
-    await ctx.render('/index');
+    await ctx.render('/index.html');
 })
 
 export default View;
