@@ -22,14 +22,14 @@ Search.get('/:model', async (ctx, next) => {
             { email: regx },
             { name: regx },
             { desc: regx },
-            { url: regx },
-            { method: regx }
+            { url: regx }
         ]
     }
 
     if(ctx.params.model === 'urls'){
         queryParams.parent_project = ctx.query.parent_project;
     }
+    queryParams.members = ctx.query.members;
 
     const realResult = await Model.find(queryParams).populate('creator').populate('members').populate('parent_project').limit(limit).skip((page - 1) * limit).sort({ 'create_time': -1 });
     const allLen = await Model.find(queryParams);

@@ -48,8 +48,6 @@ const checkAuthorityInApi = (ctx, item) => {
 	return true;
 }
 
-
-
 Api
 	.get('/:model', async(ctx, next) => {
 		const model = ctx.params.model;
@@ -69,6 +67,7 @@ Api
 		}
 		const Model = global.dbHandle.getModel(model);
 		const result = await Model.find(realQuery).populate('creator').populate('members').populate('parent_project').sort({ 'create_time': -1 }).limit(limit).skip((page - 1) * limit);
+		console.log(result);
 		const all = await Model.find(realQuery);
 		ctx.success({
 			total: all.length,

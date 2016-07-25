@@ -10,6 +10,20 @@ export const inArray = (ele, arr) => {
 	return false;
 };
 
+export const unique = (array) => {
+	let obj = {};
+	let i = 0;
+	let len = 0;
+	if (Array.isArray(array) && array.length > 0) {
+		len = array.length;
+		for (i = 0; i < len; i += 1) {
+			obj[array[i]] = array[i];
+		}
+		return Object.keys(obj);
+	}
+	return [];
+};
+
 export const mixin = (source, target) => {
 	for (var i in target) {
 		if (target.hasOwnProperty(i)) {

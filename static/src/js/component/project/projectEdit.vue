@@ -254,6 +254,10 @@ export default {
 				return;
 			}
 
+			if (this.id === 'new') {
+				this.projectDetail.members.push(this.userInfo._id);
+			}
+
 			this.$http({
 				url: '/api/projects' + (this.id === 'new' ? '' : '?_id=' + this.id),
 				method: this.id === 'new' ? 'post' : 'put',

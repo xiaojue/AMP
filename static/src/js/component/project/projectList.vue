@@ -3,7 +3,7 @@
 		<m-top>
 			<p class="title">{{titleMap[type]}}</p>
 			<div class="search">
-				<input type="text" v-model="searchStr" @keyup.enter="search()" debounce="300" placeholder="请输入名称/描述进行搜索"></input>
+				<input type="text" v-model="searchStr" @keyup.enter="search()" debounce="300" placeholder="请输入名称进行搜索"></input>
 			</div>
 			<a class="btn btn_success" href="javascript:void(0)" v-link="{name: 'projectEdit', params: {id: 'new'}}">新建项目</a>
 		</m-top>
@@ -156,7 +156,7 @@ export default {
 			actions.loading(store, true);
 			const queryParams = {};
 			if (this.type === 'mine') {
-				queryParams.creator = this.userInfo._id;
+				queryParams.members = this.userInfo._id;
 			}
 			queryParams.limit = this.paginationConf.itemsPerPage;
 			queryParams.page = this.paginationConf.currentPage;
@@ -196,7 +196,8 @@ export default {
 				data: {
 					query: this.searchStr,
 					limit: this.paginationConf.itemsPerPage,
-					page: 1
+					page: 1,
+					members: this.userInfo._id
 				}
 			}).then((res) => {
 				if (this.isLogin) {

@@ -20,11 +20,11 @@
 						<p>我的项目</p>
 						<i class="iconfont">&#xe604;</i>
 					</li>
-					<li v-link="{name: 'apiList', params: {type: 'mine'}}">
+					<!-- <li v-link="{name: 'apiList', params: {type: 'mine'}}">
 						<span class="iconfont">&#xe605;</span>
 						<p>我的API</p>
 						<i class="iconfont">&#xe604;</i>
-					</li>
+					</li> -->
 				</ul>
 			</div>
 			<!-- <div class="item">

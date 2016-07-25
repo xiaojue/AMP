@@ -3,7 +3,7 @@
 		<m-top>
 			<p class="title">{{titleMap[type] ? titleMap[type] : 'API列表'}}</p>
 			<div class="search">
-				<input type="text" v-model="searchStr" @keyup.enter="search()" debounce="300" placeholder="请输入名称/地址/请求方式进行搜索"></input>
+				<input type="text" v-model="searchStr" @keyup.enter="search()" debounce="300" placeholder="请输入名称/地址进行搜索"></input>
 			</div>
 			<a class="btn btn_success" v-show="titleMap[type] === undefined" href="javascript:void(0)" v-link="{name: 'apiEdit', params: {id: 'new'}, query: {projectId: type}}">新建接口</a>
 		</m-top>
