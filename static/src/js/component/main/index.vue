@@ -9,10 +9,10 @@
 		</div>
 		<div class="login">
 			<h2>登录</h2>
-			<ul class="tab">
+<!-- 			<ul class="tab">
 				<li :class="{'active': loginStyle === 0}" @click="changeLoginStyle(0)">LDAP</li>
 				<li :class="{'active': loginStyle === 1}" @click="changeLoginStyle(1)">NORMAL</li>
-			</ul>
+			</ul> -->
 			<form v-form name="loginForm" @submit.prevent="login()" v-show="loginOrRegister === 0 || loginStyle === 0">
 				<label>
 					<i class="iconfont">&#xe603;</i>
