@@ -9,6 +9,7 @@ export default {
 	users: {
 		name: String,
 		email: String,
+		password: String,
 		department: String,
 		role: String,
 		bg: String,
