@@ -33,7 +33,10 @@ if (ip.address() === '10.69.205.26') {
 	dbConfig.env = 'dev';
 };
 global.dbHandle = dbHandle;
-global.db = Mongoose.connect('mongodb://' + dbs[dbConfig.env].host + ':' + dbs[dbConfig.env].port + '/AMP');
+global.db = Mongoose.connect('mongodb://' + dbs[dbConfig.env].host + ':' + dbs[dbConfig.env].port + '/AMP', {
+	user: 'myUserName',
+	pass: 'myPassword'
+});
 
 global.pwd = __dirname;
 
