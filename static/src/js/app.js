@@ -115,5 +115,3 @@ Vue.http.interceptors.push({
 
 import App from './component/app.vue';
 router.start(App, '#app');
-
-export const debugApp = router.app;

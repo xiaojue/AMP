@@ -6,7 +6,7 @@ import webpack from 'webpack';
 import ora from 'ora';
 
 import baseConfig from '../config/base.config.js';
-import webpackConfig from '../config/webpack.build.config.js';
+import webpackConfig from '../config/webpack.dev.config.js';
 
 console.log(
 	'  Tip:\n' +

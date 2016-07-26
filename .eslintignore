@@ -1,0 +1,4 @@
+static/build/*.js
+static/config/*.js
+static/support/*.js
+static/src/js/lib/*js

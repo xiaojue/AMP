@@ -9,13 +9,12 @@ import https from 'https';
 
 import Koa from 'koa';
 import Static from 'koa-static';
-// import Logger from 'koa-logger';
+import Views from 'koa-views';
 import KoaBodyParser from 'koa-better-body';
 import Session from 'koa2-cookie-session';
 import Mongoose from 'mongoose';
-import Render from 'koa-ejs';
-import co from 'co';
 import cors from 'koa-cors';
+import response from './middleware/response.js';
 
 // koa1中间件转换
 import convert from 'koa-convert';
@@ -23,7 +22,7 @@ import convert from 'koa-convert';
 // all routers
 import routers from './routers';
 
-import response from './middleware/response.js';
+import env from './config/env.config.js';
 
 // db about
 import ip from 'ip';
@@ -49,17 +48,9 @@ const options = {
 // middleware
 app.use(KoaBodyParser());
 app.use(Session());
-// app.use(convert(Logger()));
 app.use(response);
 app.use(convert(cors()));
-
-Render(app, {
-	root: path.join(__dirname, 'views'),
-	layout: 'index',
-	cache: false,
-	debug: true
-});
-app.context.render = co.wrap(app.context.render);
+app.use(Views(path.join(__dirname, './views')));
 
 // static
 app.use(convert(Static(path.join(__dirname, 'static'))));

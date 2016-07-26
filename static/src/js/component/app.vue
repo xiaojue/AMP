@@ -6,6 +6,9 @@
 		<m-confirm></m-confirm>
 	</div>
 </template>
+<style lang="less">
+@import '../../css/app.less';
+</style>
 <script>
 import store from 'store';
 import actions from 'actions';
@@ -25,7 +28,7 @@ export default {
 	vuex: {
 		getters: {
 			bgImgUrl: () => {
-				return store.state.userInfo.bg || '/dist/img/main_bg.png';
+				return store.state.userInfo.bg || 'http://www.pp3.cn/uploads/allimg/111110/134S31a5-17.jpg';
 			}
 		},
 		actions: actions
