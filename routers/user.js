@@ -54,7 +54,7 @@ const ldapClient = (ctx, email, pwd, remember, next) => {
                                 email: email
                             }).exec((err, docs) => {
                                 if (docs.length) {
-                                    saveLogin(ctx, docs[0]);
+                                    saveLogin(ctx, delPassword(docs[0]));
                                     resolve(delPassword(docs[0]));
                                     client.unbind();
                                 } else {
@@ -69,7 +69,7 @@ const ldapClient = (ctx, email, pwd, remember, next) => {
                                     newUser.password = '';
                                     Users.create(newUser, function(err, doc) {
                                         resolve(delPassword(doc));
-                                        saveLogin(ctx, doc);
+                                        saveLogin(ctx, delPassword(doc));
                                         client.unbind();
                                     });
                                 }
@@ -95,7 +95,7 @@ const normalLogin = (ctx, email, pwd, remember, next) => {
         }).exec((err, docs) => {
             if (docs.length) {
                 if (docs[0].password === md5(safeWord + pwd)) {
-                    saveLogin(ctx, docs[0]);
+                    saveLogin(ctx, delPassword(docs[0]));
                     resolve(delPassword(docs[0]));
                 } else {
                     reject('密码错误');
@@ -127,9 +127,9 @@ const register = (ctx) => {
                newUser.avatar = '/dist/img/user_avatar.png';
                newUser.password = md5(safeWord + pwd);
                Users.create(newUser, function(err, doc) {
-                   saveLogin(ctx, doc);
+                   saveLogin(ctx, delPassword(doc));
                    resolve(delPassword(doc), '注册成功');
-               }); 
+               });
             }
         });
     })

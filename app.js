@@ -23,39 +23,33 @@ import convert from 'koa-convert';
 import routers from './routers';
 
 import env from './config/env.config.js';
+import baseConfig from './config/base.config.js';
 
 // db about
-import ip from 'ip';
-import dbConfig from './dbconfig/config.json';
-import dbs from './dbconfig/db.json';
+import dbConfig from './config/db.config.js';
 import * as dbHandle from './database/dbHandle.js';
-if (ip.address() === '10.69.205.26') {
-	dbConfig.env = 'dev';
-};
 global.dbHandle = dbHandle;
-global.db = Mongoose.connect('mongodb://' + dbs[dbConfig.env].host + ':' + dbs[dbConfig.env].port + '/AMP', {
-	user: 'myUserName',
-	pass: 'myPassword'
+global.db = Mongoose.connect('mongodb://' + dbConfig[env].host + ':' + dbConfig[env].port + '/AMP', {
+	user: dbConfig[env].username,
+	pass: dbConfig[env].password
 });
 
 global.pwd = __dirname;
 
 const app = new Koa();
-const httpPort = 9090;
-const httpsPort = 8989;
+const httpPort = baseConfig.httpPort;
+const httpsPort = baseConfig.httpsPort;
 const options = {
 	key: fs.readFileSync('./pem/privatekey.pem'),
 	cert: fs.readFileSync('./pem/certificate.pem')
 };
 
 // middleware
-app.use(KoaBodyParser());
 app.use(Session());
 app.use(response);
+app.use(convert(KoaBodyParser()));
 app.use(convert(cors()));
 app.use(Views(path.join(__dirname, './views')));
-
-// static
 app.use(convert(Static(path.join(__dirname, 'static'))));
 app.use(convert(Static(path.join(__dirname, 'upload'))));
 
@@ -71,3 +65,6 @@ app.on('error', (err, ctx) => {
 
 app.listen(httpPort);
 https.createServer(options, app.callback()).listen(httpsPort);
+
+console.log(`http server listening on port ${httpPort} ...
+https server listening on port ${httpsPort} ...`);

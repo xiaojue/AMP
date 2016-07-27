@@ -5,6 +5,7 @@ export default {
 		use: true,
 		url: 'ldap://10.69.100.1',
 		username: 'yunyingbaobiao',
-		password: '5P=/d_Xp'
+		password: '5P=/d_Xp',
+		group_base: ''
 	}
 };

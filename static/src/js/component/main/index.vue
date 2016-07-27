@@ -4,15 +4,14 @@
 			<div class="all_center" style="top: 30%;">
 				<h2>AMP - Api Manage Platform</h2>
 				<p>高效的API管理平台</p>
-				<!-- <p>基于nodejs开发，base on koa2 web framework</p> -->
 			</div>
 		</div>
 		<div class="login">
 			<h2>登录</h2>
-<!-- 			<ul class="tab">
+			<ul class="tab" v-show="ldap">
 				<li :class="{'active': loginStyle === 0}" @click="changeLoginStyle(0)">LDAP</li>
 				<li :class="{'active': loginStyle === 1}" @click="changeLoginStyle(1)">NORMAL</li>
-			</ul> -->
+			</ul>
 			<form v-form name="loginForm" @submit.prevent="login()" v-show="loginOrRegister === 0 || loginStyle === 0">
 				<label>
 					<i class="iconfont">&#xe603;</i>
@@ -308,9 +307,15 @@ export default {
 			},
 			alertConfig: () => {
 				return store.state.alertConfig;
+			},
+			ldap: () => {
+				return store.state.ldap;
 			}
 		},
 		actions: actions
+	},
+	ready: function() {
+		this.loginStyle = this.ldap ? 0 : 1;
 	},
 	methods: {
 		login() {

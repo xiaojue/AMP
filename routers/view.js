@@ -6,6 +6,8 @@ import Router from 'koa-router';
 
 import env from '../config/env.config.js';
 
+import baseConfig from '../config/base.config.js';
+
 const View = Router();
 
 View.get('/', async(ctx, next) => {
@@ -15,6 +17,17 @@ View.get('/', async(ctx, next) => {
 			httpOnly: false,
 			expires: null
 		});
+	}
+	if (baseConfig.ldap.use) {
+		ctx.cookies.set('ldap', true, {
+			httpOnly: false,
+			expires: null
+		})
+	} else {
+		ctx.cookies.set('ldap', false, {
+			httpOnly: false,
+			expires: null
+		})
 	}
 	if (env === 'dev') {
 		await ctx.render('/index.dev.html');
