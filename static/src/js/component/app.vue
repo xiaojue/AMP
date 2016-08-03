@@ -28,7 +28,7 @@ export default {
 	vuex: {
 		getters: {
 			bgImgUrl: () => {
-				return store.state.userInfo.bg || 'http://www.pp3.cn/uploads/allimg/111110/134S31a5-17.jpg';
+				return store.state.userInfo.bg || '/dist/img/main_bg.png';
 			}
 		},
 		actions: actions

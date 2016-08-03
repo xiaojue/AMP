@@ -6,7 +6,9 @@ import Router from 'koa-router';
 
 import md5 from 'md5';
 
-import { ldapConnect } from '../utils/index.js';
+import ldapConnect from '../utils/ldap.js';
+
+import baseConfig from '../config/base.config.js';
 
 const User = Router({
     prefix: '/user'
@@ -27,11 +29,8 @@ const delPassword = (userInfo) => {
 
 const ldapClient = (ctx, email, pwd, remember, next) => {
     return ldapConnect((client, resolve, reject) => {
-        if (email.indexOf("@") < 0) {
-            email += '@gomeplus.com';
-        }
-        client.search('ou=美信,dc=meixin,dc=com', {
-            filter: '(userprincipalname=' + email + ')',
+        client.search(baseConfig.ldap.group_base, {
+            filter: '(userprincipalname=' + email + '*)',
             scope: 'sub'
         }, (err, resp) => {
             var entrys = [];
@@ -78,7 +77,7 @@ const ldapClient = (ctx, email, pwd, remember, next) => {
                     });
                 } else {
                     // ctx.status = 401;
-                    reject("用户名填写错误");
+                    reject('用户不存在');
                     client.unbind();
                 }
             });

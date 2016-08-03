@@ -2,6 +2,8 @@ import path from 'path';
 
 import baseConfig from './base.config.js';
 
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+
 const rootPath = path.join(__dirname, '../../');
 
 export default {
@@ -64,5 +66,20 @@ export default {
 	},
 	eslint: {
 		formatter: require('eslint-friendly-formatter')
-	}
+	},
+	plugins: [
+		new CopyWebpackPlugin([{
+			from: path.join(rootPath, './static/src/img/main_bg.png'),
+			to: path.join(rootPath, './static/dist/img/')
+		}, {
+			from: path.join(rootPath, './static/src/img/main_bg2.jpg'),
+			to: path.join(rootPath, './static/dist/img/')
+		}, {
+			from: path.join(rootPath, './static/src/img/main_bg3.jpg'),
+			to: path.join(rootPath, './static/dist/img/')
+		}, {
+			from: path.join(rootPath, './static/src/img/user_avatar.png'),
+			to: path.join(rootPath, './static/dist/img/')
+		}])
+	]
 };

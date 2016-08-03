@@ -246,6 +246,7 @@
 }
 </style>
 <script>
+/*global FormData:true*/
 import store from 'store';
 import actions from 'actions';
 
