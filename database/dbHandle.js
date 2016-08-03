@@ -1,7 +1,3 @@
-/*
- * db handler
- */
-
 import mongoose from 'mongoose';
 
 import models from './model.js';

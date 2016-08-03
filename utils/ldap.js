@@ -1,8 +1,3 @@
-/**
- * @author spring
- * @fileoverview 连接远程users表查询数据
- * @date 2016-05-11
- */
 import ldap from 'ldapjs';
 import baseConfig from '../config/base.config.js';
 

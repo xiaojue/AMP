@@ -12,7 +12,6 @@ node_modules/
 npm-debug.log
 
 # project
-db/
 static/dist/**/*
 
 upload/*
