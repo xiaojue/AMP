@@ -20,11 +20,6 @@ import Confirm from './base/confirm.vue';
 export default {
 	name: 'App',
 	store: store,
-	data() {
-		return {
-
-		};
-	},
 	vuex: {
 		getters: {
 			bgImgUrl: () => {
