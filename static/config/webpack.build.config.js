@@ -48,6 +48,7 @@ webpackConfig = merge(baseWebpackConfig, {
 			filename: path.join(baseConfig.build.viewFolder, './index.production.html'),
 			template: path.join(baseConfig.build.viewFolder, './index.html'),
 			inject: true,
+			favicon: path.join(__dirname, '../src/img/favico.ico'),
 			chunksSortMode: 'dependency',
 			minify: {
 				removeComments: true
