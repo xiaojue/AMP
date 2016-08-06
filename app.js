@@ -29,7 +29,7 @@ import baseConfig from './config/base.config.js';
 import dbConfig from './config/db.config.js';
 import * as dbHandle from './database/dbHandle.js';
 global.dbHandle = dbHandle;
-global.db = Mongoose.connect('mongodb://' + dbConfig[env].host + ':' + dbConfig[env].port + '/AMP', {
+global.db = Mongoose.connect('mongodb://' + dbConfig[env].host + ':' + dbConfig[env].port + '/' + dbConfig[env].database, {
 	user: dbConfig[env].username,
 	pass: dbConfig[env].password
 });

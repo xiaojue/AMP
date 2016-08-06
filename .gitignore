@@ -13,6 +13,8 @@ npm-debug.log
 
 # project
 static/dist/**/*
+config/base.config.js
+config/db.config.js
 
 upload/*
 !upload/.empty

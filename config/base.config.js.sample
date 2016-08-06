@@ -3,9 +3,9 @@ export default {
 	httpsPort: 8989,
 	ldap: {
 		use: false,
-		url: 'ldap://10.69.100.1',
-		username: 'yunyingbaobiao',
-		password: '5P=/d_Xp',
-		group_base: 'ou=美信,dc=meixin,dc=com'
+		url: '',
+		username: '',
+		password: '',
+		group_base: ''
 	}
 };

@@ -7,8 +7,8 @@ export default {
 		database: 'AMP'
 	},
 	production: {
-		host: '10.69.205.26',
-		port: '28017',
+		host: '',
+		port: '',
 		username: '',
 		password: '',
 		database: 'AMP'
