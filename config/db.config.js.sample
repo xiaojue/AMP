@@ -4,11 +4,13 @@ export default {
 		port: '27017',
 		username: '',
 		password: ''
+		database: 'AMP'
 	},
 	production: {
 		host: '10.69.205.26',
 		port: '28017',
 		username: '',
-		password: ''
+		password: '',
+		database: 'AMP'
 	}
 };
