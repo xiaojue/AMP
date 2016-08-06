@@ -3,7 +3,7 @@ export default {
 		host: 'localhost',
 		port: '27017',
 		username: '',
-		password: ''
+		password: '',
 		database: 'AMP'
 	},
 	production: {
