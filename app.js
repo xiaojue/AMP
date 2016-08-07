@@ -40,8 +40,8 @@ const app = new Koa();
 const httpPort = baseConfig.httpPort;
 const httpsPort = baseConfig.httpsPort;
 const options = {
-	key: fs.readFileSync('./pem/privatekey.pem'),
-	cert: fs.readFileSync('./pem/certificate.pem')
+	key: fs.readFileSync(path.join(__dirname, './pem/privatekey.pem')),
+	cert: fs.readFileSync(path.join(__dirname, './pem/certificate.pem'))
 };
 
 // middleware
