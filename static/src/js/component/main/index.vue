@@ -316,6 +316,9 @@ export default {
 	},
 	ready: function() {
 		this.loginStyle = this.ldap ? 0 : 1;
+		if (this.isLogin) {
+			this.$route.router.go('/main/project/list/mine');
+		}
 	},
 	methods: {
 		login() {
