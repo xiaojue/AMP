@@ -12,8 +12,11 @@ node_modules/
 npm-debug.log
 
 # project
-db/
 static/dist/**/*
+config/base.config.js
+config/db.config.js
+views/index.dev.html
+views/index.production.html
 
 upload/*
 !upload/.empty
