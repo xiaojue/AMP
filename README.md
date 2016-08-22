@@ -1,8 +1,6 @@
 Api manage platform
 ============================
 
-mongo version 3.0.4
-
 ## 缘由
 
 * 项目开发时接口文档更新不及时，文档格式不一致，文档地址不统一
@@ -43,6 +41,14 @@ $.ajax({
 })
 ```
 
+## 部署
+
+[部署文档](./doc/deploy.md)
+
+## 开发
+
+[开发文档](./doc/develop.md)
+
 ## 截图
 
 ![](./doc/static/2.png)
@@ -51,13 +57,3 @@ $.ajax({
 ![](./doc/static/5.png)
 ![](./doc/static/6.png)
 ![](./doc/static/7.png)
-
-## 炫技
-
-* 前后端代码全部 `ES6/ES7`
-* 后台基于 `nodejs` `koa2`，接口全部 `restful`
-* 前端基于 `vue` 全家桶，`vue` `vuex` `vue-router` 打造的纯单页应用
-
-## 最后
-
-拉上去点个赞！！！
