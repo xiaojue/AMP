@@ -146,8 +146,8 @@ import conTop from '../container/top.vue';
 import conMiddle from '../container/middle.vue';
 import conBottom from '../container/bottom.vue';
 
-import wangEditor from 'wangeditor';
-wangEditor.config.printLog = false;
+import WangEditor from 'wangeditor';
+WangEditor.config.printLog = false;
 
 import $ from 'jquery';
 
@@ -323,7 +323,7 @@ export default {
 			try {
 				this.remarkEditor.destroy();
 			} catch (e) {};
-			this.remarkEditor = new wangEditor(document.getElementById('remark'));
+			this.remarkEditor = new WangEditor(document.getElementById('remark'));
 			this.remarkEditor.config.menus = menus;
 			this.remarkEditor.onchange = function() {
 				_this.projectDetail.remark = this.$txt.html();

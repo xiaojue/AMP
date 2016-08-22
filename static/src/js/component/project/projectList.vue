@@ -93,9 +93,9 @@ import utils from 'utils';
 
 // container component
 import conMain from '../container/main.vue';
-import con_top from '../container/top.vue';
-import con_middle from '../container/middle.vue';
-import con_bottom from '../container/bottom.vue';
+import conTop from '../container/top.vue';
+import conMiddle from '../container/middle.vue';
+import conBottom from '../container/bottom.vue';
 
 import Pagination from '../base/pagination.vue';
 
@@ -135,9 +135,9 @@ export default {
 	},
 	components: {
 		'm-main-con': conMain,
-		'm-top': con_top,
-		'm-middle': con_middle,
-		'm-bottom': con_bottom,
+		'm-top': conTop,
+		'm-middle': conMiddle,
+		'm-bottom': conBottom,
 		'm-pagination': Pagination
 	},
 	route: {

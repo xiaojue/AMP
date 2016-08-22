@@ -49,7 +49,7 @@ const checkAuthorityInApi = (ctx, item) => {
 }
 
 Api
-	.get('/:model', async(ctx, next) => {
+	.get('/:model', async (ctx, next) => {
 		const model = ctx.params.model;
 		if (checkModel(ctx, model)) {
 			return;
@@ -73,7 +73,7 @@ Api
 			result: result
 		}, '查询成功');
 	})
-	.post('/:model', async(ctx, next) => {
+	.post('/:model', async (ctx, next) => {
 		const model = ctx.params.model;
 		if (checkModel(ctx, model)) {
 			return;
@@ -110,7 +110,7 @@ Api
 		const newModel = await Model.create(modelMap)
 		ctx.success(newModel, '新建成功');
 	})
-	.put('/:model', async(ctx, next) => {
+	.put('/:model', async (ctx, next) => {
 		const model = ctx.params.model;
 		if (checkModel(ctx, model)) {
 			return;
@@ -155,7 +155,7 @@ Api
 		})
 		ctx.success(updateModel, '修改成功');
 	})
-	.delete('/:model', async(ctx, next) => {
+	.delete('/:model', async (ctx, next) => {
 		const model = ctx.params.model;
 		if (checkModel(ctx, model)) {
 			return;

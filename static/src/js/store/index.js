@@ -23,8 +23,9 @@ const state = {
 		apply: 'func',
 		cancle: 'func'
 	},
-	isLogin: utils.getCookie('userInfo') === undefined,
-	userInfo: utils.getCookie('userInfo') ? JSON.parse(new Buffer(utils.getCookie('userInfo'), 'base64').toString()) : ''
+	isLogin: utils.getCookie('userInfo') !== undefined,
+	userInfo: utils.getCookie('userInfo') ? JSON.parse(new Buffer(utils.getCookie('userInfo'), 'base64').toString()) : '',
+	ldap: utils.getCookie('ldap') === 'true'
 };
 
 import actions from 'actions';

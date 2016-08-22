@@ -4,7 +4,7 @@ Api manage platform
 ### **注意：最新的代码在 dev 分支下，如果想要部署使用请使用 dev 的代码**
 
 ## 缘由
- 
+
 * 项目开发时接口文档更新不及时，文档格式不一致，文档地址不统一
 * 接口未完成时前端调试困难，用本地数据模拟开发完成后修改成本大
 ...
@@ -25,7 +25,7 @@ Api manage platform
 * 进入接口列表页
 * 可见到如下提示
 ![](./doc/static/1.png)
-* 定义接口 `url` `request params` `response example` ... 
+* 定义接口 `url` `request params` `response example` ...
 * 客户端直接请求 `mock 服务根目录 + api_url` ，以及定义好的请求方式和请求参数，即可返回模拟数据（根据所勾选示例）
 
 ```js
@@ -43,6 +43,14 @@ $.ajax({
 })
 ```
 
+## 部署
+
+[部署文档](./doc/deploy.md)
+
+## 开发
+
+[开发文档](./doc/develop.md)
+
 ## 截图
 
 ![](./doc/static/2.png)
@@ -51,13 +59,3 @@ $.ajax({
 ![](./doc/static/5.png)
 ![](./doc/static/6.png)
 ![](./doc/static/7.png)
-
-## 炫技
-
-* 前后端代码全部 `ES6/ES7`
-* 后台基于 `nodejs` `koa2`，接口全部 `restful` 
-* 前端基于 `vue` 全家桶，`vue` `vuex` `vue-router` 打造的纯单页应用
-
-## 最后
-
-拉上去点个赞！！！

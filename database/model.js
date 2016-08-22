@@ -1,14 +1,10 @@
-/*
- * db models
- */
-
-import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
+import { Schema } from 'mongoose';
 
 export default {
 	users: {
 		name: String,
 		email: String,
+		password: String,
 		department: String,
 		role: String,
 		bg: String,

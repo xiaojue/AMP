@@ -1,13 +1,9 @@
-/**
- * @author spring
- * @fileoverview 连接远程users表查询数据
- * @date 2016-05-11
- */
 import ldap from 'ldapjs';
+import baseConfig from '../config/base.config.js';
 
-const ldapurl = 'ldap://10.69.100.1';
-const username = 'yunyingbaobiao';
-const password = '5P=/d_Xp';
+const ldapurl = baseConfig.ldap.use ? baseConfig.ldap.url : '';
+const username = baseConfig.ldap.use ? baseConfig.ldap.username : '';
+const password = baseConfig.ldap.use ? baseConfig.ldap.password : '';
 
 export default (callback) => {
 	return new Promise((resolve, reject) => {
@@ -18,7 +14,6 @@ export default (callback) => {
 		});
 		client.bind(username, password, (err) => {
 			if (err) {
-                // ctx.status = 400;
 				reject(err);
 			} else {
 				callback(client, resolve, reject);

@@ -4,36 +4,79 @@
 			<div class="all_center" style="top: 30%;">
 				<h2>AMP - Api Manage Platform</h2>
 				<p>高效的API管理平台</p>
-				<p>基于nodejs开发，base on koa2 web framework</p>
 			</div>
 		</div>
 		<div class="login">
 			<h2>登录</h2>
-			<form v-form name="loginForm" @submit.prevent="login()">
+			<ul class="tab" v-show="ldap">
+				<li :class="{'active': loginStyle === 0}" @click="changeLoginStyle(0)">LDAP</li>
+				<li :class="{'active': loginStyle === 1}" @click="changeLoginStyle(1)">NORMAL</li>
+			</ul>
+			<form v-form name="loginForm" @submit.prevent="login()" v-show="loginOrRegister === 0 || loginStyle === 0">
 				<label>
 					<i class="iconfont">&#xe603;</i>
-					<input type="text" v-model="model.email" v-form-ctrl required name="email" placeholder="请输入邮箱"></input>
+					<input type="text" v-model="loginModel.email" v-form-ctrl required name="email" placeholder="请输入邮箱"></input>
 					<div class="errors" v-if="loginForm.$submitted">
 						<p v-if="loginForm.email.$error.required">邮箱不能为空</p>
 					</div>
 				</label>
 				<label>
 					<i class="iconfont">&#xe602;</i>
-					<input type="password" v-model="model.passowrd" v-form-ctrl required name="passowrd" placeholder="请输入密码"></input>
+					<input type="password" v-model="loginModel.passowrd" v-form-ctrl required name="passowrd" placeholder="请输入密码"></input>
 					<div class="errors" v-if="loginForm.$submitted">
 						<p v-if="loginForm.passowrd.$error.required">密码不能为空</p>
 					</div>
 				</label>
 				<div class="remember">
 					<label>
-						<input type="checkbox" v-model="model.remember"></input>
+						<input type="checkbox" v-model="loginModel.remember"></input>
 						<span>保存密码</span>
+					</label>
+					<label style="float: right;" v-show="loginStyle === 1">
+						<span @click="registerUi(1)">注册</span>
 					</label>
 				</div>
 				<div class="errors">
 					<p>{{extraErr}}</p>
 				</div>
 				<button class="submit" type="submit">登录</button>
+			</form>
+			<form v-form name="registerForm" @submit.prevent="register()" v-show="loginOrRegister === 1 && loginStyle === 1">
+				<label>
+					<i class="iconfont">&#xe603;</i>
+					<input type="text" v-model="registerModel.email" v-form-ctrl required name="email" placeholder="请输入用户名"></input>
+					<div class="errors" v-if="registerForm.$submitted">
+						<p v-if="registerForm.email.$error.required">邮箱不能为空</p>
+					</div>
+				</label>
+				<label>
+					<i class="iconfont">&#xe602;</i>
+					<input type="password" v-model="registerModel.password" v-form-ctrl required name="password" placeholder="请输入密码"></input>
+					<div class="errors" v-if="registerForm.$submitted">
+						<p v-if="registerForm.password.$error.required">密码不能为空</p>
+					</div>
+				</label>
+				<label>
+					<i class="iconfont">&#xe602;</i>
+					<input type="password" v-model="registerModel.passwordAgain" v-form-ctrl required name="passwordAgain" placeholder="请再次输入密码"></input>
+					<div class="errors" v-if="registerForm.$submitted">
+						<p v-if="registerForm.passwordAgain.$error.required">密码不能为空</p>
+						<p v-show="registerModel.password !== registerModel.passwordAgain">密码不一致</p>
+					</div>
+				</label>
+				<div class="remember">
+					<label>
+						<input type="checkbox" v-model="loginModel.remember"></input>
+						<span>保存密码</span>
+					</label>
+					<label style="float: right;">
+						<span @click="registerUi(0)">登录</span>
+					</label>
+				</div>
+				<div class="errors">
+					<p>{{extraErr}}</p>
+				</div>
+				<button class="submit" type="submit">注册</button>
 			</form>
 		</div>
 	</section>
@@ -49,11 +92,10 @@
 
 .desc {
 	position: fixed;
-	top: 50%;
+	top: 20%;
 	left: 25%;
 	width: 800px;
 	height: 400px;
-	margin-top: -200px;
 	margin-left: -250px;
 	color: #fff;
 	animation: fadeInLeftBig 0.7s ease 0s 1 both;
@@ -76,14 +118,12 @@
 
 .login {
 	width: 400px;
-	height: 400px;
 	border: 1px solid rgba(255, 255, 255, 0.9);
 	border-radius: 6px;
 	position: fixed;
 	left: 75%;
-	top: 50%;
+	top: 20%;
 	margin-left: -200px;
-	margin-top: -200px;
 	padding: 20px;
 	box-sizing: border-box;
 	animation: fadeInRightBig 0.7s ease 0s 1 both;
@@ -91,6 +131,25 @@
 	-moz-animation: fadeInRightBig 0.7s ease 0s 1 both;
 	-ms-animation: fadeInRightBig 0.7s ease 0s 1 both;
 	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.login ul.tab {
+	font-size: 0;
+	margin-top: 10px;
+}
+
+.login ul.tab li {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 14px;
+	line-height: 26px;
+	color: #fff;
+	padding: 0 5px;
+	cursor: pointer;
+}
+
+.login ul.tab li.active {
+	border-bottom: 2px solid #fff;
 }
 
 .login h2 {
@@ -103,7 +162,7 @@
 .login form {
 	width: 100%;
 	display: block;
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 .login form>label {
@@ -230,20 +289,36 @@ export default {
 	name: 'Index',
 	data() {
 		return {
-			model: {
+			loginModel: {
 				remember: true
 			},
+			registerModel: {},
 			loginForm: {},
-			extraErr: null
+			registerForm: {},
+			extraErr: null,
+			loginStyle: 0, // 0:ldap 1:normal
+			loginOrRegister: 0 // 0:login 1:register
 		};
 	},
 	vuex: {
 		getters: {
 			isLogin: () => {
 				return store.state.isLogin;
+			},
+			alertConfig: () => {
+				return store.state.alertConfig;
+			},
+			ldap: () => {
+				return store.state.ldap;
 			}
 		},
 		actions: actions
+	},
+	ready: function() {
+		this.loginStyle = this.ldap ? 0 : 1;
+		if (this.isLogin) {
+			this.$route.router.go('/main/project/list/mine');
+		}
 	},
 	methods: {
 		login() {
@@ -252,9 +327,10 @@ export default {
 				url: '/user/login',
 				method: 'post',
 				data: {
-					email: this.model.email,
-					password: this.model.passowrd,
-					remember: this.model.remember ? 1 : 0
+					email: this.loginModel.email,
+					password: this.loginModel.passowrd,
+					remember: this.loginModel.remember ? 1 : 0,
+					type: this.loginStyle
 				}
 			}).then((res) => {
 				const resData = res.data;
@@ -262,6 +338,38 @@ export default {
 					this.extraErr = resData.msg;
 				} else {
 					actions.setUserInfo(store, resData.data);
+					this.$route.router.go('/main/project/list/mine');
+				}
+			});
+		},
+		changeLoginStyle(type) {
+			this.loginStyle = type;
+			this.extraErr = '';
+		},
+		registerUi(type) {
+			this.loginOrRegister = type;
+			this.extraErr = '';
+		},
+		register() {
+			if (this.registerModel.password !== this.registerModel.passwordAgain) return;
+			this.$http({
+				url: '/user/register',
+				method: 'post',
+				data: {
+					email: this.registerModel.email,
+					password: this.registerModel.password
+				}
+			}).then((res) => {
+				const resData = res.data;
+				if (resData.iserror && resData.code === 400) {
+					this.extraErr = resData.msg;
+				} else {
+					actions.setUserInfo(store, resData.data);
+					actions.alert(store, {
+						show: 'true',
+						msg: '注册成功，自动登录',
+						type: 'success'
+					});
 					this.$route.router.go('/main/project/list/mine');
 				}
 			});

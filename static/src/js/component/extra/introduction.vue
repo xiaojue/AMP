@@ -27,7 +27,7 @@
 					<span class="main_p">第三步、可见到如下提示</span>
 					<br>
 					<br>
-					<img src="/dist/img/doc1.png">
+					<img src="../../../img/doc1.png">
 					<br>
 					<br>
 					<span class="main_p">第四步、定义接口 `url` `request params` `response example` ... </span>

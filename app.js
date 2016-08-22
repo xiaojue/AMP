@@ -9,13 +9,12 @@ import https from 'https';
 
 import Koa from 'koa';
 import Static from 'koa-static';
-// import Logger from 'koa-logger';
+import Views from 'koa-views';
 import KoaBodyParser from 'koa-better-body';
 import Session from 'koa2-cookie-session';
 import Mongoose from 'mongoose';
-import Render from 'koa-ejs';
-import co from 'co';
 import cors from 'koa-cors';
+import response from './middleware/response.js';
 
 // koa1中间件转换
 import convert from 'koa-convert';
@@ -23,45 +22,34 @@ import convert from 'koa-convert';
 // all routers
 import routers from './routers';
 
-import response from './middleware/response.js';
+import env from './config/env.config.js';
+import baseConfig from './config/base.config.js';
 
 // db about
-import ip from 'ip';
-import dbConfig from './dbconfig/config.json';
-import dbs from './dbconfig/db.json';
+import dbConfig from './config/db.config.js';
 import * as dbHandle from './database/dbHandle.js';
-if (ip.address() === '10.69.205.26') {
-	dbConfig.env = 'dev';
-};
 global.dbHandle = dbHandle;
-global.db = Mongoose.connect('mongodb://' + dbs[dbConfig.env].host + ':' + dbs[dbConfig.env].port + '/AMP');
+global.db = Mongoose.connect('mongodb://' + dbConfig[env].host + ':' + dbConfig[env].port + '/' + dbConfig[env].database, {
+	user: dbConfig[env].username,
+	pass: dbConfig[env].password
+});
 
 global.pwd = __dirname;
 
 const app = new Koa();
-const httpPort = 9090;
-const httpsPort = 8989;
+const httpPort = baseConfig.httpPort;
+const httpsPort = baseConfig.httpsPort;
 const options = {
-	key: fs.readFileSync('./pem/privatekey.pem'),
-	cert: fs.readFileSync('./pem/certificate.pem')
+	key: fs.readFileSync(path.join(__dirname, './pem/privatekey.pem')),
+	cert: fs.readFileSync(path.join(__dirname, './pem/certificate.pem'))
 };
 
 // middleware
-app.use(KoaBodyParser());
 app.use(Session());
-// app.use(convert(Logger()));
 app.use(response);
+app.use(convert(KoaBodyParser()));
 app.use(convert(cors()));
-
-Render(app, {
-	root: path.join(__dirname, 'views'),
-	layout: 'index',
-	cache: false,
-	debug: true
-});
-app.context.render = co.wrap(app.context.render);
-
-// static
+app.use(Views(path.join(__dirname, './views')));
 app.use(convert(Static(path.join(__dirname, 'static'))));
 app.use(convert(Static(path.join(__dirname, 'upload'))));
 
@@ -77,3 +65,6 @@ app.on('error', (err, ctx) => {
 
 app.listen(httpPort);
 https.createServer(options, app.callback()).listen(httpsPort);
+
+console.log(`http server listening on port ${httpPort} ...
+https server listening on port ${httpsPort} ...`);

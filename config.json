@@ -1,9 +1,0 @@
-{
-    "name": "AMP",
-    "desc": "API管理平台",
-    "versions": {
-        "2016-04-27": {
-            "desc": "init project"
-        }
-    }
-}

@@ -6,6 +6,9 @@
 		<m-confirm></m-confirm>
 	</div>
 </template>
+<style lang="less">
+@import '../../css/app.less';
+</style>
 <script>
 import store from 'store';
 import actions from 'actions';
@@ -17,11 +20,6 @@ import Confirm from './base/confirm.vue';
 export default {
 	name: 'App',
 	store: store,
-	data() {
-		return {
-
-		};
-	},
 	vuex: {
 		getters: {
 			bgImgUrl: () => {
