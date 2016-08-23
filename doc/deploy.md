@@ -15,6 +15,8 @@ AMP 部署文档
 
 	**Mongodb 只能安装 3.0 版本**
 
+	**安装好数据库后，需新建名为 AMP 的库**
+
 * clone 本项目源码
 
 	`git clone https://github.com/gomeplusFED/AMP`
