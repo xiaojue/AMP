@@ -34,8 +34,9 @@ const errMap = {
 
 const checkReqParams = (ctx, result) => {
 	let allParams = {};
-	mixin(allParams, ctx.query);
-	mixin(allParams, ctx.body);
+
+	Object.assign(allParams, ctx.query || {});
+	Object.assign(allParams, ctx.body || {});
 
 	if(result === undefined){
 		return {
