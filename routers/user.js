@@ -155,6 +155,7 @@ User
         let email = ctx.body.email,
             pwd = ctx.body.password,
             remember = ctx.body.remember;
+        /\@/.test(email) ? email = email : email = email + '@' + baseConfig.ldap.email_base;
         if (!email || !pwd) {
             ctx.fail(400, '请填写邮箱和密码');
             return;

@@ -6,6 +6,7 @@ export default {
 		url: '',
 		username: '',
 		password: '',
-		group_base: ''
+		group_base: '',
+		email_base: ''
 	}
 };
