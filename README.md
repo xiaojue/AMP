@@ -1,6 +1,12 @@
 Api manage platform
 ============================
 
+## Note
+
+[Mirror repo in here](https://github.com/luoye-fe/AMP)
+
+Plan for v2.
+
 ## 地址
 
 [AMP](http://amp.luoye.pw/)
