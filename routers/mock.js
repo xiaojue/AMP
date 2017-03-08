@@ -16,13 +16,10 @@ const formatRequestUrl = (url) => {
 	let result = {};
 	result.project_id = url.match(/^\/.*?\/(.*?)\//)[1];
 
-	const regxUrl = url.match(/^\/.*?\/.*?\/(.*)/)[1];
+	const regxUrl = url.match(/^\/.*?\/.*?(\/.*)/)[1];
 
-	if(regxUrl.indexOf('http') === -1){
-		result.api_url = '/' + regxUrl.replace(/\?.*/,'');
-	}else{
-		result.api_url = regxUrl.replace(/\?.*/,'');
-	}
+	result.api_url = regxUrl.replace(/\?.*/, '');
+
 	return result;
 }
 
@@ -38,16 +35,16 @@ const checkReqParams = (ctx, result) => {
 	Object.assign(allParams, ctx.query || {});
 	Object.assign(allParams, ctx.body || {});
 
-	if(result === undefined){
+	if (result === undefined) {
 		return {
 			err: true,
 			map: 2
 		}
 	}
 
-	for(let i = 0; i < result.request_params.length; i++){
+	for (let i = 0; i < result.request_params.length; i++) {
 		const _curr = result.request_params[i];
-		if(_curr.required === '1' && allParams[_curr['key']] === undefined){
+		if (_curr.required === '1' && allParams[_curr['key']] === undefined) {
 			return {
 				err: true,
 				map: 1
@@ -61,24 +58,24 @@ const checkReqParams = (ctx, result) => {
 	}
 }
 
-Mock.all('*', async (ctx, next) => {
+Mock.all('*', async(ctx, next) => {
 	const apiDeatil = formatRequestUrl(ctx.request.url);
 	const Url = global.dbHandle.getModel('urls');
 
 	const result = await Url.find({
 		parent_project: apiDeatil.project_id,
-		url: apiDeatil.api_url,
 		method: ctx.method.toLocaleLowerCase()
-	});
+	})
+	.or([{ url: apiDeatil.api_url }, { url: apiDeatil.api_url.replace(/^\//, '') }]);
 
 	const checkResult = checkReqParams(ctx, result[0]);
-	if(checkResult.err){
+	if (checkResult.err) {
 		ctx.fail(404, errMap[checkResult.map]);
 		return;
 	}
-	try{
+	try {
 		ctx.body = JSON.parse(result[0].response_example.exapmle_array[result[0].response_example.in_use].replace(commentRegex(), ''));
-	}catch(e){
+	} catch (e) {
 		ctx.fail(500, '出错啦');
 	}
 });
